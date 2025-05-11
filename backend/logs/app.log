@@ -1,0 +1,16 @@
+2025-05-10 22:36:51,925 - INFO - werkzeug - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-10 22:36:51,925 - INFO - werkzeug - [33mPress CTRL+C to quit[0m
+2025-05-10 22:36:58,110 - INFO - werkzeug - 127.0.0.1 - - [10/May/2025 22:36:58] "[33mGET / HTTP/1.1[0m" 404 -
+2025-05-10 22:39:52,382 - INFO - werkzeug - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-10 22:39:52,383 - INFO - werkzeug - [33mPress CTRL+C to quit[0m
+2025-05-10 22:39:56,176 - INFO - werkzeug - 127.0.0.1 - - [10/May/2025 22:39:56] "[33mGET / HTTP/1.1[0m" 404 -
+2025-05-10 22:40:36,627 - INFO - werkzeug - 127.0.0.1 - - [10/May/2025 22:40:36] "[35m[1mPOST /api/auth/register HTTP/1.1[0m" 201 -
+2025-05-10 22:42:19,107 - INFO - werkzeug - 127.0.0.1 - - [10/May/2025 22:42:19] "[35m[1mPOST /api/auth/register HTTP/1.1[0m" 201 -
+2025-05-10 22:47:27,978 - INFO - werkzeug - 127.0.0.1 - - [10/May/2025 22:47:27] "[35m[1mPOST /api/auth/register HTTP/1.1[0m" 201 -
+2025-05-10 22:47:58,983 - INFO - root - Logging initialized successfully
+2025-05-10 22:47:59,173 - INFO - werkzeug - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-10 22:47:59,174 - INFO - werkzeug - [33mPress CTRL+C to quit[0m
+2025-05-10 22:58:31,511 - INFO - werkzeug - 127.0.0.1 - - [10/May/2025 22:58:31] "[35m[1mPOST /api/auth/register HTTP/1.1[0m" 201 -
