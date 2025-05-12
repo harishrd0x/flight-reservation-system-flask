@@ -1,0 +1,113 @@
+2025-05-12 23:58:46,998 - INFO - root - Logging initialized successfully
+2025-05-12 23:59:47,128 - INFO - root - Logging initialized successfully
+2025-05-12 23:59:49,870 - INFO - root - Logging initialized successfully
+2025-05-13 00:00:30,274 - INFO - root - Logging initialized successfully
+2025-05-13 00:01:51,580 - INFO - root - Logging initialized successfully
+2025-05-13 00:02:03,163 - INFO - root - Logging initialized successfully
+2025-05-13 00:03:54,538 - INFO - root - Logging initialized successfully
+2025-05-13 00:05:19,783 - INFO - root - Logging initialized successfully
+2025-05-13 00:05:19,948 - ERROR - flask_migrate - Error: Directory migrations already exists and is not empty
+2025-05-13 00:07:54,271 - INFO - root - Logging initialized successfully
+2025-05-13 00:08:01,173 - INFO - root - Logging initialized successfully
+2025-05-13 00:09:45,248 - INFO - root - Logging initialized successfully
+2025-05-13 00:11:07,728 - INFO - root - Logging initialized successfully
+2025-05-13 00:11:10,890 - INFO - root - Logging initialized successfully
+2025-05-13 00:11:13,162 - INFO - root - Logging initialized successfully
+2025-05-13 00:14:23,652 - INFO - root - Logging initialized successfully
+2025-05-13 00:15:28,083 - INFO - root - Logging initialized successfully
+2025-05-13 00:15:47,380 - INFO - root - Logging initialized successfully
+2025-05-13 00:15:53,954 - INFO - root - Logging initialized successfully
+2025-05-13 00:29:43,270 - INFO - root - Logging initialized
+2025-05-13 00:33:14,297 - INFO - root - Logging initialized
+2025-05-13 00:34:40,790 - INFO - root - Logging initialized
+2025-05-13 00:34:41,367 - INFO - werkzeug - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-13 00:34:41,368 - INFO - werkzeug - [33mPress CTRL+C to quit[0m
+2025-05-13 00:34:41,377 - INFO - werkzeug -  * Restarting with stat
+2025-05-13 00:34:42,824 - INFO - root - Logging initialized
+2025-05-13 00:34:43,106 - WARNING - werkzeug -  * Debugger is active!
+2025-05-13 00:34:43,113 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-13 00:34:54,344 - WARNING - backend.routes.auth_routes - Registration failed: Email or mobile number already exists
+2025-05-13 00:34:54,345 - INFO - werkzeug - 127.0.0.1 - - [13/May/2025 00:34:54] "[31m[1mPOST /api/auth/register HTTP/1.1[0m" 400 -
+2025-05-13 00:37:05,278 - WARNING - backend.routes.auth_routes - Registration failed: Email or mobile number already exists
+2025-05-13 00:37:05,280 - INFO - werkzeug - 127.0.0.1 - - [13/May/2025 00:37:05] "[31m[1mPOST /api/auth/register HTTP/1.1[0m" 400 -
+2025-05-13 00:37:42,097 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\services\\auth_service.py', reloading
+2025-05-13 00:37:42,333 - INFO - werkzeug -  * Restarting with stat
+2025-05-13 00:38:18,245 - INFO - root - Logging initialized
+2025-05-13 00:38:18,519 - INFO - werkzeug - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-13 00:38:18,520 - INFO - werkzeug - [33mPress CTRL+C to quit[0m
+2025-05-13 00:38:18,523 - INFO - werkzeug -  * Restarting with stat
+2025-05-13 00:38:20,039 - INFO - root - Logging initialized
+2025-05-13 00:38:20,334 - WARNING - werkzeug -  * Debugger is active!
+2025-05-13 00:38:20,338 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-13 00:43:02,798 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\services\\auth_service.py', reloading
+2025-05-13 00:43:03,128 - INFO - werkzeug -  * Restarting with stat
+2025-05-13 00:44:12,974 - INFO - root - Logging initialized
+2025-05-13 00:44:13,250 - INFO - werkzeug - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-13 00:44:13,251 - INFO - werkzeug - [33mPress CTRL+C to quit[0m
+2025-05-13 00:44:13,254 - INFO - werkzeug -  * Restarting with stat
+2025-05-13 00:44:14,646 - INFO - root - Logging initialized
+2025-05-13 00:44:14,936 - WARNING - werkzeug -  * Debugger is active!
+2025-05-13 00:44:14,941 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-13 00:46:04,440 - INFO - backend.services.auth_service - Attempting to add user: <User alice@example.com>
+2025-05-13 00:46:04,448 - ERROR - backend.services.auth_service - IntegrityError: (oracledb.exceptions.IntegrityError) ORA-01400: cannot insert NULL into ("SYSTEM"."USERS"."ID")
+Help: https://docs.oracle.com/error-help/db/ora-01400/
+[SQL: INSERT INTO users (name, email, password, role, gender, mobile_number, created_at) VALUES (:name, :email, :password, :role, :gender, :mobile_number, CURRENT_DATE) RETURNING users.id, users.created_at INTO :ret_0, :ret_1]
+[parameters: {'name': 'Alice Johnson', 'email': 'alice@example.com', 'password': 'scrypt:32768:8:1$5F2HW7bsZ1IfLreb$d3f1276786f79094cf555b0bb47c39c45956fff08fe3973b5cc350f99636bd4fb8e5af7ee6566336fa5bb45e4f94b10fa141bc8c92867e8643d0b78af1bdf288', 'role': 'USER', 'gender': 'F', 'mobile_number': '9876543210', 'ret_0': <oracledb.Var of type DB_TYPE_VARCHAR with value []>, 'ret_1': <oracledb.Var of type DB_TYPE_DATE with value []>}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-05-13 00:46:04,450 - WARNING - backend.routes.auth_routes - Registration failed: Email or mobile number already exists
+2025-05-13 00:46:04,453 - INFO - werkzeug - 127.0.0.1 - - [13/May/2025 00:46:04] "[31m[1mPOST /api/auth/register HTTP/1.1[0m" 400 -
+2025-05-13 00:47:59,763 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\models\\user.py', reloading
+2025-05-13 00:47:59,948 - INFO - werkzeug -  * Restarting with stat
+2025-05-13 00:48:01,773 - INFO - root - Logging initialized
+2025-05-13 00:48:02,185 - WARNING - werkzeug -  * Debugger is active!
+2025-05-13 00:48:02,191 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-13 00:48:14,733 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\models\\user.py', reloading
+2025-05-13 00:48:15,012 - INFO - werkzeug -  * Restarting with stat
+2025-05-13 00:49:47,121 - INFO - root - Logging initialized
+2025-05-13 00:49:47,515 - INFO - werkzeug - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-13 00:49:47,616 - INFO - werkzeug - [33mPress CTRL+C to quit[0m
+2025-05-13 00:49:47,621 - INFO - werkzeug -  * Restarting with stat
+2025-05-13 00:49:49,072 - INFO - root - Logging initialized
+2025-05-13 00:49:49,314 - WARNING - werkzeug -  * Debugger is active!
+2025-05-13 00:49:49,320 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-13 00:49:54,278 - INFO - backend.services.auth_service - Attempting to add user: <User alice@example.com>
+2025-05-13 00:49:54,366 - INFO - werkzeug - 127.0.0.1 - - [13/May/2025 00:49:54] "[35m[1mPOST /api/auth/register HTTP/1.1[0m" 500 -
+2025-05-13 00:50:52,013 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\models\\user.py', reloading
+2025-05-13 00:50:52,230 - INFO - werkzeug -  * Restarting with stat
+2025-05-13 00:50:53,529 - INFO - root - Logging initialized
+2025-05-13 00:50:53,806 - WARNING - werkzeug -  * Debugger is active!
+2025-05-13 00:50:53,810 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-13 00:51:35,373 - INFO - backend.services.auth_service - Attempting to add user: <User alice@example.com>
+2025-05-13 00:51:35,467 - INFO - werkzeug - 127.0.0.1 - - [13/May/2025 00:51:35] "[35m[1mPOST /api/auth/register HTTP/1.1[0m" 500 -
+2025-05-13 00:51:54,794 - INFO - root - Logging initialized
+2025-05-13 00:51:55,113 - INFO - werkzeug - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-13 00:51:55,114 - INFO - werkzeug - [33mPress CTRL+C to quit[0m
+2025-05-13 00:51:55,117 - INFO - werkzeug -  * Restarting with stat
+2025-05-13 00:51:56,380 - INFO - root - Logging initialized
+2025-05-13 00:51:56,641 - WARNING - werkzeug -  * Debugger is active!
+2025-05-13 00:51:56,651 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-13 00:51:57,765 - INFO - backend.services.auth_service - Attempting to add user: <User alice@example.com>
+2025-05-13 00:51:57,782 - INFO - backend.services.auth_service - User alice@example.com successfully registered.
+2025-05-13 00:51:57,784 - INFO - backend.routes.auth_routes - User alice@example.com registered successfully
+2025-05-13 00:51:57,786 - INFO - werkzeug - 127.0.0.1 - - [13/May/2025 00:51:57] "[35m[1mPOST /api/auth/register HTTP/1.1[0m" 201 -
+2025-05-13 01:01:10,652 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\schemas\\auth_schemas.py', reloading
+2025-05-13 01:01:10,898 - INFO - werkzeug -  * Restarting with stat
+2025-05-13 01:01:12,500 - INFO - root - Logging initialized
+2025-05-13 01:01:12,783 - WARNING - werkzeug -  * Debugger is active!
+2025-05-13 01:01:12,787 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-13 01:01:13,936 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\schemas\\auth_schemas.py', reloading
+2025-05-13 01:01:14,143 - INFO - werkzeug -  * Restarting with stat
+2025-05-13 01:01:15,939 - INFO - root - Logging initialized
+2025-05-13 01:01:16,284 - WARNING - werkzeug -  * Debugger is active!
+2025-05-13 01:01:16,288 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-13 01:01:18,515 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\schemas\\auth_schemas.py', reloading
+2025-05-13 01:01:18,721 - INFO - werkzeug -  * Restarting with stat
+2025-05-13 01:01:20,127 - INFO - root - Logging initialized
+2025-05-13 01:01:20,410 - WARNING - werkzeug -  * Debugger is active!
+2025-05-13 01:01:20,413 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-13 01:08:04,262 - INFO - werkzeug -  * Restarting with stat

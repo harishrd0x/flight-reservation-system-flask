@@ -7,6 +7,8 @@ class Config:
     SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", "super-secret")
+    CELERY_BROKER_URL = 'your-celery-broker-url'
+    CELERY_RESULT_BACKEND = 'your-result-backend-url'
 
     # TODO: Add DB config, caching, email config, etc.
 

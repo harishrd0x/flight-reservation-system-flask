@@ -1,21 +1,15 @@
-from celery import Celery
 from flask import Flask
+from celery import Celery
 
-celery = Celery(__name__)
+# Celery initialization
+celery = Celery()
 
-
-def create_celery_app(app: Flask = None) -> Celery:
-    app = app or create_app()
+def init_celery(app):
+    """Initialize Celery with the app's configuration."""
     celery.conf.update(app.config)
+    return celery
 
-    class ContextTask(celery.Task):
-        def __call__(self, *args, **kwargs):
-            with app.app_context():
-                return self.run(*args, **kwargs)
-
-    celery.Task = ContextTask
 
     # TODO: Autodiscover and register tasks here
     # e.g., from backend.tasks import email_tasks
 
-    return celery

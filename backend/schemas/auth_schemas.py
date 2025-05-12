@@ -1,13 +1,26 @@
-# backend/schemas/auth_schema.py
+# backend/schemas/auth_schemas.py
 
 from marshmallow import Schema, fields, validate
 
-class RegisterUserSchema(Schema):
-    name = fields.Str(required=True, validate=validate.Length(min=1))
-    email = fields.Email(required=True)
-    password = fields.Str(required=True, validate=validate.Length(min=6))
-    role = fields.Str(required=True, validate=validate.OneOf(["USER", "ADMIN"]))
-    gender = fields.Str(required=True, validate=validate.OneOf(["M", "F"]))
-    mobile_number = fields.Str(required=True, validate=validate.Length(equal=10))
 
-# TODO: Add schema for login and update user if needed
+class RegisterSchema(Schema):
+    name = fields.Str(required=True)
+    email = fields.Email(required=True)
+    password = fields.Str(required=True, load_only=True)
+    mobile_number = fields.Str(required=True)
+    role = fields.Str(required=True, validate=validate.OneOf(["ADMIN", "USER"]))
+    gender = fields.Str(required=True, validate=validate.OneOf(["M", "F", "O"]))
+
+
+class LoginSchema(Schema):
+    email = fields.Email(required=True)
+    password = fields.Str(required=True, load_only=True)
+
+
+class AuthResponseSchema(Schema):
+    id = fields.Int()
+    email = fields.Email()
+    token = fields.Str()
+
+
+# TODO: Add schema for  update user if needed

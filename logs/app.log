@@ -1,0 +1,137 @@
+2025-05-13 01:11:14,896 - INFO - werkzeug -  * Restarting with stat
+2025-05-13 01:11:16,647 - INFO - root - Logging initialized
+2025-05-13 01:11:17,029 - WARNING - werkzeug -  * Debugger is active!
+2025-05-13 01:11:17,033 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-13 01:11:20,240 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\services\\auth_service.py', reloading
+2025-05-13 01:11:20,439 - INFO - werkzeug -  * Restarting with stat
+2025-05-13 01:11:22,691 - INFO - root - Logging initialized
+2025-05-13 01:11:22,936 - WARNING - werkzeug -  * Debugger is active!
+2025-05-13 01:11:22,940 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-13 01:12:07,410 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\services\\auth_service.py', reloading
+2025-05-13 01:12:07,593 - INFO - werkzeug -  * Restarting with stat
+2025-05-13 03:08:04,313 - INFO - root - Logging initialized
+2025-05-13 03:08:04,855 - INFO - werkzeug - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-13 03:08:04,856 - INFO - werkzeug - [33mPress CTRL+C to quit[0m
+2025-05-13 03:08:04,859 - INFO - werkzeug -  * Restarting with stat
+2025-05-13 03:08:05,990 - INFO - root - Logging initialized
+2025-05-13 03:08:06,347 - WARNING - werkzeug -  * Debugger is active!
+2025-05-13 03:08:06,351 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-13 03:17:46,695 - INFO - backend.routes.auth_routes - Login attempt for email: alice@gmail.com
+2025-05-13 03:17:46,697 - INFO - backend.services.auth_service - Login attempt for email: alice@gmail.com
+2025-05-13 03:17:46,730 - WARNING - backend.services.auth_service - Login failed: No user with email alice@gmail.com
+2025-05-13 03:17:46,731 - ERROR - backend.routes.auth_routes - Unexpected error during login
+Traceback (most recent call last):
+  File "C:\PythonWorkspace\frs\backend\routes\auth_routes.py", line 52, in login
+    user = login_user(data)
+  File "C:\PythonWorkspace\frs\backend\services\auth_service.py", line 78, in login_user
+    raise InvalidCredentialsError()
+backend.exceptions.custom_exceptions.InvalidCredentialsError
+2025-05-13 03:17:46,809 - INFO - werkzeug - 127.0.0.1 - - [13/May/2025 03:17:46] "[31m[1mPOST /api/auth/login HTTP/1.1[0m" 401 -
+2025-05-13 03:17:52,498 - INFO - backend.routes.auth_routes - Registration attempt for email: alice@gmail.com
+2025-05-13 03:17:52,501 - WARNING - backend.routes.auth_routes - Validation failed during registration: {'role': ['Must be one of: ADMIN, CUSTOMER.'], 'gender': ['Must be one of: MALE, FEMALE, OTHER.']}
+2025-05-13 03:17:52,503 - INFO - werkzeug - 127.0.0.1 - - [13/May/2025 03:17:52] "[31m[1mPOST /api/auth/register HTTP/1.1[0m" 400 -
+2025-05-13 03:19:50,382 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\schemas\\auth_schemas.py', reloading
+2025-05-13 03:19:50,901 - INFO - werkzeug -  * Restarting with stat
+2025-05-13 03:19:53,905 - INFO - root - Logging initialized
+2025-05-13 03:19:54,411 - WARNING - werkzeug -  * Debugger is active!
+2025-05-13 03:19:54,417 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-13 03:20:07,241 - INFO - backend.routes.auth_routes - Registration attempt for email: alice@gmail.com
+2025-05-13 03:20:07,243 - WARNING - backend.routes.auth_routes - Validation failed during registration: {'role': ['Must be one of: ADMIN, CUSTOMER.']}
+2025-05-13 03:20:07,245 - INFO - werkzeug - 127.0.0.1 - - [13/May/2025 03:20:07] "[31m[1mPOST /api/auth/register HTTP/1.1[0m" 400 -
+2025-05-13 03:20:13,438 - INFO - backend.routes.auth_routes - Registration attempt for email: alice@gmail.com
+2025-05-13 03:20:13,440 - WARNING - backend.routes.auth_routes - Validation failed during registration: {'role': ['Must be one of: ADMIN, CUSTOMER.']}
+2025-05-13 03:20:13,441 - INFO - werkzeug - 127.0.0.1 - - [13/May/2025 03:20:13] "[31m[1mPOST /api/auth/register HTTP/1.1[0m" 400 -
+2025-05-13 03:20:22,017 - INFO - backend.routes.auth_routes - Registration attempt for email: alice@gmail.com
+2025-05-13 03:20:22,019 - WARNING - backend.services.auth_service - Invalid role or gender provided.
+2025-05-13 03:20:22,020 - ERROR - backend.routes.auth_routes - Unexpected error during registration
+Traceback (most recent call last):
+  File "C:\PythonWorkspace\frs\backend\services\auth_service.py", line 33, in register_user
+    role = UserRole(data["role"])
+  File "C:\Python313\Lib\enum.py", line 726, in __call__
+    return cls.__new__(cls, value)
+           ~~~~~~~~~~~^^^^^^^^^^^^
+  File "C:\Python313\Lib\enum.py", line 1201, in __new__
+    raise ve_exc
+ValueError: 'CUSTOMER' is not a valid UserRole
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\PythonWorkspace\frs\backend\routes\auth_routes.py", line 22, in register
+    user = register_user(data)
+  File "C:\PythonWorkspace\frs\backend\services\auth_service.py", line 37, in register_user
+    raise InvalidEnumError()
+backend.exceptions.custom_exceptions.InvalidEnumError
+2025-05-13 03:20:22,096 - INFO - werkzeug - 127.0.0.1 - - [13/May/2025 03:20:22] "[31m[1mPOST /api/auth/register HTTP/1.1[0m" 400 -
+2025-05-13 03:20:44,019 - INFO - backend.routes.auth_routes - Registration attempt for email: alice@gmail.com
+2025-05-13 03:20:44,022 - WARNING - backend.services.auth_service - Invalid role or gender provided.
+2025-05-13 03:20:44,026 - ERROR - backend.routes.auth_routes - Unexpected error during registration
+Traceback (most recent call last):
+  File "C:\PythonWorkspace\frs\backend\services\auth_service.py", line 33, in register_user
+    role = UserRole(data["role"])
+  File "C:\Python313\Lib\enum.py", line 726, in __call__
+    return cls.__new__(cls, value)
+           ~~~~~~~~~~~^^^^^^^^^^^^
+  File "C:\Python313\Lib\enum.py", line 1201, in __new__
+    raise ve_exc
+ValueError: 'CUSTOMER' is not a valid UserRole
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\PythonWorkspace\frs\backend\routes\auth_routes.py", line 22, in register
+    user = register_user(data)
+  File "C:\PythonWorkspace\frs\backend\services\auth_service.py", line 37, in register_user
+    raise InvalidEnumError()
+backend.exceptions.custom_exceptions.InvalidEnumError
+2025-05-13 03:20:44,057 - INFO - werkzeug - 127.0.0.1 - - [13/May/2025 03:20:44] "[31m[1mPOST /api/auth/register HTTP/1.1[0m" 400 -
+2025-05-13 03:20:57,876 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\services\\auth_service.py', reloading
+2025-05-13 03:20:58,883 - INFO - werkzeug -  * Restarting with stat
+2025-05-13 03:21:01,800 - INFO - root - Logging initialized
+2025-05-13 03:21:02,499 - WARNING - werkzeug -  * Debugger is active!
+2025-05-13 03:21:02,508 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-13 03:21:03,943 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\services\\auth_service.py', reloading
+2025-05-13 03:21:04,581 - INFO - werkzeug -  * Restarting with stat
+2025-05-13 03:21:07,542 - INFO - root - Logging initialized
+2025-05-13 03:21:08,066 - WARNING - werkzeug -  * Debugger is active!
+2025-05-13 03:21:08,073 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-13 03:21:10,560 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\services\\auth_service.py', reloading
+2025-05-13 03:21:11,084 - INFO - werkzeug -  * Restarting with stat
+2025-05-13 03:21:13,516 - INFO - root - Logging initialized
+2025-05-13 03:21:14,037 - WARNING - werkzeug -  * Debugger is active!
+2025-05-13 03:21:14,046 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-13 03:21:22,979 - INFO - backend.routes.auth_routes - Registration attempt for email: alice@gmail.com
+2025-05-13 03:21:22,981 - WARNING - backend.services.auth_service - Invalid enum value: 'CUSTOMER' is not a valid UserRole
+2025-05-13 03:21:22,982 - ERROR - backend.routes.auth_routes - Unexpected error during registration
+Traceback (most recent call last):
+  File "C:\PythonWorkspace\frs\backend\services\auth_service.py", line 33, in register_user
+    role = UserRole(data["role"])
+  File "C:\Python313\Lib\enum.py", line 726, in __call__
+    return cls.__new__(cls, value)
+           ~~~~~~~~~~~^^^^^^^^^^^^
+  File "C:\Python313\Lib\enum.py", line 1201, in __new__
+    raise ve_exc
+ValueError: 'CUSTOMER' is not a valid UserRole
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\PythonWorkspace\frs\backend\routes\auth_routes.py", line 22, in register
+    user = register_user(data)
+  File "C:\PythonWorkspace\frs\backend\services\auth_service.py", line 37, in register_user
+    raise InvalidEnumError()
+backend.exceptions.custom_exceptions.InvalidEnumError
+2025-05-13 03:21:23,004 - INFO - werkzeug - 127.0.0.1 - - [13/May/2025 03:21:22] "[31m[1mPOST /api/auth/register HTTP/1.1[0m" 400 -
+2025-05-13 03:21:46,565 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\services\\auth_service.py', reloading
+2025-05-13 03:21:46,874 - INFO - werkzeug -  * Restarting with stat
+2025-05-13 03:21:48,618 - INFO - root - Logging initialized
+2025-05-13 03:21:49,360 - WARNING - werkzeug -  * Debugger is active!
+2025-05-13 03:21:49,386 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-13 03:21:51,788 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\services\\auth_service.py', reloading
+2025-05-13 03:21:52,173 - INFO - werkzeug -  * Restarting with stat
+2025-05-13 03:21:54,260 - INFO - root - Logging initialized
+2025-05-13 03:21:54,860 - WARNING - werkzeug -  * Debugger is active!
+2025-05-13 03:21:54,877 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-13 03:22:57,623 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\schemas\\auth_schemas.py', reloading
+2025-05-13 03:22:58,068 - INFO - werkzeug -  * Restarting with stat

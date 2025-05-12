@@ -1,45 +1,70 @@
-# backend/routes/auth_routes.py
-
-from flask import Blueprint, request, jsonify
-from backend.schemas.auth_schema import RegisterUserSchema
-from backend.services.auth_service import register_user
 import logging
+from flask import Blueprint, request, jsonify
+from marshmallow import ValidationError
+from backend.services.auth_service import register_user, login_user
+from backend.schemas.auth_schemas import RegisterSchema, LoginSchema, AuthResponseSchema
 
 auth_bp = Blueprint("auth", __name__, url_prefix="/api/auth")
+
+# Configure route-level logger
 logger = logging.getLogger(__name__)
 
 @auth_bp.route("/register", methods=["POST"])
 def register():
-    schema = RegisterUserSchema()
-    data = request.get_json()
-    errors = schema.validate(data)
-
-    if errors:
-        return jsonify({"errors": errors}), 400
-
     try:
-        result = register_user(data)
-        logger.info(f"User {result['email']} registered successfully")
-        return jsonify({"message": "Registration successful", "user": result}), 201
-    except ValueError as e:
-        logger.warning(f"Registration failed: {str(e)}")
-        return jsonify({"error": str(e)}), 400
+        json_data = request.get_json()
+        logger.info(f"Registration attempt for email: {json_data.get('email')}")
 
-@auth_bp.route('/login', methods=['POST'])
+        # Validate input
+        data = RegisterSchema().load(json_data)
+
+        # Process
+        user = register_user(data)
+
+        # Return serialized output
+        return jsonify({
+            "message": "Registration successful",
+            "user": AuthResponseSchema().dump(user)
+        }), 201
+
+    except ValidationError as ve:
+        logger.warning(f"Validation failed during registration: {ve.messages}")
+        return jsonify({"errors": ve.messages}), 400
+
+    except ValueError as ve:
+        logger.warning(f"Registration failed: {ve}")
+        return jsonify({"error": str(ve)}), 400
+
+    except Exception as e:
+        logger.exception("Unexpected error during registration")
+        raise e  # Global handler catches this
+
+@auth_bp.route("/login", methods=["POST"])
 def login():
-    data = request.get_json()
+    try:
+        json_data = request.get_json()
+        logger.info(f"Login attempt for email: {json_data.get('email')}")
 
-    email = data.get('email')
-    password = data.get('password')
+        # Validate input
+        data = LoginSchema().load(json_data)
 
-    if not email or not password:
-        return jsonify({"error": "Email and password are required"}), 400
+        # Process
+        user = login_user(data)
 
-    result, error = authenticate_user(email, password)
+        # Return serialized output
+        return jsonify({
+            "message": "Login successful",
+            "user": AuthResponseSchema().dump(user)
+        }), 200
 
-    if error:
-        return jsonify({"error": error}), 401
+    except ValidationError as ve:
+        logger.warning(f"Validation failed during login: {ve.messages}")
+        return jsonify({"errors": ve.messages}), 400
 
-    return jsonify(result), 200
+    except ValueError as ve:
+        logger.warning(f"Login failed: {ve}")
+        return jsonify({"error": str(ve)}), 401
 
-# TODO: Add /login route later
+    except Exception as e:
+        logger.exception("Unexpected error during login")
+        raise e  # Global handler catches this

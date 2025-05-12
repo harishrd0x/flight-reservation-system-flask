@@ -2,7 +2,7 @@
 # WSGI entry point for the Flask application
 # Entry point when deploying the app with a WSGI server like Gunicorn or uWSGI
 
-from app import create_app
+from backend.app import create_app
 
 app = create_app()
 
