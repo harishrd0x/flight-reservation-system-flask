@@ -1,21 +1,45 @@
 # backend/routes/auth_routes.py
 
-import logging
 from flask import Blueprint, request, jsonify
+from backend.schemas.auth_schema import RegisterUserSchema
 from backend.services.auth_service import register_user
-from backend.schemas.auth_schemas import RegisterUserSchema
+import logging
 
 auth_bp = Blueprint("auth", __name__, url_prefix="/api/auth")
-
-# DO NOT use basicConfig here — the app's logging config is already set
 logger = logging.getLogger(__name__)
 
 @auth_bp.route("/register", methods=["POST"])
 def register():
-    logger.info("🔐 Register route accessed")
-    data = request.get_json()
     schema = RegisterUserSchema()
-    validated_data = schema.load(data)
-    user = register_user(validated_data)
-    logger.info(f"✅ User {user['email']} registered successfully")  # Sample additional log
-    return jsonify({"message": "User registered successfully", "user": user}), 201
+    data = request.get_json()
+    errors = schema.validate(data)
+
+    if errors:
+        return jsonify({"errors": errors}), 400
+
+    try:
+        result = register_user(data)
+        logger.info(f"User {result['email']} registered successfully")
+        return jsonify({"message": "Registration successful", "user": result}), 201
+    except ValueError as e:
+        logger.warning(f"Registration failed: {str(e)}")
+        return jsonify({"error": str(e)}), 400
+
+@auth_bp.route('/login', methods=['POST'])
+def login():
+    data = request.get_json()
+
+    email = data.get('email')
+    password = data.get('password')
+
+    if not email or not password:
+        return jsonify({"error": "Email and password are required"}), 400
+
+    result, error = authenticate_user(email, password)
+
+    if error:
+        return jsonify({"error": error}), 401
+
+    return jsonify(result), 200
+
+# TODO: Add /login route later
