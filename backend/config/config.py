@@ -4,8 +4,9 @@
 import os
 
 class Config:
-    SECRET_KEY = os.environ.get("SECRET_KEY", "supersecretkey")  # TODO: Set a secure key in production
-    JWT_SECRET_KEY = os.environ.get("JWT_SECRET_KEY", "jwtsecret")  # TODO: Set in .env for prod
+    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL")
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", "super-secret")
 
     # TODO: Add DB config, caching, email config, etc.
 
