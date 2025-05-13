@@ -15,3 +15,9 @@ class InvalidEnumError(ApplicationError):
 
 class NotFoundError(ApplicationError):
     pass
+
+class BadRequestError(Exception):
+    """Exception raised for invalid data or bad request."""
+    def __init__(self, message):
+        self.message = message
+        super().__init__(self.message)

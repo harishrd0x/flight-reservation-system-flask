@@ -1,137 +1,73 @@
-2025-05-13 01:11:14,896 - INFO - werkzeug -  * Restarting with stat
-2025-05-13 01:11:16,647 - INFO - root - Logging initialized
-2025-05-13 01:11:17,029 - WARNING - werkzeug -  * Debugger is active!
-2025-05-13 01:11:17,033 - INFO - werkzeug -  * Debugger PIN: 642-335-336
-2025-05-13 01:11:20,240 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\services\\auth_service.py', reloading
-2025-05-13 01:11:20,439 - INFO - werkzeug -  * Restarting with stat
-2025-05-13 01:11:22,691 - INFO - root - Logging initialized
-2025-05-13 01:11:22,936 - WARNING - werkzeug -  * Debugger is active!
-2025-05-13 01:11:22,940 - INFO - werkzeug -  * Debugger PIN: 642-335-336
-2025-05-13 01:12:07,410 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\services\\auth_service.py', reloading
-2025-05-13 01:12:07,593 - INFO - werkzeug -  * Restarting with stat
-2025-05-13 03:08:04,313 - INFO - root - Logging initialized
-2025-05-13 03:08:04,855 - INFO - werkzeug - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+2025-05-13 16:30:27,562 - INFO - root - Logging initialized
+2025-05-13 16:30:40,935 - INFO - root - Logging initialized
+2025-05-13 16:30:41,310 - INFO - werkzeug - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
  * Running on http://127.0.0.1:5000
-2025-05-13 03:08:04,856 - INFO - werkzeug - [33mPress CTRL+C to quit[0m
-2025-05-13 03:08:04,859 - INFO - werkzeug -  * Restarting with stat
-2025-05-13 03:08:05,990 - INFO - root - Logging initialized
-2025-05-13 03:08:06,347 - WARNING - werkzeug -  * Debugger is active!
-2025-05-13 03:08:06,351 - INFO - werkzeug -  * Debugger PIN: 642-335-336
-2025-05-13 03:17:46,695 - INFO - backend.routes.auth_routes - Login attempt for email: alice@gmail.com
-2025-05-13 03:17:46,697 - INFO - backend.services.auth_service - Login attempt for email: alice@gmail.com
-2025-05-13 03:17:46,730 - WARNING - backend.services.auth_service - Login failed: No user with email alice@gmail.com
-2025-05-13 03:17:46,731 - ERROR - backend.routes.auth_routes - Unexpected error during login
-Traceback (most recent call last):
-  File "C:\PythonWorkspace\frs\backend\routes\auth_routes.py", line 52, in login
-    user = login_user(data)
-  File "C:\PythonWorkspace\frs\backend\services\auth_service.py", line 78, in login_user
-    raise InvalidCredentialsError()
-backend.exceptions.custom_exceptions.InvalidCredentialsError
-2025-05-13 03:17:46,809 - INFO - werkzeug - 127.0.0.1 - - [13/May/2025 03:17:46] "[31m[1mPOST /api/auth/login HTTP/1.1[0m" 401 -
-2025-05-13 03:17:52,498 - INFO - backend.routes.auth_routes - Registration attempt for email: alice@gmail.com
-2025-05-13 03:17:52,501 - WARNING - backend.routes.auth_routes - Validation failed during registration: {'role': ['Must be one of: ADMIN, CUSTOMER.'], 'gender': ['Must be one of: MALE, FEMALE, OTHER.']}
-2025-05-13 03:17:52,503 - INFO - werkzeug - 127.0.0.1 - - [13/May/2025 03:17:52] "[31m[1mPOST /api/auth/register HTTP/1.1[0m" 400 -
-2025-05-13 03:19:50,382 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\schemas\\auth_schemas.py', reloading
-2025-05-13 03:19:50,901 - INFO - werkzeug -  * Restarting with stat
-2025-05-13 03:19:53,905 - INFO - root - Logging initialized
-2025-05-13 03:19:54,411 - WARNING - werkzeug -  * Debugger is active!
-2025-05-13 03:19:54,417 - INFO - werkzeug -  * Debugger PIN: 642-335-336
-2025-05-13 03:20:07,241 - INFO - backend.routes.auth_routes - Registration attempt for email: alice@gmail.com
-2025-05-13 03:20:07,243 - WARNING - backend.routes.auth_routes - Validation failed during registration: {'role': ['Must be one of: ADMIN, CUSTOMER.']}
-2025-05-13 03:20:07,245 - INFO - werkzeug - 127.0.0.1 - - [13/May/2025 03:20:07] "[31m[1mPOST /api/auth/register HTTP/1.1[0m" 400 -
-2025-05-13 03:20:13,438 - INFO - backend.routes.auth_routes - Registration attempt for email: alice@gmail.com
-2025-05-13 03:20:13,440 - WARNING - backend.routes.auth_routes - Validation failed during registration: {'role': ['Must be one of: ADMIN, CUSTOMER.']}
-2025-05-13 03:20:13,441 - INFO - werkzeug - 127.0.0.1 - - [13/May/2025 03:20:13] "[31m[1mPOST /api/auth/register HTTP/1.1[0m" 400 -
-2025-05-13 03:20:22,017 - INFO - backend.routes.auth_routes - Registration attempt for email: alice@gmail.com
-2025-05-13 03:20:22,019 - WARNING - backend.services.auth_service - Invalid role or gender provided.
-2025-05-13 03:20:22,020 - ERROR - backend.routes.auth_routes - Unexpected error during registration
-Traceback (most recent call last):
-  File "C:\PythonWorkspace\frs\backend\services\auth_service.py", line 33, in register_user
-    role = UserRole(data["role"])
-  File "C:\Python313\Lib\enum.py", line 726, in __call__
-    return cls.__new__(cls, value)
-           ~~~~~~~~~~~^^^^^^^^^^^^
-  File "C:\Python313\Lib\enum.py", line 1201, in __new__
-    raise ve_exc
-ValueError: 'CUSTOMER' is not a valid UserRole
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "C:\PythonWorkspace\frs\backend\routes\auth_routes.py", line 22, in register
-    user = register_user(data)
-  File "C:\PythonWorkspace\frs\backend\services\auth_service.py", line 37, in register_user
-    raise InvalidEnumError()
-backend.exceptions.custom_exceptions.InvalidEnumError
-2025-05-13 03:20:22,096 - INFO - werkzeug - 127.0.0.1 - - [13/May/2025 03:20:22] "[31m[1mPOST /api/auth/register HTTP/1.1[0m" 400 -
-2025-05-13 03:20:44,019 - INFO - backend.routes.auth_routes - Registration attempt for email: alice@gmail.com
-2025-05-13 03:20:44,022 - WARNING - backend.services.auth_service - Invalid role or gender provided.
-2025-05-13 03:20:44,026 - ERROR - backend.routes.auth_routes - Unexpected error during registration
-Traceback (most recent call last):
-  File "C:\PythonWorkspace\frs\backend\services\auth_service.py", line 33, in register_user
-    role = UserRole(data["role"])
-  File "C:\Python313\Lib\enum.py", line 726, in __call__
-    return cls.__new__(cls, value)
-           ~~~~~~~~~~~^^^^^^^^^^^^
-  File "C:\Python313\Lib\enum.py", line 1201, in __new__
-    raise ve_exc
-ValueError: 'CUSTOMER' is not a valid UserRole
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "C:\PythonWorkspace\frs\backend\routes\auth_routes.py", line 22, in register
-    user = register_user(data)
-  File "C:\PythonWorkspace\frs\backend\services\auth_service.py", line 37, in register_user
-    raise InvalidEnumError()
-backend.exceptions.custom_exceptions.InvalidEnumError
-2025-05-13 03:20:44,057 - INFO - werkzeug - 127.0.0.1 - - [13/May/2025 03:20:44] "[31m[1mPOST /api/auth/register HTTP/1.1[0m" 400 -
-2025-05-13 03:20:57,876 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\services\\auth_service.py', reloading
-2025-05-13 03:20:58,883 - INFO - werkzeug -  * Restarting with stat
-2025-05-13 03:21:01,800 - INFO - root - Logging initialized
-2025-05-13 03:21:02,499 - WARNING - werkzeug -  * Debugger is active!
-2025-05-13 03:21:02,508 - INFO - werkzeug -  * Debugger PIN: 642-335-336
-2025-05-13 03:21:03,943 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\services\\auth_service.py', reloading
-2025-05-13 03:21:04,581 - INFO - werkzeug -  * Restarting with stat
-2025-05-13 03:21:07,542 - INFO - root - Logging initialized
-2025-05-13 03:21:08,066 - WARNING - werkzeug -  * Debugger is active!
-2025-05-13 03:21:08,073 - INFO - werkzeug -  * Debugger PIN: 642-335-336
-2025-05-13 03:21:10,560 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\services\\auth_service.py', reloading
-2025-05-13 03:21:11,084 - INFO - werkzeug -  * Restarting with stat
-2025-05-13 03:21:13,516 - INFO - root - Logging initialized
-2025-05-13 03:21:14,037 - WARNING - werkzeug -  * Debugger is active!
-2025-05-13 03:21:14,046 - INFO - werkzeug -  * Debugger PIN: 642-335-336
-2025-05-13 03:21:22,979 - INFO - backend.routes.auth_routes - Registration attempt for email: alice@gmail.com
-2025-05-13 03:21:22,981 - WARNING - backend.services.auth_service - Invalid enum value: 'CUSTOMER' is not a valid UserRole
-2025-05-13 03:21:22,982 - ERROR - backend.routes.auth_routes - Unexpected error during registration
-Traceback (most recent call last):
-  File "C:\PythonWorkspace\frs\backend\services\auth_service.py", line 33, in register_user
-    role = UserRole(data["role"])
-  File "C:\Python313\Lib\enum.py", line 726, in __call__
-    return cls.__new__(cls, value)
-           ~~~~~~~~~~~^^^^^^^^^^^^
-  File "C:\Python313\Lib\enum.py", line 1201, in __new__
-    raise ve_exc
-ValueError: 'CUSTOMER' is not a valid UserRole
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "C:\PythonWorkspace\frs\backend\routes\auth_routes.py", line 22, in register
-    user = register_user(data)
-  File "C:\PythonWorkspace\frs\backend\services\auth_service.py", line 37, in register_user
-    raise InvalidEnumError()
-backend.exceptions.custom_exceptions.InvalidEnumError
-2025-05-13 03:21:23,004 - INFO - werkzeug - 127.0.0.1 - - [13/May/2025 03:21:22] "[31m[1mPOST /api/auth/register HTTP/1.1[0m" 400 -
-2025-05-13 03:21:46,565 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\services\\auth_service.py', reloading
-2025-05-13 03:21:46,874 - INFO - werkzeug -  * Restarting with stat
-2025-05-13 03:21:48,618 - INFO - root - Logging initialized
-2025-05-13 03:21:49,360 - WARNING - werkzeug -  * Debugger is active!
-2025-05-13 03:21:49,386 - INFO - werkzeug -  * Debugger PIN: 642-335-336
-2025-05-13 03:21:51,788 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\services\\auth_service.py', reloading
-2025-05-13 03:21:52,173 - INFO - werkzeug -  * Restarting with stat
-2025-05-13 03:21:54,260 - INFO - root - Logging initialized
-2025-05-13 03:21:54,860 - WARNING - werkzeug -  * Debugger is active!
-2025-05-13 03:21:54,877 - INFO - werkzeug -  * Debugger PIN: 642-335-336
-2025-05-13 03:22:57,623 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\schemas\\auth_schemas.py', reloading
-2025-05-13 03:22:58,068 - INFO - werkzeug -  * Restarting with stat
+2025-05-13 16:30:41,311 - INFO - werkzeug - [33mPress CTRL+C to quit[0m
+2025-05-13 16:30:41,313 - INFO - werkzeug -  * Restarting with stat
+2025-05-13 16:30:42,343 - INFO - root - Logging initialized
+2025-05-13 16:30:42,558 - WARNING - werkzeug -  * Debugger is active!
+2025-05-13 16:30:42,561 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-13 16:36:19,509 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\app.py', reloading
+2025-05-13 16:36:19,771 - INFO - werkzeug -  * Restarting with stat
+2025-05-13 16:36:21,140 - INFO - root - Logging initialized
+2025-05-13 16:36:21,469 - WARNING - werkzeug -  * Debugger is active!
+2025-05-13 16:36:21,473 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-13 17:20:48,227 - INFO - werkzeug - 127.0.0.1 - - [13/May/2025 17:20:48] "[32mPOST /api/flights HTTP/1.1[0m" 308 -
+2025-05-13 17:20:48,235 - INFO - werkzeug - 127.0.0.1 - - [13/May/2025 17:20:48] "[31m[1mPOST /api/flights/ HTTP/1.1[0m" 401 -
+2025-05-13 17:20:58,572 - INFO - backend.routes.auth_routes - Login attempt for email: bob@gmail.com
+2025-05-13 17:20:58,574 - INFO - backend.services.auth_service - Login attempt for email: bob@gmail.com
+2025-05-13 17:20:58,805 - INFO - backend.services.auth_service - Login successful for bob@gmail.com
+2025-05-13 17:20:58,808 - INFO - werkzeug - 127.0.0.1 - - [13/May/2025 17:20:58] "POST /api/auth/login HTTP/1.1" 200 -
+2025-05-13 17:21:03,766 - INFO - werkzeug - 127.0.0.1 - - [13/May/2025 17:21:03] "[32mPOST /api/flights HTTP/1.1[0m" 308 -
+2025-05-13 17:21:03,788 - INFO - werkzeug - 127.0.0.1 - - [13/May/2025 17:21:03] "[35m[1mPOST /api/flights/ HTTP/1.1[0m" 500 -
+2025-05-13 17:23:14,803 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\services\\flight_service.py', reloading
+2025-05-13 17:23:15,024 - INFO - werkzeug -  * Restarting with stat
+2025-05-13 17:23:16,674 - INFO - root - Logging initialized
+2025-05-13 17:23:17,141 - WARNING - werkzeug -  * Debugger is active!
+2025-05-13 17:23:17,153 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-13 17:23:26,649 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\services\\flight_service.py', reloading
+2025-05-13 17:23:26,903 - INFO - werkzeug -  * Restarting with stat
+2025-05-13 17:23:29,581 - INFO - root - Logging initialized
+2025-05-13 17:23:29,888 - WARNING - werkzeug -  * Debugger is active!
+2025-05-13 17:23:29,891 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-13 17:23:38,095 - INFO - werkzeug - 127.0.0.1 - - [13/May/2025 17:23:38] "[32mPOST /api/flights HTTP/1.1[0m" 308 -
+2025-05-13 17:23:38,104 - INFO - werkzeug - 127.0.0.1 - - [13/May/2025 17:23:38] "[35m[1mPOST /api/flights/ HTTP/1.1[0m" 500 -
+2025-05-13 17:23:49,967 - INFO - root - Logging initialized
+2025-05-13 17:23:50,179 - INFO - werkzeug - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-13 17:23:50,179 - INFO - werkzeug - [33mPress CTRL+C to quit[0m
+2025-05-13 17:23:50,189 - INFO - werkzeug -  * Restarting with stat
+2025-05-13 17:23:51,328 - INFO - root - Logging initialized
+2025-05-13 17:23:51,547 - WARNING - werkzeug -  * Debugger is active!
+2025-05-13 17:23:51,551 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-13 17:26:56,275 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\services\\flight_service.py', reloading
+2025-05-13 17:26:56,458 - INFO - werkzeug -  * Restarting with stat
+2025-05-13 17:28:27,890 - INFO - root - Logging initialized
+2025-05-13 17:28:28,186 - INFO - werkzeug - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-13 17:28:28,187 - INFO - werkzeug - [33mPress CTRL+C to quit[0m
+2025-05-13 17:28:28,194 - INFO - werkzeug -  * Restarting with stat
+2025-05-13 17:28:29,611 - INFO - root - Logging initialized
+2025-05-13 17:28:29,854 - WARNING - werkzeug -  * Debugger is active!
+2025-05-13 17:28:29,857 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-13 17:28:33,609 - INFO - werkzeug - 127.0.0.1 - - [13/May/2025 17:28:33] "[32mPOST /api/flights HTTP/1.1[0m" 308 -
+2025-05-13 17:28:33,630 - INFO - werkzeug - 127.0.0.1 - - [13/May/2025 17:28:33] "[35m[1mPOST /api/flights/ HTTP/1.1[0m" 500 -
+2025-05-13 17:32:53,173 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\services\\flight_service.py', reloading
+2025-05-13 17:32:53,525 - INFO - werkzeug -  * Restarting with stat
+2025-05-13 17:32:57,764 - INFO - root - Logging initialized
+2025-05-13 17:32:58,323 - WARNING - werkzeug -  * Debugger is active!
+2025-05-13 17:32:58,328 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-13 17:32:58,453 - INFO - werkzeug - 127.0.0.1 - - [13/May/2025 17:32:58] "[32mPOST /api/flights HTTP/1.1[0m" 308 -
+2025-05-13 17:32:58,477 - INFO - werkzeug - 127.0.0.1 - - [13/May/2025 17:32:58] "[35m[1mPOST /api/flights/ HTTP/1.1[0m" 500 -
+2025-05-13 17:41:51,704 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\services\\flight_service.py', reloading
+2025-05-13 17:41:51,952 - INFO - werkzeug -  * Restarting with stat
+2025-05-13 17:41:53,730 - INFO - root - Logging initialized
+2025-05-13 17:41:54,020 - WARNING - werkzeug -  * Debugger is active!
+2025-05-13 17:41:54,023 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-13 17:42:09,109 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\services\\flight_service.py', reloading
+2025-05-13 17:42:09,502 - INFO - werkzeug -  * Restarting with stat
+2025-05-13 17:42:11,048 - INFO - root - Logging initialized
+2025-05-13 17:42:11,358 - WARNING - werkzeug -  * Debugger is active!
+2025-05-13 17:42:11,362 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-13 17:42:20,742 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\services\\flight_service.py', reloading
+2025-05-13 17:42:20,940 - INFO - werkzeug -  * Restarting with stat

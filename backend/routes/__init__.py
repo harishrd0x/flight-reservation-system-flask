@@ -1,11 +1,8 @@
 # backend/routes/__init__.py
-# Keeps blueprint registrations modular and scalable
 
-# TODO: Register all blueprints here as they are added
+# this file serves as an organizational point for importing blueprints if needed.
 
 from backend.routes.auth_routes import auth_bp
-
-def register_blueprints(app):
-    app.register_blueprint(auth_bp)
-
-    # TODO: Later add user_bp, flight_bp, booking_bp, etc.
+from backend.routes.airplane_routes import airplane_bp
+from backend.routes.airport_routes import airport_bp
+from backend.routes.flight_routes import flight_bp
