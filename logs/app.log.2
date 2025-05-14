@@ -1,0 +1,107 @@
+2025-05-14 16:45:50,884 - INFO - werkzeug -  * Restarting with stat
+2025-05-14 16:45:54,904 - INFO - root - Logging initialized
+2025-05-14 16:45:55,534 - WARNING - werkzeug -  * Debugger is active!
+2025-05-14 16:45:55,543 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-14 16:47:10,243 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\models\\airport.py', reloading
+2025-05-14 16:47:11,027 - INFO - werkzeug -  * Restarting with stat
+2025-05-14 16:50:11,758 - INFO - root - Logging initialized
+2025-05-14 16:50:12,380 - INFO - werkzeug - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-14 16:50:12,418 - INFO - werkzeug - [33mPress CTRL+C to quit[0m
+2025-05-14 16:50:12,425 - INFO - werkzeug -  * Restarting with stat
+2025-05-14 16:50:15,081 - INFO - root - Logging initialized
+2025-05-14 16:50:15,992 - WARNING - werkzeug -  * Debugger is active!
+2025-05-14 16:50:16,001 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-14 16:50:20,854 - INFO - werkzeug - 127.0.0.1 - - [14/May/2025 16:50:20] "[32mPOST /api/flights HTTP/1.1[0m" 308 -
+2025-05-14 16:50:20,866 - INFO - backend.services.flight_service - Received flight creation request: {'flight_number': 'FL1234', 'airplane_id': 2, 'departure_airport_id': 2, 'arrival_airport_id': 3, 'departure_time': datetime.datetime(2025, 5, 15, 8, 0), 'arrival_time': datetime.datetime(2025, 5, 15, 12, 0), 'status': 'ACTIVE', 'price': 199.99}
+2025-05-14 16:50:21,041 - INFO - backend.services.flight_service - Flight successfully created with ID 10
+2025-05-14 16:50:21,045 - INFO - werkzeug - 127.0.0.1 - - [14/May/2025 16:50:21] "[35m[1mPOST /api/flights/ HTTP/1.1[0m" 201 -
+2025-05-14 16:50:34,193 - INFO - werkzeug - 127.0.0.1 - - [14/May/2025 16:50:34] "[33mGET /flights HTTP/1.1[0m" 404 -
+2025-05-14 16:50:42,791 - INFO - werkzeug - 127.0.0.1 - - [14/May/2025 16:50:42] "[32mGET /api/flights HTTP/1.1[0m" 308 -
+2025-05-14 16:50:42,800 - INFO - backend.services.flight_service - Fetching all flights...
+2025-05-14 16:50:42,819 - INFO - werkzeug - 127.0.0.1 - - [14/May/2025 16:50:42] "GET /api/flights/ HTTP/1.1" 200 -
+2025-05-14 16:50:56,117 - INFO - backend.services.flight_service - Fetching flight with ID 1...
+2025-05-14 16:50:56,126 - ERROR - backend.services.flight_service - NotFoundError occurred: Flight with ID 1 not found.
+Traceback (most recent call last):
+  File "C:\PythonWorkspace\frs\backend\services\flight_service.py", line 131, in get_flight_by_id
+    raise NotFoundError(f"Flight with ID {flight_id} not found.")
+backend.exceptions.custom_exceptions.NotFoundError: Flight with ID 1 not found.
+2025-05-14 16:50:56,157 - WARNING - backend.routes.flight_routes - Flight with ID 1 not found.
+2025-05-14 16:50:56,185 - INFO - werkzeug - 127.0.0.1 - - [14/May/2025 16:50:56] "[33mGET /api/flights/1 HTTP/1.1[0m" 404 -
+2025-05-14 16:51:06,206 - INFO - backend.services.flight_service - Fetching flight with ID 2...
+2025-05-14 16:51:06,209 - ERROR - backend.services.flight_service - NotFoundError occurred: Flight with ID 2 not found.
+Traceback (most recent call last):
+  File "C:\PythonWorkspace\frs\backend\services\flight_service.py", line 131, in get_flight_by_id
+    raise NotFoundError(f"Flight with ID {flight_id} not found.")
+backend.exceptions.custom_exceptions.NotFoundError: Flight with ID 2 not found.
+2025-05-14 16:51:06,212 - WARNING - backend.routes.flight_routes - Flight with ID 2 not found.
+2025-05-14 16:51:06,213 - INFO - werkzeug - 127.0.0.1 - - [14/May/2025 16:51:06] "[33mGET /api/flights/2 HTTP/1.1[0m" 404 -
+2025-05-14 16:52:01,587 - INFO - werkzeug - 127.0.0.1 - - [14/May/2025 16:52:01] "[32mGET /api/flights HTTP/1.1[0m" 308 -
+2025-05-14 16:52:01,839 - INFO - backend.services.flight_service - Fetching all flights...
+2025-05-14 16:52:01,979 - INFO - werkzeug - 127.0.0.1 - - [14/May/2025 16:52:01] "GET /api/flights/ HTTP/1.1" 200 -
+2025-05-14 16:52:47,029 - INFO - backend.services.flight_service - Fetching flight with ID 10...
+2025-05-14 16:52:47,036 - INFO - werkzeug - 127.0.0.1 - - [14/May/2025 16:52:47] "GET /api/flights/10 HTTP/1.1" 200 -
+2025-05-14 16:53:29,491 - INFO - backend.services.flight_service - Updating flight with ID 10...
+2025-05-14 16:53:30,151 - INFO - werkzeug - 127.0.0.1 - - [14/May/2025 16:53:30] "[35m[1mPUT /api/flights/10 HTTP/1.1[0m" 500 -
+2025-05-14 16:53:42,876 - INFO - backend.services.flight_service - Updating flight with ID 10...
+2025-05-14 16:53:42,916 - INFO - backend.services.flight_service - Successfully updated flight with ID 10.
+2025-05-14 16:53:42,920 - INFO - werkzeug - 127.0.0.1 - - [14/May/2025 16:53:42] "PUT /api/flights/10 HTTP/1.1" 200 -
+2025-05-14 16:54:03,054 - INFO - werkzeug - 127.0.0.1 - - [14/May/2025 16:54:03] "[33mGET /flights/search?departure_airport_id=1&arrival_airport_id=2&departure_time=2025-05-15T08:00:00 HTTP/1.1[0m" 404 -
+2025-05-14 16:54:09,095 - INFO - werkzeug - 127.0.0.1 - - [14/May/2025 16:54:09] "[33mGET /flights/search?departure_airport_id=3&arrival_airport_id=2&departure_time=2025-05-15T08:00:00 HTTP/1.1[0m" 404 -
+2025-05-14 16:54:17,278 - INFO - werkzeug - 127.0.0.1 - - [14/May/2025 16:54:17] "[33mGET /api/flights/search?departure_airport_id=3&arrival_airport_id=2&departure_time=2025-05-15T08:00:00 HTTP/1.1[0m" 404 -
+2025-05-14 16:55:39,559 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\routes\\flight_routes.py', reloading
+2025-05-14 16:55:40,204 - INFO - werkzeug -  * Restarting with stat
+2025-05-14 16:55:43,051 - INFO - root - Logging initialized
+2025-05-14 16:55:43,684 - WARNING - werkzeug -  * Debugger is active!
+2025-05-14 16:55:43,696 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-14 16:56:38,389 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\services\\flight_service.py', reloading
+2025-05-14 16:56:39,597 - INFO - werkzeug -  * Restarting with stat
+2025-05-14 16:56:42,865 - INFO - root - Logging initialized
+2025-05-14 16:56:43,305 - WARNING - werkzeug -  * Debugger is active!
+2025-05-14 16:56:43,315 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-14 16:56:59,988 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\services\\flight_service.py', reloading
+2025-05-14 16:57:00,318 - INFO - werkzeug -  * Restarting with stat
+2025-05-14 16:57:03,148 - INFO - root - Logging initialized
+2025-05-14 16:57:04,153 - WARNING - werkzeug -  * Debugger is active!
+2025-05-14 16:57:04,172 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-14 16:57:09,227 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\services\\flight_service.py', reloading
+2025-05-14 16:57:09,945 - INFO - werkzeug -  * Restarting with stat
+2025-05-14 16:57:12,691 - INFO - root - Logging initialized
+2025-05-14 16:57:13,435 - WARNING - werkzeug -  * Debugger is active!
+2025-05-14 16:57:13,453 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-14 16:57:21,604 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\services\\flight_service.py', reloading
+2025-05-14 16:57:22,416 - INFO - werkzeug -  * Restarting with stat
+2025-05-14 16:57:24,823 - INFO - root - Logging initialized
+2025-05-14 16:57:25,357 - WARNING - werkzeug -  * Debugger is active!
+2025-05-14 16:57:25,391 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-14 16:57:35,137 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\routes\\flight_routes.py', reloading
+2025-05-14 16:57:35,686 - INFO - werkzeug -  * Restarting with stat
+2025-05-14 16:57:38,854 - INFO - root - Logging initialized
+2025-05-14 16:57:39,249 - WARNING - werkzeug -  * Debugger is active!
+2025-05-14 16:57:39,258 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-14 16:57:43,272 - ERROR - backend.routes.flight_routes - Failed to search for flights.
+Traceback (most recent call last):
+  File "C:\PythonWorkspace\frs\backend\routes\flight_routes.py", line 109, in search
+    flights = search_flights(departure_airport_id, arrival_airport_id, departure_time)
+              ^^^^^^^^^^^^^^
+NameError: name 'search_flights' is not defined
+2025-05-14 16:57:43,277 - INFO - werkzeug - 127.0.0.1 - - [14/May/2025 16:57:43] "[35m[1mGET /api/flights/search?departure_airport_id=3&arrival_airport_id=2&departure_time=2025-05-15T08:00:00 HTTP/1.1[0m" 500 -
+2025-05-14 16:59:33,130 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\services\\flight_service.py', reloading
+2025-05-14 16:59:33,797 - INFO - werkzeug -  * Restarting with stat
+2025-05-14 16:59:37,031 - INFO - root - Logging initialized
+2025-05-14 16:59:37,527 - WARNING - werkzeug -  * Debugger is active!
+2025-05-14 16:59:37,556 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-14 16:59:58,899 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\routes\\flight_routes.py', reloading
+2025-05-14 16:59:59,657 - INFO - werkzeug -  * Restarting with stat
+2025-05-14 17:01:12,305 - INFO - root - Logging initialized
+2025-05-14 17:01:12,947 - INFO - werkzeug - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-14 17:01:12,949 - INFO - werkzeug - [33mPress CTRL+C to quit[0m
+2025-05-14 17:01:12,953 - INFO - werkzeug -  * Restarting with stat
+2025-05-14 17:01:15,547 - INFO - root - Logging initialized
+2025-05-14 17:01:15,955 - WARNING - werkzeug -  * Debugger is active!
+2025-05-14 17:01:15,960 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-14 17:01:24,426 - INFO - backend.services.flight_service - Searching flights from 3 to 2 departing at 2025-05-15 08:00:00...
+2025-05-14 17:01:24,500 - ERROR - backend.routes.flight_routes - Failed to search for flights: 'Flight' object has no attribute 'to_dict'
+2025-05-14 17:02:36,739 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\routes\\flight_routes.py', reloading
+2025-05-14 17:02:37,338 - INFO - werkzeug -  * Restarting with stat

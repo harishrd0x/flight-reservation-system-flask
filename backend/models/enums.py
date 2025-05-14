@@ -14,3 +14,8 @@ class FlightStatus(str, Enum):
     IN_PROGRESS = "IN_PROGRESS"
     COMPLETED = "COMPLETED"
     CANCELLED = "CANCELLED"
+
+# class FlightClass(str, Enum):
+#     ECONOMY = "ECONOMY"
+#     BUSINESS = "BUSINESS"
+#     FIRST_CLASS = "FIRST_CLASS"

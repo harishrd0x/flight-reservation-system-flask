@@ -1,32 +1,29 @@
-# backend/schemas/flight_schema.py
-
 from marshmallow import Schema, fields, validate
-from backend.models.enums import FlightStatus
+from backend.models.enums import FlightStatus  # Imported from centralized enums
 
 class FlightCreateSchema(Schema):
-    flight_name = fields.Str(required=True, validate=validate.Length(min=1, max=100))
+    flight_number = fields.Str(required=True)
     airplane_id = fields.Int(required=True)
-    source_airport_id = fields.Int(required=True)
-    destination_airport_id = fields.Int(required=True)
-    departure_time = fields.DateTime(required=True, format='%Y-%m-%d %H:%M:%S')
-    arrival_time = fields.DateTime(required=True, format='%Y-%m-%d %H:%M:%S')
-    status = fields.Str(required=True, validate=validate.OneOf([status.name for status in FlightStatus]))
+    departure_airport_id = fields.Int(required=True)
+    arrival_airport_id = fields.Int(required=True)
+    departure_time = fields.DateTime(required=True)
+    arrival_time = fields.DateTime(required=True)
+    status = fields.Str(
+        required=True,
+        validate=validate.OneOf([status.value for status in FlightStatus]),
+    )
+    price = fields.Float(required=True)  # Single price for all classes
 
-class FlightUpdateSchema(Schema):
-    flight_name = fields.Str(validate=validate.Length(min=1, max=100))
-    airplane_id = fields.Int()
-    source_airport_id = fields.Int()
-    destination_airport_id = fields.Int()
-    departure_time = fields.DateTime(format='%Y-%m-%d %H:%M:%S')
-    arrival_time = fields.DateTime(format='%Y-%m-%d %H:%M:%S')
-    status = fields.Str(validate=validate.OneOf([status.name for status in FlightStatus]))
+class FlightUpdateSchema(FlightCreateSchema):
+    pass
 
 class FlightResponseSchema(Schema):
     id = fields.Int()
-    flight_name = fields.Str()
+    flight_number = fields.Str()
     airplane_id = fields.Int()
-    source_airport_id = fields.Int()
-    destination_airport_id = fields.Int()
-    departure_time = fields.DateTime(format='%Y-%m-%d %H:%M:%S')
-    arrival_time = fields.DateTime(format='%Y-%m-%d %H:%M:%S')
-    status = fields.Str()
+    departure_airport_id = fields.Int()
+    arrival_airport_id = fields.Int()
+    departure_time = fields.DateTime()
+    arrival_time = fields.DateTime()
+    status = fields.Str(validate=validate.OneOf([status.value for status in FlightStatus]))
+    price = fields.Float()

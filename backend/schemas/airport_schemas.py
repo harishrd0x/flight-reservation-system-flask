@@ -11,6 +11,7 @@ class AirportCreateSchema(Schema):
 class AirportResponseSchema(Schema):
     id = fields.Int()
     name = fields.Str()
-    city = fields.Str()
-    country = fields.Str()
-    airport_code = fields.Str()
+    code = fields.Str()  # Airport code (e.g., 'JFK', 'LHR')
+    city = fields.Str()  # Optionally, city or other details
+    country = fields.Str()  # Optionally, country
+

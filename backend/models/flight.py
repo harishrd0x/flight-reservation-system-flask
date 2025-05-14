@@ -1,8 +1,7 @@
 # backend/models/flight.py
 
 from backend.extensions import db
-from sqlalchemy import Sequence, Enum as PgEnum
-from backend.models.enums import FlightStatus
+from sqlalchemy import Sequence
 
 class Flight(db.Model):
     __tablename__ = 'flights'
@@ -12,25 +11,32 @@ class Flight(db.Model):
         Sequence('flights_id_seq', start=1, increment=1),
         primary_key=True
     )
-    flight_name = db.Column(db.String(100), nullable=False)
+    flight_number = db.Column(db.String(255), nullable=False, unique=True)
     airplane_id = db.Column(db.Integer, db.ForeignKey('airplanes.id'), nullable=False)
-    source_airport_id = db.Column(db.Integer, db.ForeignKey('airports.id'), nullable=False)
-    destination_airport_id = db.Column(db.Integer, db.ForeignKey('airports.id'), nullable=False)
-    departure_time = db.Column(db.DateTime, nullable=False)
-    arrival_time = db.Column(db.DateTime, nullable=False)
-    status = db.Column(PgEnum(FlightStatus, name="flight_status"), nullable=False)
+    departure_airport_id = db.Column(db.Integer, db.ForeignKey('airports.id'), nullable=False)
+    arrival_airport_id = db.Column(db.Integer, db.ForeignKey('airports.id'), nullable=False)
+    departure_time = db.Column(db.Date, nullable=False)
+    arrival_time = db.Column(db.Date, nullable=False)
+    status = db.Column(db.String(11), nullable=True)
+    price = db.Column(db.Numeric(10, 2), nullable=False)
+
+    # Define relationships if needed
+    airplane = db.relationship("Airplane", backref="flights")
+    departure_airport = db.relationship("Airport", foreign_keys=[departure_airport_id])
+    arrival_airport = db.relationship("Airport", foreign_keys=[arrival_airport_id])
 
     def serialize(self):
         return {
             "id": self.id,
-            "flight_name": self.flight_name,
+            "flight_number": self.flight_number,
             "airplane_id": self.airplane_id,
-            "source_airport_id": self.source_airport_id,
-            "destination_airport_id": self.destination_airport_id,
-            "departure_time": self.departure_time.isoformat(),
-            "arrival_time": self.arrival_time.isoformat(),
-            "status": self.status.value
+            "departure_airport_id": self.departure_airport_id,
+            "arrival_airport_id": self.arrival_airport_id,
+            "departure_time": self.departure_time,
+            "arrival_time": self.arrival_time,
+            "status": self.status,
+            "price": str(self.price),  # Convert price to string for proper JSON serialization
         }
 
     def __repr__(self):
-        return f"<Flight {self.flight_name} ({self.status.value})>"
+        return f"<Flight {self.flight_number}>"

@@ -1,11 +1,9 @@
 # backend/exceptions/error_handlers.py
-# Clean way to handle errors globally instead of repeating try/except
-
 
 from flask import jsonify
 from werkzeug.exceptions import HTTPException
-from backend.exceptions.custom_exceptions import BadRequestError
 from backend.exceptions.custom_exceptions import (
+    BadRequestError,
     InvalidCredentialsError,
     UserAlreadyExistsError,
     InvalidEnumError,
@@ -20,57 +18,39 @@ from backend.exceptions.error_codes import (
 )
 
 def register_error_handlers(app):
+    # BadRequestError handler
     @app.errorhandler(BadRequestError)
     def handle_bad_request(error):
-        response = jsonify({"error": error.message})
+        response = jsonify({"status": "error", "message": str(error)})
         response.status_code = 400
         return response
 
-    @app.errorhandler(Exception)
-    def handle_general_exception(error):
-        response = jsonify({"error": "Internal Server Error"})
-        response.status_code = 500
-        return response
-    
+    # Invalid Credentials handler
     @app.errorhandler(InvalidCredentialsError)
     def handle_invalid_credentials(err):
-        return jsonify({"error": INVALID_CREDENTIALS}), 401
+        return jsonify({"status": "error", "message": INVALID_CREDENTIALS}), 401
 
+    # User Already Exists handler
     @app.errorhandler(UserAlreadyExistsError)
     def handle_user_exists(err):
-        return jsonify({"error": USER_ALREADY_EXISTS}), 400
+        return jsonify({"status": "error", "message": USER_ALREADY_EXISTS}), 400
 
+    # Invalid Enum handler
     @app.errorhandler(InvalidEnumError)
     def handle_invalid_enum(err):
-        return jsonify({"error": INVALID_ROLE_OR_GENDER}), 400
+        return jsonify({"status": "error", "message": INVALID_ROLE_OR_GENDER}), 400
 
+    # Not Found handler
     @app.errorhandler(NotFoundError)
     def handle_not_found(err):
-        return jsonify({"error": NOT_FOUND}), 404
+        return jsonify({"status": "error", "message": NOT_FOUND}), 404
 
+    # HTTP Exception handler
     @app.errorhandler(HTTPException)
     def handle_http_exception(err):
-        return jsonify({"error": err.description}), err.code
+        return jsonify({"status": "error", "message": err.description}), err.code
 
+    # General Exception handler (Unexpected errors)
     @app.errorhandler(Exception)
     def handle_unexpected_exception(err):
-        return jsonify({"error": INTERNAL_SERVER_ERROR}), 500
-
-    @app.errorhandler(BadRequestError)
-    def handle_bad_request(error):
-        return jsonify({"error": str(error)}), 400
-
-    @app.errorhandler(404)
-    def handle_not_found(error):
-        return jsonify({"error": "Not found"}), 404
-
-    @app.errorhandler(500)
-    def handle_internal_server_error(error):
-        return jsonify({"error": "Internal server error"}), 500
-
-    @app.errorhandler(Exception)
-    def handle_unexpected_error(error):
-        return jsonify({"error": "Something went wrong"}), 500
-
-
-    # TODO: Add more granular error handling
+        return jsonify({"status": "error", "message": INTERNAL_SERVER_ERROR}), 500

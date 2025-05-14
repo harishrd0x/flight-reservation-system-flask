@@ -7,3 +7,6 @@ class UserPublicSchema(Schema):
     name = fields.Str()
     email = fields.Email()
     role = fields.Str()
+
+# give proper validation for userPUblicSchema
+
