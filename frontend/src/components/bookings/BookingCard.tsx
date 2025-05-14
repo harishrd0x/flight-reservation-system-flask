@@ -1,9 +1,9 @@
-
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { PassengerInfo } from "@/types/user";
 
+// Define the props for a booking card.
 interface BookingCardProps {
   id: string;
   flightId: string;
@@ -19,10 +19,12 @@ interface BookingCardProps {
   status: "confirmed" | "pending" | "cancelled";
   onCancel?: () => void;
   onViewDetails?: () => void;
-  extraButtons?: React.ReactNode;
-  // Add new passenger field
+  onDownloadPdf?: () => void;
   passengers?: PassengerInfo[];
 }
+
+// Helper to capitalize status strings.
+const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
 const BookingCard = ({
   id,
@@ -39,9 +41,12 @@ const BookingCard = ({
   status,
   onCancel,
   onViewDetails,
-  extraButtons,
-  passengers
+  onDownloadPdf,
+  passengers,
 }: BookingCardProps) => {
+  // Compute the converted price.
+  const convertedPrice = (price * 83).toFixed(2);
+
   return (
     <Card
       className="overflow-hidden hover:shadow-md transition-shadow cursor-pointer"
@@ -49,6 +54,7 @@ const BookingCard = ({
     >
       <CardContent className="p-0">
         <div className="p-6">
+          {/* Header: Flight and booking info */}
           <div className="flex justify-between items-center mb-4">
             <div>
               <h3 className="font-bold text-lg">{flightId}</h3>
@@ -63,10 +69,11 @@ const BookingCard = ({
                   : "bg-red-50 text-red-600"
               }`}
             >
-              {status}
+              {capitalize(status)}
             </div>
           </div>
 
+          {/* Route Information */}
           <div className="grid grid-cols-2 gap-x-4 gap-y-2">
             <div>
               <p className="text-sm text-gray-500">From</p>
@@ -77,7 +84,6 @@ const BookingCard = ({
                 {departureDate} • {departureTime}
               </p>
             </div>
-
             <div>
               <p className="text-sm text-gray-500">To</p>
               <p className="font-medium">
@@ -89,12 +95,18 @@ const BookingCard = ({
             </div>
           </div>
 
+          {/* Passenger information (if any) */}
           {passengers && passengers.length > 0 && (
             <div className="mt-4">
-              <p className="text-sm text-gray-500">Passengers ({passengers.length})</p>
+              <p className="text-sm text-gray-500">
+                Passengers ({passengers.length})
+              </p>
               <div className="flex flex-wrap gap-1 mt-1">
-                {passengers.slice(0, 3).map((passenger, index) => (
-                  <span key={passenger.id} className="text-xs bg-gray-100 px-2 py-1 rounded">
+                {passengers.slice(0, 3).map((passenger) => (
+                  <span
+                    key={passenger.id}
+                    className="text-xs bg-gray-100 px-2 py-1 rounded"
+                  >
                     {passenger.name}
                   </span>
                 ))}
@@ -107,9 +119,11 @@ const BookingCard = ({
             </div>
           )}
 
+          {/* Footer: Price and action buttons */}
           <div className="mt-4 flex justify-between items-center">
-            <p className="font-bold text-lg">₹{(price * 83).toFixed(2)}</p>
+            <p className="font-bold text-lg">₹{convertedPrice}</p>
             <div className="flex space-x-2">
+              {/* Show Cancel button if booking is not cancelled */}
               {status !== "cancelled" && onCancel && (
                 <Button
                   variant="destructive"
@@ -122,7 +136,19 @@ const BookingCard = ({
                   Cancel
                 </Button>
               )}
-              {extraButtons}
+              {/* Show Download PDF button */}
+              {onDownloadPdf && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onDownloadPdf();
+                  }}
+                >
+                  Download PDF
+                </Button>
+              )}
             </div>
           </div>
         </div>

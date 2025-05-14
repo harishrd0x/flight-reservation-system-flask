@@ -1,7 +1,5 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -9,321 +7,232 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "@/components/ui/use-toast";
 import { Plane } from "lucide-react";
 
-interface FlightFormData {
-  id: string;
-  from: string;
-  fromCode: string;
-  to: string;
-  toCode: string;
-  departureDate: string;
-  departureTime: string;
-  arrivalDate: string;
-  arrivalTime: string;
-  price: number;
-  seatsAvailable: number;
-}
-
 export default function AddFlightPage() {
-  const { checkRole } = useAuth();
   const navigate = useNavigate();
-  
-  const [formData, setFormData] = useState<FlightFormData>({
-    id: `CJ-${Math.floor(1000 + Math.random() * 9000)}`,
-    from: "",
-    fromCode: "",
-    to: "",
-    toCode: "",
-    departureDate: "",
-    departureTime: "",
-    arrivalDate: "",
-    arrivalTime: "",
-    price: 0,
-    seatsAvailable: 0,
-  });
-  
-  const [errors, setErrors] = useState<Record<string, string>>({});
 
-  // Redirect if user is not an admin
-  if (!checkRole('admin')) {
-    navigate('/dashboard');
-    return null;
-  }
+  // Flight details state
+  const [flightName, setFlightName] = useState("");
+  const [airplaneId, setAirplaneId] = useState("");
+  const [sourceAirportId, setSourceAirportId] = useState("");
+  const [destinationAirportId, setDestinationAirportId] = useState("");
+  const [departureDate, setDepartureDate] = useState("");
+  const [departureTime, setDepartureTime] = useState("");
+  const [arrivalDate, setArrivalDate] = useState("");
+  const [arrivalTime, setArrivalTime] = useState("");
+  const [status, setStatus] = useState("ACTIVE"); // default value
 
-  const validateForm = () => {
-    const newErrors: Record<string, string> = {};
-    
-    if (!formData.from) newErrors.from = "Origin city is required";
-    if (!formData.fromCode) newErrors.fromCode = "Origin airport code is required";
-    if (!formData.to) newErrors.to = "Destination city is required";
-    if (!formData.toCode) newErrors.toCode = "Destination airport code is required";
-    if (!formData.departureDate) newErrors.departureDate = "Departure date is required";
-    if (!formData.departureTime) newErrors.departureTime = "Departure time is required";
-    if (!formData.arrivalDate) newErrors.arrivalDate = "Arrival date is required";
-    if (!formData.arrivalTime) newErrors.arrivalTime = "Arrival time is required";
-    
-    if (formData.price <= 0) newErrors.price = "Price must be greater than 0";
-    if (formData.seatsAvailable <= 0) newErrors.seatsAvailable = "Seats available must be greater than 0";
-    
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
+  // Optional flight price state (in rupees)
+  const [economyPrice, setEconomyPrice] = useState("");
+  const [businessPrice, setBusinessPrice] = useState("");
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    
-    setFormData(prev => ({
-      ...prev,
-      [name]: name === 'price' || name === 'seatsAvailable' ? parseFloat(value) || 0 : value
-    }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleFlightSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (validateForm()) {
-      try {
-        // Load existing flights from localStorage
-        const existingFlights = JSON.parse(localStorage.getItem('flights') || '[]');
-        
-        // Save the new flight
-        localStorage.setItem('flights', JSON.stringify([...existingFlights, formData]));
-        
-        toast({
-          title: "Flight Added",
-          description: `Flight ${formData.id} from ${formData.from} to ${formData.to} has been added successfully.`,
-        });
-        
-        // Navigate back to flights page
-        navigate('/dashboard/flights');
-      } catch (error) {
-        console.error("Error adding flight:", error);
-        toast({
-          title: "Error",
-          description: "There was an error adding the flight. Please try again.",
-          variant: "destructive"
-        });
+
+    // Validation: ensure required flight fields are present
+    if (
+      !flightName ||
+      !airplaneId ||
+      !sourceAirportId ||
+      !destinationAirportId ||
+      !departureDate ||
+      !departureTime ||
+      !arrivalDate ||
+      !arrivalTime
+    ) {
+      toast({
+        title: "Error",
+        description: "Please fill out all flight details.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Combine date and time to ISO8601 format strings (assuming YYYY-MM-DD for dates)
+    const departureDateTime = `${departureDate}T${departureTime}`;
+    const arrivalDateTime = `${arrivalDate}T${arrivalTime}`;
+
+    // Prepare the flight payload that matches the backend JSON:
+    const flightPayload = {
+      flight_name: flightName,
+      airplane_id: parseInt(airplaneId),
+      source_airport_id: parseInt(sourceAirportId),
+      destination_airport_id: parseInt(destinationAirportId),
+      departure_time: departureDateTime,
+      arrival_time: arrivalDateTime,
+      status: status,
+    };
+
+    try {
+      // Create the flight
+      const flightResponse = await fetch("http://localhost:5000/flights/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(flightPayload),
+      });
+
+      if (!flightResponse.ok) {
+        const errData = await flightResponse.json();
+        throw new Error(errData.error || "Failed to create flight");
       }
+
+      const flightResult = await flightResponse.json();
+
+      toast({
+        title: "Flight Created",
+        description: "Flight created successfully.",
+      });
+
+      // Obtain the new flight's ID from the response.
+      const flightId = flightResult.flight.id;
+
+      // If an economy price was provided, add the flight price for ECONOMY.
+      if (economyPrice) {
+        const econPricePayload = {
+          flight_id: flightId,
+          flight_class: "ECONOMY",
+          price: parseFloat(economyPrice),
+        };
+
+        const econPriceResponse = await fetch("http://localhost:5000/flights/prices", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(econPricePayload),
+        });
+
+        if (!econPriceResponse.ok) {
+          const errData = await econPriceResponse.json();
+          throw new Error(errData.error || "Failed to add ECONOMY price");
+        }
+      }
+
+      // If a business price was provided, add flight price for BUSINESS.
+      if (businessPrice) {
+        const busPricePayload = {
+          flight_id: flightId,
+          flight_class: "BUSINESS",
+          price: parseFloat(businessPrice),
+        };
+
+        const busPriceResponse = await fetch("http://localhost:5000/flights/prices", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(busPricePayload),
+        });
+
+        if (!busPriceResponse.ok) {
+          const errData = await busPriceResponse.json();
+          throw new Error(errData.error || "Failed to add BUSINESS price");
+        }
+      }
+
+      // Navigate to flights list page after success.
+      navigate("/dashboard/flights");
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
     }
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Add New Flight</h1>
-          <p className="text-gray-500">
-            Create a new flight route with all details
-          </p>
-        </div>
-        <Button 
-          variant="outline" 
-          onClick={() => navigate('/dashboard/flights')}
-        >
-          Cancel
-        </Button>
-      </div>
-
+    <div className="max-w-xl mx-auto">
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center">
-            <Plane className="mr-2 h-5 w-5 text-airline-blue" />
-            Flight Details
+          <CardTitle className="flex items-center gap-x-2">
+            <Plane className="h-6 w-6 text-airline-blue" />
+            Add New Flight
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Flight ID */}
-              <div className="space-y-2">
-                <Label htmlFor="id">Flight Number</Label>
-                <Input
-                  id="id"
-                  name="id"
-                  value={formData.id}
-                  onChange={handleInputChange}
-                  readOnly
-                  className="bg-gray-100"
-                />
-              </div>
-              
-              {/* Origin */}
-              <div className="space-y-2">
-                <Label htmlFor="from">Origin City</Label>
-                <Input
-                  id="from"
-                  name="from"
-                  value={formData.from}
-                  onChange={handleInputChange}
-                  className={errors.from ? "border-red-500" : ""}
-                />
-                {errors.from && (
-                  <p className="text-red-500 text-sm">{errors.from}</p>
-                )}
-              </div>
-              
-              {/* Origin Code */}
-              <div className="space-y-2">
-                <Label htmlFor="fromCode">Origin Airport Code</Label>
-                <Input
-                  id="fromCode"
-                  name="fromCode"
-                  value={formData.fromCode}
-                  onChange={handleInputChange}
-                  className={errors.fromCode ? "border-red-500" : ""}
-                  maxLength={3}
-                  placeholder="JFK"
-                />
-                {errors.fromCode && (
-                  <p className="text-red-500 text-sm">{errors.fromCode}</p>
-                )}
-              </div>
-              
-              {/* Destination */}
-              <div className="space-y-2">
-                <Label htmlFor="to">Destination City</Label>
-                <Input
-                  id="to"
-                  name="to"
-                  value={formData.to}
-                  onChange={handleInputChange}
-                  className={errors.to ? "border-red-500" : ""}
-                />
-                {errors.to && (
-                  <p className="text-red-500 text-sm">{errors.to}</p>
-                )}
-              </div>
-              
-              {/* Destination Code */}
-              <div className="space-y-2">
-                <Label htmlFor="toCode">Destination Airport Code</Label>
-                <Input
-                  id="toCode"
-                  name="toCode"
-                  value={formData.toCode}
-                  onChange={handleInputChange}
-                  className={errors.toCode ? "border-red-500" : ""}
-                  maxLength={3}
-                  placeholder="LHR"
-                />
-                {errors.toCode && (
-                  <p className="text-red-500 text-sm">{errors.toCode}</p>
-                )}
-              </div>
-              
-              {/* Departure Date */}
-              <div className="space-y-2">
+          <form onSubmit={handleFlightSubmit} className="space-y-4">
+            <div>
+              <Label htmlFor="flightName">Flight Name</Label>
+              <Input
+                id="flightName"
+                value={flightName}
+                onChange={(e) => setFlightName(e.target.value)}
+                placeholder="Flight 101"
+              />
+            </div>
+            <div>
+              <Label htmlFor="airplaneId">Airplane ID</Label>
+              <Input
+                id="airplaneId"
+                type="number"
+                value={airplaneId}
+                onChange={(e) => setAirplaneId(e.target.value)}
+                placeholder="1"
+              />
+            </div>
+            <div>
+              <Label htmlFor="sourceAirportId">Source Airport ID</Label>
+              <Input
+                id="sourceAirportId"
+                type="number"
+                value={sourceAirportId}
+                onChange={(e) => setSourceAirportId(e.target.value)}
+                placeholder="4"
+              />
+            </div>
+            <div>
+              <Label htmlFor="destinationAirportId">Destination Airport ID</Label>
+              <Input
+                id="destinationAirportId"
+                type="number"
+                value={destinationAirportId}
+                onChange={(e) => setDestinationAirportId(e.target.value)}
+                placeholder="42"
+              />
+            </div>
+            <div className="flex space-x-4">
+              <div className="flex-1">
                 <Label htmlFor="departureDate">Departure Date</Label>
-                <Input
-                  id="departureDate"
-                  name="departureDate"
-                  type="date"
-                  value={formData.departureDate}
-                  onChange={handleInputChange}
-                  className={errors.departureDate ? "border-red-500" : ""}
-                />
-                {errors.departureDate && (
-                  <p className="text-red-500 text-sm">{errors.departureDate}</p>
-                )}
+                <Input id="departureDate" type="date" value={departureDate} onChange={(e) => setDepartureDate(e.target.value)} />
               </div>
-              
-              {/* Departure Time */}
-              <div className="space-y-2">
+              <div className="flex-1">
                 <Label htmlFor="departureTime">Departure Time</Label>
-                <Input
-                  id="departureTime"
-                  name="departureTime"
-                  type="time"
-                  value={formData.departureTime}
-                  onChange={handleInputChange}
-                  className={errors.departureTime ? "border-red-500" : ""}
-                />
-                {errors.departureTime && (
-                  <p className="text-red-500 text-sm">{errors.departureTime}</p>
-                )}
+                <Input id="departureTime" type="time" value={departureTime} onChange={(e) => setDepartureTime(e.target.value)} />
               </div>
-              
-              {/* Arrival Date */}
-              <div className="space-y-2">
+            </div>
+            <div className="flex space-x-4">
+              <div className="flex-1">
                 <Label htmlFor="arrivalDate">Arrival Date</Label>
-                <Input
-                  id="arrivalDate"
-                  name="arrivalDate"
-                  type="date"
-                  value={formData.arrivalDate}
-                  onChange={handleInputChange}
-                  className={errors.arrivalDate ? "border-red-500" : ""}
-                />
-                {errors.arrivalDate && (
-                  <p className="text-red-500 text-sm">{errors.arrivalDate}</p>
-                )}
+                <Input id="arrivalDate" type="date" value={arrivalDate} onChange={(e) => setArrivalDate(e.target.value)} />
               </div>
-              
-              {/* Arrival Time */}
-              <div className="space-y-2">
+              <div className="flex-1">
                 <Label htmlFor="arrivalTime">Arrival Time</Label>
-                <Input
-                  id="arrivalTime"
-                  name="arrivalTime"
-                  type="time"
-                  value={formData.arrivalTime}
-                  onChange={handleInputChange}
-                  className={errors.arrivalTime ? "border-red-500" : ""}
-                />
-                {errors.arrivalTime && (
-                  <p className="text-red-500 text-sm">{errors.arrivalTime}</p>
-                )}
-              </div>
-              
-              {/* Price */}
-              <div className="space-y-2">
-                <Label htmlFor="price">Price (USD)</Label>
-                <Input
-                  id="price"
-                  name="price"
-                  type="number"
-                  min="0"
-                  step="0.01"
-                  value={formData.price}
-                  onChange={handleInputChange}
-                  className={errors.price ? "border-red-500" : ""}
-                />
-                {errors.price && (
-                  <p className="text-red-500 text-sm">{errors.price}</p>
-                )}
-              </div>
-              
-              {/* Seats Available */}
-              <div className="space-y-2">
-                <Label htmlFor="seatsAvailable">Seats Available</Label>
-                <Input
-                  id="seatsAvailable"
-                  name="seatsAvailable"
-                  type="number"
-                  min="0"
-                  step="1"
-                  value={formData.seatsAvailable}
-                  onChange={handleInputChange}
-                  className={errors.seatsAvailable ? "border-red-500" : ""}
-                />
-                {errors.seatsAvailable && (
-                  <p className="text-red-500 text-sm">{errors.seatsAvailable}</p>
-                )}
+                <Input id="arrivalTime" type="time" value={arrivalTime} onChange={(e) => setArrivalTime(e.target.value)} />
               </div>
             </div>
-            
-            <div className="flex justify-end space-x-4">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => navigate('/dashboard/flights')}
-              >
-                Cancel
-              </Button>
-              <Button type="submit" className="bg-airline-blue hover:bg-airline-navy">
-                <Plane className="mr-2 h-4 w-4" />
-                Add Flight
-              </Button>
+            <div>
+              <Label htmlFor="status">Status</Label>
+              <Input id="status" value={status} onChange={(e) => setStatus(e.target.value)} placeholder="ACTIVE" />
             </div>
+            <div>
+              <Label htmlFor="economyPrice">Economy Price (in Rupees, optional)</Label>
+              <Input
+                id="economyPrice"
+                type="number"
+                value={economyPrice}
+                onChange={(e) => setEconomyPrice(e.target.value)}
+                placeholder="₹ e.g. 1200"
+              />
+            </div>
+            <div>
+              <Label htmlFor="businessPrice">Business Price (in Rupees, optional)</Label>
+              <Input
+                id="businessPrice"
+                type="number"
+                value={businessPrice}
+                onChange={(e) => setBusinessPrice(e.target.value)}
+                placeholder="₹ e.g. 2200"
+              />
+            </div>
+            <Button type="submit" className="w-full bg-airline-blue hover:bg-airline-navy">
+              Add Flight
+            </Button>
           </form>
         </CardContent>
       </Card>

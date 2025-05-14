@@ -1,31 +1,43 @@
-
-import { Wallet, Transaction } from '@/models/types/wallet';
-import { LocalStorageRepository } from '@/models/repository/LocalStorageRepository';
+// src/models/wallet/WalletLogic.ts
+import { Wallet } from '@/models/types/wallet';
 import { useToast } from '@/hooks/use-toast';
 
-/**
- * Business logic for wallet operations
- */
 export class WalletLogic {
-  private walletRepository: LocalStorageRepository<Wallet>;
   private toast = useToast();
 
-  constructor() {
-    this.walletRepository = new LocalStorageRepository<Wallet>('wallet');
+  /**
+   * Fetch wallet data from backend API.
+   */
+  async getWallet(): Promise<Wallet> {
+    try {
+      const response = await fetch('http://localhost:5000/wallet/', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          // Include authentication if needed:
+          // 'Authorization': `Bearer ${yourJWTtoken}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error('Wallet not found');
+      }
+      const wallet: Wallet = await response.json();
+      return wallet;
+    } catch (error) {
+      console.error("Error fetching wallet:", error);
+      this.toast.toast({
+        title: "Error",
+        description: "Failed to load wallet",
+        variant: "destructive"
+      });
+      return { balance: 0, userId: '' };
+    }
   }
 
   /**
-   * Get user wallet
+   * Add funds using the backend API.
    */
-  getWallet(userId?: string): Wallet {
-    const wallets = this.walletRepository.getAll();
-    return wallets[0] || { balance: 2500, transactions: [] };
-  }
-
-  /**
-   * Add money to wallet
-   */
-  addMoney(amount: number, userId?: string): Wallet {
+  async addMoney(amount: number): Promise<Wallet> {
     try {
       if (amount <= 0) {
         this.toast.toast({
@@ -33,39 +45,27 @@ export class WalletLogic {
           description: "Please enter a positive amount",
           variant: "destructive"
         });
-        return this.getWallet(userId);
+        return await this.getWallet();
       }
 
-      const wallet = this.getWallet(userId);
-      
-      const transaction: Transaction = {
-        id: `deposit-${Date.now()}`,
-        amount: amount,
-        type: "deposit",
-        description: "Money added to wallet",
-        date: new Date().toLocaleString('en-US', {
-          year: 'numeric', 
-          month: '2-digit', 
-          day: '2-digit',
-          hour: '2-digit',
-          minute: '2-digit'
-        }),
-      };
-      
-      const updatedWallet: Wallet = {
-        ...wallet,
-        balance: wallet.balance + amount,
-        transactions: [transaction, ...(wallet.transactions || [])],
-      };
-      
-      this.walletRepository.save([updatedWallet]);
-      
+      const response = await fetch('http://localhost:5000/wallet/add', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          // 'Authorization': `Bearer ${yourJWTtoken}`,
+        },
+        body: JSON.stringify({ amount }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to add funds');
+      }
+      const data = await response.json();
       this.toast.toast({
         title: "Money Added",
         description: `$${amount} has been added to your wallet`,
       });
-      
-      return updatedWallet;
+      return data.wallet;
     } catch (error) {
       console.error("Error adding money to wallet:", error);
       this.toast.toast({
@@ -73,16 +73,8 @@ export class WalletLogic {
         description: "Failed to add money to wallet",
         variant: "destructive"
       });
-      return this.getWallet(userId);
+      return await this.getWallet();
     }
-  }
-
-  /**
-   * Get wallet transactions
-   */
-  getTransactions(userId?: string): Transaction[] {
-    const wallet = this.getWallet(userId);
-    return wallet.transactions || [];
   }
 }
 

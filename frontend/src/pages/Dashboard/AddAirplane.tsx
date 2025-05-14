@@ -1,60 +1,105 @@
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AirplaneForm from "@/components/forms/AirplaneForm";
 import { toast } from "@/components/ui/use-toast";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Plane, Trash2 } from "lucide-react";
+import { Airplane } from "@/models/types/airplane"; // Ensure your Airplane interface now reflects the field "manufacture"
 
-// Mock airplanes data
-const MOCK_AIRPLANES = [
-  {
-    id: "a1",
-    model: "Boeing 737-800",
-    manufacturer: "Boeing",
-    capacity: 189,
-    yearManufactured: 2017,
-  },
-  {
-    id: "a2",
-    model: "Airbus A320neo",
-    manufacturer: "Airbus",
-    capacity: 180,
-    yearManufactured: 2019,
-  },
-];
+// Backend endpoint URL (ensure it ends with a trailing slash)
+const API_URL = "http://127.0.0.1:5000/airplanes/";
 
 export default function AddAirplanePage() {
-  const [airplanes, setAirplanes] = useState(MOCK_AIRPLANES);
+  const [airplanes, setAirplanes] = useState<Airplane[]>([]);
 
-  const handleAddAirplane = (data: {
-    model: string;
-    capacity: number;
-    manufacturer: string;
-    yearManufactured: number;
-  }) => {
-    // In a real app, this would make an API call
-    const newAirplane = {
-      id: `a${Date.now()}`,
-      ...data
-    };
-    
-    setAirplanes([...airplanes, newAirplane]);
-    
-    toast({
-      title: "Airplane Added",
-      description: `${data.manufacturer} ${data.model} has been added to the fleet.`,
-    });
+  // Fetch airplanes from the Flask backend
+  const fetchAirplanes = async () => {
+    try {
+      const response = await fetch(API_URL, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      if (!response.ok) {
+        throw new Error("Failed to fetch airplanes");
+      }
+      const data = await response.json();
+      // Map backend data into our Airplane interface structure
+      const mappedAirplanes: Airplane[] = data.map((airplane: any) => ({
+        id: String(airplane.id),
+        model: airplane.model,
+        airline: airplane.airline,
+        capacity: airplane.capacity,
+        manufacture: airplane.manufacture,
+      }));
+      setAirplanes(mappedAirplanes);
+    } catch (error: any) {
+      console.error("Error fetching airplanes:", error.message);
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+    }
   };
 
-  const handleDeleteAirplane = (id: string) => {
-    // In a real app, this would make an API call
-    setAirplanes(airplanes.filter(airplane => airplane.id !== id));
-    
-    toast({
-      title: "Airplane Removed",
-      description: "The airplane has been removed from the fleet.",
-    });
+  useEffect(() => {
+    fetchAirplanes();
+  }, []);
+
+  // Add a new airplane via a POST request.
+  // The payload is expected to have the following keys: model, airline, capacity, manufacture.
+  const handleAddAirplane = async (data: {
+    model: string;
+    capacity: number;
+    airline: string;
+    manufacture: string;
+  }) => {
+    try {
+      const response = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to add airplane");
+      }
+      // Re-fetch the fleet to display updated data
+      await fetchAirplanes();
+      toast({
+        title: "Airplane Added",
+        description: `${data.airline} ${data.model} has been added to the fleet.`,
+      });
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+    }
+  };
+
+  // Delete an airplane via a DELETE request
+  const handleDeleteAirplane = async (id: string) => {
+    try {
+      const response = await fetch(`${API_URL}${id}`, { method: "DELETE" });
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Airplane not found");
+      }
+      // After successful deletion, re-fetch the airplane list
+      await fetchAirplanes();
+      toast({
+        title: "Airplane Removed",
+        description: "The airplane has been removed from the fleet.",
+      });
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+    }
   };
 
   return (
@@ -67,10 +112,12 @@ export default function AddAirplanePage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Airplane Form Section */}
         <div>
           <AirplaneForm onSubmit={handleAddAirplane} />
         </div>
 
+        {/* Airplane List Section */}
         <div>
           <Card>
             <CardHeader>
@@ -83,19 +130,21 @@ export default function AddAirplanePage() {
               {airplanes.length > 0 ? (
                 <div className="space-y-4">
                   {airplanes.map((airplane) => (
-                    <div 
-                      key={airplane.id} 
+                    <div
+                      key={airplane.id}
                       className="flex justify-between items-center p-4 border rounded-lg hover:bg-gray-50"
                     >
                       <div>
-                        <h3 className="font-medium">{airplane.manufacturer} {airplane.model}</h3>
-                        <div className="text-sm text-gray-500 space-y-1">
+                        <h3 className="font-medium">
+                          {airplane.airline} {airplane.model}
+                        </h3>
+                        <div className="text-sm text-gray-500">
                           <p>Capacity: {airplane.capacity} passengers</p>
-                          <p>Year: {airplane.yearManufactured}</p>
+                          <p>Manufacture: {airplane.manufacture}</p>
                         </div>
                       </div>
-                      <Button 
-                        variant="destructive" 
+                      <Button
+                        variant="destructive"
                         size="icon"
                         onClick={() => handleDeleteAirplane(airplane.id)}
                       >

@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -10,22 +9,23 @@ import { Plane } from "lucide-react";
 interface AirplaneFormProps {
   onSubmit: (data: {
     model: string;
+    airline: string;
     capacity: number;
-    manufacturer: string;
-    yearManufactured: number;
+    manufacture: string;
   }) => void;
 }
 
 const AirplaneForm: React.FC<AirplaneFormProps> = ({ onSubmit }) => {
   const [model, setModel] = useState("");
+  const [airline, setAirline] = useState("");
   const [capacity, setCapacity] = useState("");
-  const [manufacturer, setManufacturer] = useState("");
-  const [yearManufactured, setYearManufactured] = useState("");
+  const [manufacture, setManufacture] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!model || !capacity || !manufacturer || !yearManufactured) {
+    // Ensure all fields are provided
+    if (!model || !airline || !capacity || !manufacture) {
       toast({
         title: "Error",
         description: "Please fill in all fields",
@@ -34,9 +34,8 @@ const AirplaneForm: React.FC<AirplaneFormProps> = ({ onSubmit }) => {
       return;
     }
 
+    // Validate capacity as a positive number
     const capacityNum = parseInt(capacity);
-    const yearNum = parseInt(yearManufactured);
-
     if (isNaN(capacityNum) || capacityNum <= 0) {
       toast({
         title: "Error",
@@ -45,28 +44,19 @@ const AirplaneForm: React.FC<AirplaneFormProps> = ({ onSubmit }) => {
       });
       return;
     }
-
-    if (isNaN(yearNum) || yearNum < 1900 || yearNum > new Date().getFullYear()) {
-      toast({
-        title: "Error",
-        description: "Please enter a valid year",
-        variant: "destructive",
-      });
-      return;
-    }
     
     onSubmit({
       model,
+      airline,
       capacity: capacityNum,
-      manufacturer,
-      yearManufactured: yearNum,
+      manufacture,
     });
 
-    // Reset form
+    // Reset the form
     setModel("");
+    setAirline("");
     setCapacity("");
-    setManufacturer("");
-    setYearManufactured("");
+    setManufacture("");
   };
 
   return (
@@ -90,37 +80,34 @@ const AirplaneForm: React.FC<AirplaneFormProps> = ({ onSubmit }) => {
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="manufacturer">Manufacturer</Label>
+            <Label htmlFor="airline">Airline</Label>
             <Input
-              id="manufacturer"
-              placeholder="e.g. Boeing"
-              value={manufacturer}
-              onChange={(e) => setManufacturer(e.target.value)}
+              id="airline"
+              placeholder="e.g. American Airlines"
+              value={airline}
+              onChange={(e) => setAirline(e.target.value)}
             />
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="capacity">Passenger Capacity</Label>
-              <Input
-                id="capacity"
-                type="number"
-                placeholder="e.g. 180"
-                value={capacity}
-                onChange={(e) => setCapacity(e.target.value)}
-              />
-            </div>
-            
-            <div className="space-y-2">
-              <Label htmlFor="yearManufactured">Year Manufactured</Label>
-              <Input
-                id="yearManufactured"
-                type="number"
-                placeholder="e.g. 2020"
-                value={yearManufactured}
-                onChange={(e) => setYearManufactured(e.target.value)}
-              />
-            </div>
+          <div className="space-y-2">
+            <Label htmlFor="capacity">Passenger Capacity</Label>
+            <Input
+              id="capacity"
+              type="number"
+              placeholder="e.g. 160"
+              value={capacity}
+              onChange={(e) => setCapacity(e.target.value)}
+            />
+          </div>
+          
+          <div className="space-y-2">
+            <Label htmlFor="manufacture">Manufacture</Label>
+            <Input
+              id="manufacture"
+              placeholder="e.g. Boeing"
+              value={manufacture}
+              onChange={(e) => setManufacture(e.target.value)}
+            />
           </div>
           
           <Button 
@@ -133,6 +120,6 @@ const AirplaneForm: React.FC<AirplaneFormProps> = ({ onSubmit }) => {
       </CardContent>
     </Card>
   );
-}
+};
 
 export default AirplaneForm;

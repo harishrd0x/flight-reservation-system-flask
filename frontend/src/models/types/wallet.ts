@@ -1,15 +1,7 @@
-
-export interface Transaction {
-  id: string;
-  amount: number;
-  type: 'deposit' | 'withdrawal';
-  description: string;
-  date: string;
-}
+// src/models/types/wallet.ts
 
 export interface Wallet {
-  id?: string;
-  userId?: string;
-  balance: number;
-  transactions?: Transaction[];
+  id?: string;      // Primary key provided by the database
+  userId?: string;  // The owner's user id (mapped from the backend column "user_id")
+  balance: number;  // The wallet balance
 }

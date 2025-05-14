@@ -1,10 +1,17 @@
-
+// src/components/LoginForm.tsx
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Plane } from "lucide-react";
 
 export default function LoginForm() {
@@ -17,49 +24,44 @@ export default function LoginForm() {
 
   const validateForm = () => {
     const newErrors: { email?: string; password?: string } = {};
-    
     if (!email) {
       newErrors.email = "Email is required";
     } else if (!/\S+@\S+\.\S+/.test(email)) {
       newErrors.email = "Email is invalid";
     }
-    
     if (!password) {
       newErrors.password = "Password is required";
     } else if (password.length < 6) {
       newErrors.password = "Password must be at least 6 characters";
     }
-    
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoginError(null);
-    
     if (validateForm()) {
-      const success = login(email, password);
+      const success = await login(email, password);
       if (success) {
         navigate("/dashboard");
       } else {
-        setLoginError("Invalid credentials. For testing, use password: 'password'");
+        setLoginError("Invalid credentials. Please try again.");
       }
     }
   };
 
   return (
-    <div className="min-h-screen bg-cover bg-center flex justify-center items-center px-4 py-12"
-         style={{ 
-           backgroundImage: 'url("https://images.unsplash.com/photo-1559367183-975d410de28e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80")',
-           backgroundSize: 'cover',
-           backgroundPosition: 'center',
-           backgroundRepeat: 'no-repeat',
-           position: 'relative'
-         }}>
-      {/* Dark overlay for better readability */}
+    <div
+      className="min-h-screen bg-cover bg-center flex justify-center items-center px-4 py-12"
+      style={{
+        backgroundImage:
+          'url("https://images.unsplash.com/photo-1559367183-975d410de28e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1974&q=80")',
+        position: "relative",
+      }}
+    >
+      {/* Dark overlay */}
       <div className="absolute inset-0 bg-black opacity-60 z-0"></div>
-      
       <Card className="w-full max-w-md shadow-2xl relative z-10 bg-white/90 backdrop-blur-sm">
         <CardHeader className="space-y-1">
           <div className="flex justify-center mb-4">
@@ -120,7 +122,6 @@ export default function LoginForm() {
               Sign In
             </Button>
           </form>
-          
           <div className="relative my-4">
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-gray-300"></div>
@@ -129,10 +130,9 @@ export default function LoginForm() {
               <span className="px-2 bg-white text-gray-500">Quick Login</span>
             </div>
           </div>
-          
           <div className="grid grid-cols-1 gap-3">
-            <Button 
-              type="button" 
+            <Button
+              type="button"
               variant="outline"
               onClick={() => {
                 setEmail("user@example.com");
@@ -142,8 +142,8 @@ export default function LoginForm() {
             >
               Use Test Account (user@example.com)
             </Button>
-            <Button 
-              type="button" 
+            <Button
+              type="button"
               variant="outline"
               onClick={() => {
                 setEmail("admin@example.com");
@@ -156,7 +156,7 @@ export default function LoginForm() {
           </div>
         </CardContent>
         <CardFooter>
-          <p className="text-center text-sm text-gray-600 mt-2 w-full">
+          <p className="text-center text-sm text-gray-600 mt-2">
             Don't have an account?{" "}
             <Link to="/register" className="text-airline-blue hover:underline font-medium">
               Sign Up

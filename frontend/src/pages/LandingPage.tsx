@@ -13,7 +13,7 @@ export default function LandingPage() {
         <div 
           className="absolute inset-0 bg-cover bg-center z-0" 
           style={{ 
-            backgroundImage: 'url("https://images.unsplash.com/photo-1559367183-975d410de28e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80")',
+            backgroundImage: 'url("https://wallup.net/wp-content/uploads/2019/09/717044-cessna-airplane-aircraft-transport.jpg")',
             opacity: 0.3
           }}
         ></div>
@@ -40,7 +40,7 @@ export default function LandingPage() {
             </div>
             <div className="flex items-center justify-center relative">
               <img 
-                src="https://images.unsplash.com/photo-1559367183-975d410de28e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" 
+                src="https://wallup.net/wp-content/uploads/2019/09/717044-cessna-airplane-aircraft-transport.jpg" 
                 alt="Cloud Jet airplane" 
                 className="rounded-2xl shadow-2xl w-full max-w-lg mx-auto object-cover animate-float relative z-10" 
               />

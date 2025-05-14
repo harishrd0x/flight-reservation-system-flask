@@ -1,31 +1,47 @@
-
-import { createContext, useContext, useState, ReactNode, useEffect } from "react";
+// src/context/AuthContext.tsx
+import {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useEffect,
+  useCallback,
+} from "react";
 import { UserProfile } from "@/models/types/user";
 
-// Update User type to include displayName
+// The basic user type for login and authentication.
 export interface User {
   email: string;
-  userType: 'admin' | 'customer' | null;
+  userType: "admin" | "customer" | null;
   displayName?: string;
 }
 
 interface AuthContextProps {
   user: User | null;
   userProfile: UserProfile | null;
-  login: (email: string, password: string) => boolean;
-  register: (email: string, password: string, userType: 'admin' | 'customer') => boolean;
+  login: (email: string, password: string) => Promise<boolean>;
+  register: (
+    name: string,
+    email: string,
+    mobileNumber: string,
+    password: string,
+    dob: string,
+    address: string,
+    zipCode: string,
+    gender: string
+  ) => Promise<boolean>;
   logout: () => void;
   getToken: () => string | null;
   isAuthenticated: boolean;
-  checkRole: (role: 'admin' | 'customer') => boolean;
+  checkRole: (role: "admin" | "customer") => boolean;
   updateUserProfile: (data: Partial<UserProfile>) => void;
 }
 
 const AuthContext = createContext<AuthContextProps>({
   user: null,
   userProfile: null,
-  login: () => false,
-  register: () => false,
+  login: async () => false,
+  register: async () => false,
   logout: () => {},
   getToken: () => null,
   isAuthenticated: false,
@@ -38,135 +54,149 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+  // Load basic user info from localStorage if available.
   const [user, setUser] = useState<User | null>(() => {
-    // Initialize user from localStorage
-    const storedUser = localStorage.getItem('user');
+    const storedUser = localStorage.getItem("user");
     return storedUser ? JSON.parse(storedUser) : null;
   });
-  
+
+  // Load full user profile from localStorage if available.
   const [userProfile, setUserProfile] = useState<UserProfile | null>(() => {
-    // Initialize userProfile from localStorage
-    const storedProfile = localStorage.getItem('userProfile');
+    const storedProfile = localStorage.getItem("userProfile");
     return storedProfile ? JSON.parse(storedProfile) : null;
   });
-  
-  const [token, setToken] = useState<string | null>(() => {
-    // Initialize token from localStorage
-    return localStorage.getItem('token');
-  });
-  
+
+  const [token, setToken] = useState<string | null>(() => localStorage.getItem("token"));
+
   const isAuthenticated = Boolean(user && token);
-  
+
   useEffect(() => {
-    // If we have a user but no profile, create an initial profile
     if (user && !userProfile) {
       const initialProfile: UserProfile = {
         email: user.email,
-        userType: user.userType,
-        displayName: user.displayName || user.email.split('@')[0],
+        role: user.userType === "admin" ? "ADMIN" : "CUSTOMER",
+        name: user.displayName || user.email.split("@")[0],
       };
-      
       setUserProfile(initialProfile);
-      localStorage.setItem('userProfile', JSON.stringify(initialProfile));
+      localStorage.setItem("userProfile", JSON.stringify(initialProfile));
     }
   }, [user, userProfile]);
 
-  const login = (email: string, password: string): boolean => {
-    // This is a mock implementation
-    if (password === 'password') {
-      // For test account
-      const userData: User = {
-        email,
-        userType: email.includes('admin') ? 'admin' : 'customer',
-        displayName: email.split('@')[0],
-      };
-      
-      setUser(userData);
-      localStorage.setItem('user', JSON.stringify(userData));
-      
-      // Generate a mock token
-      const mockToken = 'mocked_token_' + Math.random().toString(36).substring(2, 15);
-      setToken(mockToken);
-      localStorage.setItem('token', mockToken);
-      
-      // Create initial profile
-      const initialProfile: UserProfile = {
-        email,
-        userType: userData.userType,
-        displayName: userData.displayName,
-      };
-      
-      setUserProfile(initialProfile);
-      localStorage.setItem('userProfile', JSON.stringify(initialProfile));
-      
-      return true;
+  const login = async (email: string, password: string): Promise<boolean> => {
+    try {
+      const response = await fetch("http://localhost:5000/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        const userData: User = {
+          email,
+          userType: email.includes("admin") ? "admin" : "customer",
+          displayName: email.split("@")[0],
+        };
+        setUser(userData);
+        localStorage.setItem("user", JSON.stringify(userData));
+        setToken(data.access_token);
+        localStorage.setItem("token", data.access_token);
+        const initialProfile: UserProfile = {
+          email,
+          role: userData.userType === "admin" ? "ADMIN" : "CUSTOMER",
+          name: userData.displayName,
+        };
+        setUserProfile(initialProfile);
+        localStorage.setItem("userProfile", JSON.stringify(initialProfile));
+        return true;
+      } else {
+        const errorData = await response.json();
+        console.error("Login failed:", errorData);
+        return false;
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      return false;
     }
-    return false;
   };
 
-  const register = (email: string, password: string, userType: 'admin' | 'customer'): boolean => {
-    // This is a mock implementation
-    // In a real app, you would send this to your backend API
-    
-    const userData: User = {
-      email,
-      userType,
-      displayName: email.split('@')[0],
-    };
-    
-    // Store user in localStorage (simulating a successful registration)
-    localStorage.setItem('registeredUsers', JSON.stringify([
-      ...JSON.parse(localStorage.getItem('registeredUsers') || '[]'),
-      { email, password, userType }
-    ]));
-    
-    return true;
+  const register = async (
+    name: string,
+    email: string,
+    mobileNumber: string,
+    password: string,
+    dob: string,
+    address: string,
+    zipCode: string,
+    gender: string
+  ): Promise<boolean> => {
+    try {
+      const response = await fetch("http://localhost:5000/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          email,
+          mobile_number: mobileNumber,
+          password,
+          dob,
+          address,
+          zip_code: zipCode,
+          gender,
+        }),
+      });
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Register error:", errorData);
+        return false;
+      }
+      return true;
+    } catch (error) {
+      console.error("Register error:", error);
+      return false;
+    }
   };
 
   const logout = () => {
     setUser(null);
     setToken(null);
     setUserProfile(null);
-    localStorage.removeItem('user');
-    localStorage.removeItem('token');
-    localStorage.removeItem('userProfile');
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    localStorage.removeItem("userProfile");
   };
 
-  const getToken = () => {
-    return token;
-  };
-  
-  const checkRole = (role: 'admin' | 'customer'): boolean => {
+  const getToken = () => token;
+
+  const checkRole = (role: "admin" | "customer"): boolean => {
     return user?.userType === role;
   };
-  
-  const updateUserProfile = (data: Partial<UserProfile>) => {
-    if (!userProfile) return;
-    
-    const updatedProfile = { ...userProfile, ...data };
+
+  // Memoize updateUserProfile so that its reference remains stable.
+  const updateUserProfile = useCallback((data: Partial<UserProfile>) => {
+    const updatedProfile = userProfile ? { ...userProfile, ...data } : (data as UserProfile);
     setUserProfile(updatedProfile);
-    localStorage.setItem('userProfile', JSON.stringify(updatedProfile));
-    
-    // Also update displayName in user if it's changed
-    if (data.displayName && data.displayName !== user?.displayName) {
-      const updatedUser = { ...user!, displayName: data.displayName };
+    localStorage.setItem("userProfile", JSON.stringify(updatedProfile));
+    if (data.name && user && data.name !== user.displayName) {
+      const updatedUser = { ...user, displayName: data.name };
       setUser(updatedUser);
-      localStorage.setItem('user', JSON.stringify(updatedUser));
+      localStorage.setItem("user", JSON.stringify(updatedUser));
     }
-  };
+  }, [user, userProfile]);
 
   return (
-    <AuthContext.Provider value={{ 
-      user, 
-      userProfile, 
-      login, 
-      register,
-      logout, 
-      getToken, 
-      isAuthenticated, 
-      checkRole,
-      updateUserProfile 
-    }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        userProfile,
+        login,
+        register,
+        logout,
+        getToken,
+        isAuthenticated,
+        checkRole,
+        updateUserProfile,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
