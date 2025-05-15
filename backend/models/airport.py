@@ -1,6 +1,6 @@
 # backend/models/airport.py
 
-from backend.extensions import db
+from extensions import db
 from sqlalchemy import Sequence
 
 class Airport(db.Model):

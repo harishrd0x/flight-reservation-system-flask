@@ -1,8 +1,8 @@
 import logging
 from flask import Blueprint, request, jsonify
 from marshmallow import ValidationError
-from backend.services.auth_service import register_user, login_user
-from backend.schemas.auth_schemas import RegisterSchema, LoginSchema, AuthResponseSchema
+from services.auth_service import register_user, login_user
+from schemas.auth_schemas import RegisterSchema, LoginSchema, AuthResponseSchema
 
 auth_bp = Blueprint("auth", __name__, url_prefix="/api/auth")
 

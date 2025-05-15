@@ -1,8 +1,8 @@
 # WARNING: RUNNING THIS FILE WILL DELETE ALL DATA IN YOUR DATABASE
 
-# from backend.extensions import db
-# from backend.app import create_app
-# from backend.models import user  # import all models so SQLAlchemy sees them
+# from extensions import db
+# from app import create_app
+# from models import user  # import all models so SQLAlchemy sees them
 
 # app = create_app()
 

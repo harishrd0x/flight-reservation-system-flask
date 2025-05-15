@@ -1,12 +1,12 @@
 import logging
 from sqlalchemy.exc import SQLAlchemyError, IntegrityError
-from backend.extensions import db
-from backend.models.flight import Flight
-from backend.models.airplane import Airplane
-from backend.models.airport import Airport
-from backend.exceptions.custom_exceptions import BadRequestError, NotFoundError
+from extensions import db
+from models.flight import Flight
+from models.airplane import Airplane
+from models.airport import Airport
+from exceptions.custom_exceptions import BadRequestError, NotFoundError
 from datetime import datetime, timezone
-from backend.models.enums import FlightStatus
+from models.enums import FlightStatus
 
 
 logger = logging.getLogger(__name__)

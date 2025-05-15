@@ -20,7 +20,7 @@ def user_identity_lookup(user_id):
 
 @jwt.additional_claims_loader
 def add_custom_claims(identity):
-    from backend.models.user import User
+    from models.user import User
     user = User.query.get(identity)
     return {
         "email": user.email,

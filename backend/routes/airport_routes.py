@@ -2,15 +2,15 @@
 
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt, get_jwt_identity
-from backend.services.airport_service import (
+from services.airport_service import (
     create_airport,
     get_airport_by_id,
     get_airport_by_code,
     update_airport,
     delete_airport
 )
-from backend.models.airport import Airport
-from backend.exceptions.custom_exceptions import BadRequestError
+from models.airport import Airport
+from exceptions.custom_exceptions import BadRequestError
 import logging
 
 airport_bp = Blueprint("airports", __name__, url_prefix="/api/airports")

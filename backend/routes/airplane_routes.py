@@ -2,12 +2,12 @@
 
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
-from backend.services.airplane_service import (
+from services.airplane_service import (
     create_airplane, get_all_airplanes, get_airplane_by_id,
     update_airplane, delete_airplane
 )
-from backend.schemas.airplane_schemas import AirplaneResponseSchema
-from backend.exceptions.custom_exceptions import BadRequestError
+from schemas.airplane_schemas import AirplaneResponseSchema
+from exceptions.custom_exceptions import BadRequestError
 
 airplane_bp = Blueprint("airplanes", __name__, url_prefix="/api/airplanes")
 

@@ -1,6 +1,6 @@
 # backend/models/flight.py
 
-from backend.extensions import db
+from extensions import db
 from sqlalchemy import Sequence
 
 class Flight(db.Model):

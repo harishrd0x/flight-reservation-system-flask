@@ -1,12 +1,12 @@
 # backend/__init__.py
 
 from flask import Flask
-from backend.routes.auth_routes import auth_bp
-from backend.routes.airplane_routes import airplane_bp
-from backend.routes.airport_routes import airport_bp
-from backend.routes.flight_routes import flight_bp
-from backend.extensions import db, jwt  # Assuming extensions are initialized here
-from backend.exceptions.error_handlers import register_error_handlers  # Your global handler
+from routes.auth_routes import auth_bp
+from routes.airplane_routes import airplane_bp
+from routes.airport_routes import airport_bp
+from routes.flight_routes import flight_bp
+from extensions import db, jwt  # Assuming extensions are initialized here
+from exceptions.error_handlers import register_error_handlers  # Your global handler
 
 def create_app():
     app = Flask(__name__)

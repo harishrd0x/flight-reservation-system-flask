@@ -1,10 +1,10 @@
 # backend/services/airport_service.py
 
 import logging
-from backend.extensions import db
-from backend.models.airport import Airport
+from extensions import db
+from models.airport import Airport
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
-from backend.exceptions.custom_exceptions import BadRequestError
+from exceptions.custom_exceptions import BadRequestError
 
 logger = logging.getLogger(__name__)
 

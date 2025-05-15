@@ -1,5 +1,5 @@
 from marshmallow import Schema, fields, validate
-from backend.models.enums import FlightStatus  # Imported from centralized enums
+from models.enums import FlightStatus  # Imported from centralized enums
 
 class FlightCreateSchema(Schema):
     flight_number = fields.Str(required=True)

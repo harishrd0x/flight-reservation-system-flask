@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required
-from backend.services.flight_service import (
+from services.flight_service import (
     get_all_flights,  # Ensure this import is correct
     get_flight_by_id,
     create_flight,
@@ -9,10 +9,10 @@ from backend.services.flight_service import (
     search_flights
 )
 
-from backend.schemas.flight_schemas import (
+from schemas.flight_schemas import (
     FlightCreateSchema, FlightResponseSchema, FlightUpdateSchema
 )
-from backend.exceptions.custom_exceptions import BadRequestError, NotFoundError
+from exceptions.custom_exceptions import BadRequestError, NotFoundError
 import logging
 from datetime import datetime
 

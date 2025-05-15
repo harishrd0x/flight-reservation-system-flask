@@ -1,47 +1,45 @@
-# backend/__init__.py
-
-from backend.config.config import get_config_class
-from backend.extensions import db, jwt
-from backend.exceptions.error_handlers import register_error_handlers
-from backend.utils.logging_config import init_logging
 from flask import Flask
-from backend.routes import auth_bp, airplane_bp, airport_bp, flight_bp  # Import blueprints here
+from config.config import get_config_class
+from extensions import db, jwt
+from exceptions.error_handlers import register_error_handlers
+from utils.logging_config import init_logging
+from routes import auth_bp, airplane_bp, airport_bp, flight_bp  # import blueprints as required
+
 
 def create_app(config_name="development"):
     app = Flask(__name__)
 
-    # Load config (dev/test/prod)
+    # loading environment-specific configuration
     app.config.from_object(get_config_class(config_name))
 
-    # Logging setup
+    # setting up logging
     init_logging(app)
-    app.logger.info("Logging initialized")
+    app.logger.info("✅ Logging initialized")
 
-    # Initialize extensions
+    # initializing Flask extensions
     db.init_app(app)
     jwt.init_app(app)
 
-    # Register blueprints
+    # registering blueprints
     app.register_blueprint(auth_bp)
     app.register_blueprint(airplane_bp)
     app.register_blueprint(airport_bp)
     app.register_blueprint(flight_bp)
 
-    # Register error handlers
+    # registering global error handlers
     register_error_handlers(app)
 
     return app
-
 
 
 # --- Entry Point ---
 if __name__ == "__main__":
     app = create_app()
 
-    # Manually create all tables from models
+    # creating all the tables
     with app.app_context():
         db.create_all()
         print("✅ All tables created successfully.")
-    
-    # Start server
+
+    # running the server
     app.run(debug=True)

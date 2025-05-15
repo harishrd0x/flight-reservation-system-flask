@@ -1,7 +1,7 @@
 import logging
-from backend.extensions import db
-from backend.models.airplane import Airplane
-from backend.exceptions.custom_exceptions import BadRequestError, NotFoundError
+from extensions import db
+from models.airplane import Airplane
+from exceptions.custom_exceptions import BadRequestError, NotFoundError
 from sqlalchemy.exc import SQLAlchemyError, IntegrityError
 
 logger = logging.getLogger(__name__)

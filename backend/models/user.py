@@ -1,7 +1,7 @@
 # backend/models/user.py
 
-from backend.extensions import db
-from backend.models.enums import UserRole, Gender
+from extensions import db
+from models.enums import UserRole, Gender
 from sqlalchemy import Enum as SqlEnum
 from sqlalchemy import Sequence
 

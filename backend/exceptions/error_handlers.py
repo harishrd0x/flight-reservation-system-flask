@@ -2,14 +2,14 @@
 
 from flask import jsonify
 from werkzeug.exceptions import HTTPException
-from backend.exceptions.custom_exceptions import (
+from exceptions.custom_exceptions import (
     BadRequestError,
     InvalidCredentialsError,
     UserAlreadyExistsError,
     InvalidEnumError,
     NotFoundError,
 )
-from backend.exceptions.error_codes import (
+from exceptions.error_codes import (
     INVALID_CREDENTIALS,
     USER_ALREADY_EXISTS,
     INVALID_ROLE_OR_GENDER,

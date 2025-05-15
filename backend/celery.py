@@ -11,5 +11,5 @@ def init_celery(app):
 
 
     # TODO: Autodiscover and register tasks here
-    # e.g., from backend.tasks import email_tasks
+    # e.g., from tasks import email_tasks
 

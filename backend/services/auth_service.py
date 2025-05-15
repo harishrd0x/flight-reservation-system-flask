@@ -7,16 +7,16 @@ from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token
 
-from backend.extensions import db
-from backend.models.user import User
-from backend.models.enums import UserRole, Gender
+from extensions import db
+from models.user import User
+from models.enums import UserRole, Gender
 
-from backend.exceptions.custom_exceptions import (
+from exceptions.custom_exceptions import (
     InvalidEnumError,
     UserAlreadyExistsError,
     InvalidCredentialsError,
 )
-from backend.exceptions.error_codes import INTERNAL_SERVER_ERROR
+from exceptions.error_codes import INTERNAL_SERVER_ERROR
 
 
 # Configure logger
