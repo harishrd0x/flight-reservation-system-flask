@@ -7,6 +7,8 @@ from flask_cors import CORS
 from extensions import init_extensions, db
 from routes import register_blueprints
 from flasgger import Swagger
+from exceptions.handlers import register_error_handlers
+from utils.logging_config import setup_logging
 
 # Custom JSON provider for enums
 class CustomJSONProvider(DefaultJSONProvider):
@@ -18,6 +20,7 @@ class CustomJSONProvider(DefaultJSONProvider):
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
+    setup_logging(log_file_path="logs/app.log")
     
     # Use our custom JSON provider.
     app.json_provider_class = CustomJSONProvider
@@ -46,6 +49,7 @@ def create_app():
         db.create_all()
     
     register_blueprints(app)
+    register_error_handlers(app)
     
     return app
 

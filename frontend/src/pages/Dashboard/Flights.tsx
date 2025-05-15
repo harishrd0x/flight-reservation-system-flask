@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Search, Trash2 } from "lucide-react";
+import { Search } from "lucide-react";
 import { toast } from "@/components/ui/use-toast";
 import {
   Dialog,
@@ -167,41 +167,6 @@ export default function FlightsPage() {
     }
   };
 
-  // Admin: Delete Flight.
-  const handleDeleteFlight = async (id: number) => {
-    if (!isAdmin) {
-      toast({
-        title: "Unauthorized",
-        description: "Only admins can delete flights.",
-        variant: "destructive",
-      });
-      return;
-    }
-    try {
-      const response = await fetch(`${API_URL}${id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to delete flight");
-      }
-      await fetchFlights();
-      toast({
-        title: "Flight Removed",
-        description: "The flight has been removed.",
-      });
-    } catch (error: any) {
-      toast({
-        title: "Error",
-        description: error.message,
-        variant: "destructive",
-      });
-    }
-  };
-
   // Open booking dialog.
   const openBookingDialog = (flight: FlightData) => {
     setSelectedFlight(flight);
@@ -250,7 +215,6 @@ export default function FlightsPage() {
         title: "Booking Created",
         description: resData.message || "Flight booking created!",
       });
-      // Ensure the response includes a booking (or modify as needed)
       const bookingData = resData.booking || resData;
       setCreatedBooking(bookingData);
     } catch (error: any) {
@@ -297,7 +261,6 @@ export default function FlightsPage() {
         description:
           resData.message || "Payment successful and ticket confirmed!",
       });
-      // Reset state after successful confirmation.
       setCreatedBooking(null);
       setSelectedFlight(null);
       setIsBookingDialogOpen(false);
@@ -356,15 +319,8 @@ export default function FlightsPage() {
                   ))}
                 </div>
               )}
-              {isAdmin ? (
-                <Button
-                  variant="destructive"
-                  size="icon"
-                  onClick={() => handleDeleteFlight(flight.id)}
-                >
-                  <Trash2 className="h-4 w-4" />
-                </Button>
-              ) : (
+              {/* Removed delete button */}
+              {!isAdmin && (
                 <Button
                   onClick={() => openBookingDialog(flight)}
                   className="mt-2 float-right"
@@ -468,21 +424,20 @@ export default function FlightsPage() {
             </div>
           )}
           <DialogFooter>
-            <Button variant="outline" onClick={() => {
-              setIsBookingDialogOpen(false);
-              setCreatedBooking(null);
-              setSelectedFlight(null);
-            }}>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setIsBookingDialogOpen(false);
+                setCreatedBooking(null);
+                setSelectedFlight(null);
+              }}
+            >
               Cancel
             </Button>
             {createdBooking ? (
-              <Button onClick={handleConfirmTicket}>
-                Confirm Ticket
-              </Button>
+              <Button onClick={handleConfirmTicket}>Confirm Ticket</Button>
             ) : (
-              <Button onClick={handleConfirmBooking}>
-                Confirm Booking
-              </Button>
+              <Button onClick={handleConfirmBooking}>Confirm Booking</Button>
             )}
           </DialogFooter>
         </DialogContent>

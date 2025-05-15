@@ -1,0 +1,363 @@
+2025-05-15 13:39:07,587 [INFO] root - Logging is configured.
+2025-05-15 13:39:07,874 [WARNING] werkzeug -  * Debugger is active!
+2025-05-15 13:39:07,877 [INFO] werkzeug -  * Debugger PIN: 124-151-219
+2025-05-15 13:39:29,056 [INFO] werkzeug -  * Detected change in 'c:\\python_project_complete\\flight-reservation-system-flask\\backend\\exceptions\\handlers.py', reloading
+2025-05-15 13:39:30,668 [INFO] root - Logging is configured.
+2025-05-15 13:39:30,943 [WARNING] werkzeug -  * Debugger is active!
+2025-05-15 13:39:30,946 [INFO] werkzeug -  * Debugger PIN: 124-151-219
+2025-05-15 13:40:30,960 [INFO] werkzeug -  * Detected change in 'c:\\python_project_complete\\flight-reservation-system-flask\\backend\\routes\\airplane_routes.py', reloading
+2025-05-15 13:40:32,617 [INFO] root - Logging is configured.
+2025-05-15 13:40:32,900 [WARNING] werkzeug -  * Debugger is active!
+2025-05-15 13:40:32,903 [INFO] werkzeug -  * Debugger PIN: 124-151-219
+2025-05-15 13:41:29,871 [INFO] routes.airplane_routes - Fetching all airplanes
+2025-05-15 13:41:29,899 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 13:41:29] "GET /airplanes/ HTTP/1.1" 200 -
+2025-05-15 13:41:44,208 [INFO] routes.airplane_routes - Deleting airplane with ID: 358
+2025-05-15 13:41:44,216 [INFO] routes.airplane_routes - Deleted airplane with ID: 358
+2025-05-15 13:41:44,217 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 13:41:44] "DELETE /airplanes/358 HTTP/1.1" 200 -
+2025-05-15 13:42:27,635 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 13:42:27] "OPTIONS /auth/login HTTP/1.1" 200 -
+2025-05-15 13:42:27,905 [WARNING] passlib.handlers.bcrypt - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "C:\python_project_complete\flight-reservation-system-flask\backend\venv\Lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-05-15 13:42:28,177 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 13:42:28] "POST /auth/login HTTP/1.1" 200 -
+2025-05-15 13:42:30,566 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 13:42:30] "OPTIONS /airports/ HTTP/1.1" 200 -
+2025-05-15 13:42:30,575 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 13:42:30] "GET /airports/ HTTP/1.1" 200 -
+2025-05-15 13:42:39,331 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 13:42:39] "OPTIONS /airports/ HTTP/1.1" 200 -
+2025-05-15 13:42:39,357 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 13:42:39] "[35m[1mPOST /airports/ HTTP/1.1[0m" 201 -
+2025-05-15 13:42:39,379 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 13:42:39] "GET /airports/ HTTP/1.1" 200 -
+2025-05-15 13:42:44,121 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 13:42:44] "OPTIONS /airports/55 HTTP/1.1" 200 -
+2025-05-15 13:42:44,133 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 13:42:44] "DELETE /airports/55 HTTP/1.1" 200 -
+2025-05-15 13:42:44,158 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 13:42:44] "GET /airports/ HTTP/1.1" 200 -
+2025-05-15 13:42:50,558 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 13:42:50] "OPTIONS /airplanes/ HTTP/1.1" 200 -
+2025-05-15 13:42:50,564 [INFO] routes.airplane_routes - Fetching all airplanes
+2025-05-15 13:42:50,571 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 13:42:50] "GET /airplanes/ HTTP/1.1" 200 -
+2025-05-15 13:42:55,842 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 13:42:55] "OPTIONS /airplanes/ HTTP/1.1" 200 -
+2025-05-15 13:42:55,856 [INFO] routes.airplane_routes - Creating airplane with data: {'model': 'xyz 6111', 'airline': 'xyz airlines', 'capacity': 200, 'manufacture': 'XYZ'}
+2025-05-15 13:42:55,866 [INFO] routes.airplane_routes - Airplane created with ID: 511
+2025-05-15 13:42:55,872 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 13:42:55] "[35m[1mPOST /airplanes/ HTTP/1.1[0m" 201 -
+2025-05-15 13:42:55,878 [INFO] routes.airplane_routes - Fetching all airplanes
+2025-05-15 13:42:55,881 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 13:42:55] "GET /airplanes/ HTTP/1.1" 200 -
+2025-05-15 13:43:01,506 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 13:43:01] "OPTIONS /airplanes/511 HTTP/1.1" 200 -
+2025-05-15 13:43:01,517 [INFO] routes.airplane_routes - Deleting airplane with ID: 511
+2025-05-15 13:43:01,544 [INFO] routes.airplane_routes - Deleted airplane with ID: 511
+2025-05-15 13:43:01,545 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 13:43:01] "DELETE /airplanes/511 HTTP/1.1" 200 -
+2025-05-15 13:43:01,551 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 13:43:01] "OPTIONS /airplanes/ HTTP/1.1" 200 -
+2025-05-15 13:43:01,554 [INFO] routes.airplane_routes - Fetching all airplanes
+2025-05-15 13:43:01,557 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 13:43:01] "GET /airplanes/ HTTP/1.1" 200 -
+2025-05-15 13:43:04,397 [INFO] routes.airplane_routes - Fetching all airplanes
+2025-05-15 13:43:04,399 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 13:43:04] "GET /airplanes/ HTTP/1.1" 200 -
+2025-05-15 13:43:10,339 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 13:43:10] "OPTIONS /airplanes/ HTTP/1.1" 200 -
+2025-05-15 13:43:10,370 [INFO] routes.airplane_routes - Creating airplane with data: {'model': 'xyz 6111', 'airline': 'xyz airlines', 'capacity': 200, 'manufacture': 'XYZ'}
+2025-05-15 13:43:10,376 [INFO] routes.airplane_routes - Airplane created with ID: 562
+2025-05-15 13:43:10,377 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 13:43:10] "[35m[1mPOST /airplanes/ HTTP/1.1[0m" 201 -
+2025-05-15 13:43:10,380 [INFO] routes.airplane_routes - Fetching all airplanes
+2025-05-15 13:43:10,383 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 13:43:10] "GET /airplanes/ HTTP/1.1" 200 -
+2025-05-15 13:43:12,475 [INFO] routes.airplane_routes - Fetching all airplanes
+2025-05-15 13:43:12,482 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 13:43:12] "GET /airplanes/ HTTP/1.1" 200 -
+2025-05-15 13:43:17,323 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 13:43:17] "OPTIONS /airplanes/562 HTTP/1.1" 200 -
+2025-05-15 13:43:17,328 [INFO] routes.airplane_routes - Deleting airplane with ID: 562
+2025-05-15 13:43:17,336 [INFO] routes.airplane_routes - Deleted airplane with ID: 562
+2025-05-15 13:43:17,350 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 13:43:17] "DELETE /airplanes/562 HTTP/1.1" 200 -
+2025-05-15 13:43:17,370 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 13:43:17] "OPTIONS /airplanes/ HTTP/1.1" 200 -
+2025-05-15 13:43:17,373 [INFO] routes.airplane_routes - Fetching all airplanes
+2025-05-15 13:43:17,375 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 13:43:17] "GET /airplanes/ HTTP/1.1" 200 -
+2025-05-15 13:43:19,516 [INFO] routes.airplane_routes - Fetching all airplanes
+2025-05-15 13:43:19,521 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 13:43:19] "GET /airplanes/ HTTP/1.1" 200 -
+2025-05-15 13:43:21,407 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 13:43:21] "OPTIONS /reviews/ HTTP/1.1" 200 -
+2025-05-15 13:43:21,718 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 13:43:21] "GET /reviews/ HTTP/1.1" 200 -
+2025-05-15 13:43:30,323 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 13:43:30] "OPTIONS /bookings HTTP/1.1" 200 -
+2025-05-15 13:43:30,679 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 13:43:30] "GET /bookings HTTP/1.1" 200 -
+2025-05-15 13:43:36,504 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 13:43:36] "GET /airports/ HTTP/1.1" 200 -
+2025-05-15 13:43:36,557 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 13:43:36] "GET /flights/ HTTP/1.1" 200 -
+2025-05-15 13:43:39,237 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 13:43:39] "OPTIONS /bookings HTTP/1.1" 200 -
+2025-05-15 13:43:39,575 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 13:43:39] "GET /bookings HTTP/1.1" 200 -
+2025-05-15 13:43:40,361 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 13:43:40] "OPTIONS /airplanes/ HTTP/1.1" 200 -
+2025-05-15 13:43:40,364 [INFO] routes.airplane_routes - Fetching all airplanes
+2025-05-15 13:43:40,367 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 13:43:40] "GET /airplanes/ HTTP/1.1" 200 -
+2025-05-15 13:48:03,218 [INFO] werkzeug -  * Detected change in 'c:\\python_project_complete\\flight-reservation-system-flask\\backend\\routes\\flight_routes.py', reloading
+2025-05-15 13:53:09,893 [INFO] root - Logging is configured.
+2025-05-15 13:53:10,160 [INFO] werkzeug - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-15 13:53:10,161 [INFO] werkzeug - [33mPress CTRL+C to quit[0m
+2025-05-15 13:53:10,163 [INFO] werkzeug -  * Restarting with stat
+2025-05-15 13:53:11,395 [INFO] root - Logging is configured.
+2025-05-15 13:53:11,651 [WARNING] werkzeug -  * Debugger is active!
+2025-05-15 13:53:11,653 [INFO] werkzeug -  * Debugger PIN: 124-151-219
+2025-05-15 13:53:17,174 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 13:53:17] "[31m[1mPOST /flights/ HTTP/1.1[0m" 401 -
+2025-05-15 13:53:24,920 [WARNING] passlib.handlers.bcrypt - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "C:\python_project_complete\flight-reservation-system-flask\backend\venv\Lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-05-15 13:53:25,176 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 13:53:25] "POST /auth/login HTTP/1.1" 200 -
+2025-05-15 13:53:38,602 [INFO] routes.flight_routes - Received flight creation data: {'flight_name': 'Flight 101', 'airplane_id': 1, 'source_airport_id': 4, 'destination_airport_id': 42, 'departure_time': '2025-05-12T08:00:00', 'arrival_time': '2025-05-12T12:00:00', 'status': 'ACTIVE'}
+2025-05-15 13:53:38,612 [INFO] routes.flight_routes - Flight created with ID: 15
+2025-05-15 13:53:38,617 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 13:53:38] "[35m[1mPOST /flights/ HTTP/1.1[0m" 201 -
+2025-05-15 13:53:43,689 [INFO] routes.flight_routes - Fetching all flights
+2025-05-15 13:53:43,706 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 13:53:43] "GET /flights/ HTTP/1.1" 200 -
+2025-05-15 13:54:07,989 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 13:54:07] "[31m[1mPOST /flights/prices HTTP/1.1[0m" 401 -
+2025-05-15 13:54:18,445 [INFO] routes.flight_routes - Received flight price data: {'flight_id': 15, 'flight_class': 'BUSINESS', 'price': 4800}
+2025-05-15 13:54:18,490 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 13:54:18] "[35m[1mPOST /flights/prices HTTP/1.1[0m" 500 -
+2025-05-15 13:56:31,553 [INFO] werkzeug -  * Detected change in 'c:\\python_project_complete\\flight-reservation-system-flask\\backend\\services\\flight_service.py', reloading
+2025-05-15 13:56:31,840 [INFO] werkzeug -  * Restarting with stat
+2025-05-15 13:56:33,275 [INFO] root - Logging is configured.
+2025-05-15 13:56:33,589 [WARNING] werkzeug -  * Debugger is active!
+2025-05-15 13:56:33,592 [INFO] werkzeug -  * Debugger PIN: 124-151-219
+2025-05-15 13:56:48,234 [INFO] routes.flight_routes - Received flight price data: {'flight_id': 8, 'flight_class': 'BUSINESS', 'price': 4800}
+2025-05-15 13:56:48,261 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 13:56:48] "[35m[1mPOST /flights/prices HTTP/1.1[0m" 500 -
+2025-05-15 13:59:22,096 [INFO] werkzeug -  * Detected change in 'c:\\python_project_complete\\flight-reservation-system-flask\\backend\\routes\\flight_routes.py', reloading
+2025-05-15 13:59:22,377 [INFO] werkzeug -  * Restarting with stat
+2025-05-15 13:59:24,085 [INFO] root - Logging is configured.
+2025-05-15 13:59:24,484 [WARNING] werkzeug -  * Debugger is active!
+2025-05-15 13:59:24,490 [INFO] werkzeug -  * Debugger PIN: 124-151-219
+2025-05-15 13:59:38,310 [INFO] werkzeug -  * Detected change in 'c:\\python_project_complete\\flight-reservation-system-flask\\backend\\services\\flight_service.py', reloading
+2025-05-15 13:59:38,561 [INFO] werkzeug -  * Restarting with stat
+2025-05-15 13:59:39,848 [INFO] root - Logging is configured.
+2025-05-15 13:59:40,142 [WARNING] werkzeug -  * Debugger is active!
+2025-05-15 13:59:40,145 [INFO] werkzeug -  * Debugger PIN: 124-151-219
+2025-05-15 13:59:42,303 [INFO] routes.flight_routes - Received flight price data: {'flight_id': 8, 'flight_class': 'BUSINESS', 'price': 4800}
+2025-05-15 13:59:42,345 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 13:59:42] "POST /flights/prices HTTP/1.1" 200 -
+2025-05-15 14:00:02,427 [INFO] routes.flight_routes - Received flight price data: {'flight_id': 15, 'flight_class': 'BUSINESS', 'price': 4800}
+2025-05-15 14:00:02,432 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 14:00:02] "POST /flights/prices HTTP/1.1" 200 -
+2025-05-15 14:00:12,666 [INFO] routes.flight_routes - Fetching all flights
+2025-05-15 14:00:12,667 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 14:00:12] "GET /airports/ HTTP/1.1" 200 -
+2025-05-15 14:00:12,720 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 14:00:12] "GET /flights/ HTTP/1.1" 200 -
+2025-05-15 14:00:24,259 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 14:00:24] "GET /airports/ HTTP/1.1" 200 -
+2025-05-15 14:00:24,264 [INFO] routes.flight_routes - Fetching all flights
+2025-05-15 14:00:24,281 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 14:00:24] "GET /flights/ HTTP/1.1" 200 -
+2025-05-15 14:01:04,157 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 14:01:04] "OPTIONS /flights/ HTTP/1.1" 200 -
+2025-05-15 14:01:04,417 [INFO] routes.flight_routes - Received flight creation data: {'flight_name': 'irfan', 'airplane_id': 1, 'source_airport_id': 4, 'destination_airport_id': 42, 'departure_time': '2025-05-16T16:00', 'arrival_time': '2025-05-16T18:00', 'status': 'ACTIVE'}
+2025-05-15 14:01:04,469 [INFO] routes.flight_routes - Flight created with ID: 16
+2025-05-15 14:01:04,471 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 14:01:04] "[35m[1mPOST /flights/ HTTP/1.1[0m" 201 -
+2025-05-15 14:01:04,475 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 14:01:04] "OPTIONS /flights/prices HTTP/1.1" 200 -
+2025-05-15 14:01:04,791 [INFO] routes.flight_routes - Received flight price data: {'flight_id': 16, 'flight_class': 'ECONOMY', 'price': 2100}
+2025-05-15 14:01:04,804 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 14:01:04] "[35m[1mPOST /flights/prices HTTP/1.1[0m" 201 -
+2025-05-15 14:01:05,055 [INFO] routes.flight_routes - Received flight price data: {'flight_id': 16, 'flight_class': 'BUSINESS', 'price': 5000}
+2025-05-15 14:01:05,062 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 14:01:05] "[35m[1mPOST /flights/prices HTTP/1.1[0m" 201 -
+2025-05-15 14:01:05,113 [INFO] routes.flight_routes - Fetching all flights
+2025-05-15 14:01:05,117 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 14:01:05] "GET /airports/ HTTP/1.1" 200 -
+2025-05-15 14:01:05,135 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 14:01:05] "GET /flights/ HTTP/1.1" 200 -
+2025-05-15 14:01:10,054 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 14:01:10] "[33mOPTIONS /flights/16 HTTP/1.1[0m" 404 -
+2025-05-15 14:05:50,226 [INFO] routes.flight_routes - Fetching all flights
+2025-05-15 14:05:50,228 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 14:05:50] "GET /airports/ HTTP/1.1" 200 -
+2025-05-15 14:05:50,253 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 14:05:50] "GET /flights/ HTTP/1.1" 200 -
+2025-05-15 14:05:55,305 [INFO] routes.flight_routes - Fetching all flights
+2025-05-15 14:05:55,306 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 14:05:55] "GET /airports/ HTTP/1.1" 200 -
+2025-05-15 14:05:55,327 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 14:05:55] "GET /flights/ HTTP/1.1" 200 -
+2025-05-15 14:11:25,189 [INFO] routes.flight_routes - Fetching all flights
+2025-05-15 14:11:25,210 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 14:11:25] "GET /flights/ HTTP/1.1" 200 -
+2025-05-15 14:11:46,090 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 14:11:46] "GET /bookings/user/john@gmail.com HTTP/1.1" 200 -
+2025-05-15 14:15:01,152 [INFO] werkzeug -  * Detected change in 'c:\\python_project_complete\\flight-reservation-system-flask\\backend\\models\\booking.py', reloading
+2025-05-15 14:15:01,461 [INFO] werkzeug -  * Restarting with stat
+2025-05-15 14:15:03,148 [INFO] root - Logging is configured.
+2025-05-15 14:15:03,462 [WARNING] werkzeug -  * Debugger is active!
+2025-05-15 14:15:03,465 [INFO] werkzeug -  * Debugger PIN: 124-151-219
+2025-05-15 14:15:15,260 [INFO] werkzeug -  * Detected change in 'c:\\python_project_complete\\flight-reservation-system-flask\\backend\\services\\booking_service.py', reloading
+2025-05-15 14:15:15,558 [INFO] werkzeug -  * Restarting with stat
+2025-05-15 14:15:16,987 [INFO] root - Logging is configured.
+2025-05-15 14:15:17,233 [WARNING] werkzeug -  * Debugger is active!
+2025-05-15 14:15:17,235 [INFO] werkzeug -  * Debugger PIN: 124-151-219
+2025-05-15 14:15:25,740 [INFO] werkzeug -  * Detected change in 'c:\\python_project_complete\\flight-reservation-system-flask\\backend\\services\\booking_service.py', reloading
+2025-05-15 14:15:26,088 [INFO] werkzeug -  * Restarting with stat
+2025-05-15 14:15:27,385 [INFO] root - Logging is configured.
+2025-05-15 14:15:27,781 [WARNING] werkzeug -  * Debugger is active!
+2025-05-15 14:15:27,784 [INFO] werkzeug -  * Debugger PIN: 124-151-219
+2025-05-15 14:15:38,387 [INFO] werkzeug -  * Detected change in 'c:\\python_project_complete\\flight-reservation-system-flask\\backend\\routes\\booking_routes.py', reloading
+2025-05-15 14:15:38,679 [INFO] werkzeug -  * Restarting with stat
+2025-05-15 14:15:40,012 [INFO] root - Logging is configured.
+2025-05-15 14:15:40,285 [WARNING] werkzeug -  * Debugger is active!
+2025-05-15 14:15:40,288 [INFO] werkzeug -  * Debugger PIN: 124-151-219
+2025-05-15 14:16:39,554 [INFO] werkzeug -  * Detected change in 'c:\\python_project_complete\\flight-reservation-system-flask\\backend\\routes\\booking_routes.py', reloading
+2025-05-15 14:16:39,825 [INFO] werkzeug -  * Restarting with stat
+2025-05-15 14:16:41,045 [INFO] root - Logging is configured.
+2025-05-15 14:16:41,303 [WARNING] werkzeug -  * Debugger is active!
+2025-05-15 14:16:41,307 [INFO] werkzeug -  * Debugger PIN: 124-151-219
+2025-05-15 14:16:45,573 [INFO] werkzeug -  * Detected change in 'c:\\python_project_complete\\flight-reservation-system-flask\\backend\\routes\\booking_routes.py', reloading
+2025-05-15 14:16:45,853 [INFO] werkzeug -  * Restarting with stat
+2025-05-15 14:16:47,117 [INFO] root - Logging is configured.
+2025-05-15 14:16:47,385 [WARNING] werkzeug -  * Debugger is active!
+2025-05-15 14:16:47,387 [INFO] werkzeug -  * Debugger PIN: 124-151-219
+2025-05-15 14:17:31,588 [INFO] werkzeug -  * Detected change in 'c:\\python_project_complete\\flight-reservation-system-flask\\backend\\routes\\booking_routes.py', reloading
+2025-05-15 14:17:31,866 [INFO] werkzeug -  * Restarting with stat
+2025-05-15 14:17:33,254 [INFO] root - Logging is configured.
+2025-05-15 14:17:33,630 [WARNING] werkzeug -  * Debugger is active!
+2025-05-15 14:17:33,633 [INFO] werkzeug -  * Debugger PIN: 124-151-219
+2025-05-15 14:17:45,251 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 14:17:45] "[31m[1mPOST /bookings/book_flight HTTP/1.1[0m" 401 -
+2025-05-15 14:50:43,659 [WARNING] passlib.handlers.bcrypt - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "C:\python_project_complete\flight-reservation-system-flask\backend\venv\Lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-05-15 14:50:43,937 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 14:50:43] "POST /auth/login HTTP/1.1" 200 -
+2025-05-15 14:51:06,948 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 14:51:06] "[35m[1mPOST /bookings/book_flight HTTP/1.1[0m" 201 -
+2025-05-15 14:51:52,127 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 14:51:52] "GET /bookings/user/john@gmail.com HTTP/1.1" 200 -
+2025-05-15 14:52:09,061 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 14:52:09] "[31m[1mPUT /bookings/confirm/15 HTTP/1.1[0m" 400 -
+2025-05-15 14:52:16,378 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 14:52:16] "[31m[1mPUT /bookings/confirm/16 HTTP/1.1[0m" 400 -
+2025-05-15 14:52:26,590 [INFO] root - Cancel Booking: Wallet initial balance: 10120, Booking Price: 12000.0
+2025-05-15 14:52:26,591 [INFO] root - Cancel Booking: Wallet balance after refund addition: 22120.0
+2025-05-15 14:52:26,602 [INFO] root - Cancel Booking: Wallet balance after commit and refresh: 22120
+2025-05-15 14:52:26,609 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 14:52:26] "PUT /bookings/cancel/15 HTTP/1.1" 200 -
+2025-05-15 14:52:36,432 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 14:52:36] "OPTIONS /bookings HTTP/1.1" 200 -
+2025-05-15 14:52:36,714 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 14:52:36] "GET /bookings HTTP/1.1" 200 -
+2025-05-15 14:52:39,936 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 14:52:39] "GET /airports/ HTTP/1.1" 200 -
+2025-05-15 14:52:39,937 [INFO] routes.flight_routes - Fetching all flights
+2025-05-15 14:52:39,981 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 14:52:39] "GET /flights/ HTTP/1.1" 200 -
+2025-05-15 14:52:52,917 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 14:52:52] "OPTIONS /auth/login HTTP/1.1" 200 -
+2025-05-15 14:52:53,469 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 14:52:53] "POST /auth/login HTTP/1.1" 200 -
+2025-05-15 14:52:55,701 [INFO] routes.flight_routes - Fetching all flights
+2025-05-15 14:52:55,705 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 14:52:55] "GET /airports/ HTTP/1.1" 200 -
+2025-05-15 14:52:55,720 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 14:52:55] "GET /flights/ HTTP/1.1" 200 -
+2025-05-15 14:53:03,955 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 14:53:03] "OPTIONS /bookings/book_flight HTTP/1.1" 200 -
+2025-05-15 14:53:03,971 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 14:53:03] "[35m[1mPOST /bookings/book_flight HTTP/1.1[0m" 201 -
+2025-05-15 14:53:10,705 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 14:53:10] "OPTIONS /bookings/user/irfan@gmail.com HTTP/1.1" 200 -
+2025-05-15 14:53:11,048 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 14:53:11] "GET /bookings/user/irfan@gmail.com HTTP/1.1" 200 -
+2025-05-15 14:53:15,998 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 14:53:15] "OPTIONS /bookings/confirm/30 HTTP/1.1" 200 -
+2025-05-15 14:53:16,311 [INFO] root - Confirm Booking: Wallet initial balance: 13099, Booking Price: 5000.0
+2025-05-15 14:53:16,311 [INFO] root - Confirm Booking: Wallet balance after deduction: 8099.0
+2025-05-15 14:53:16,317 [INFO] root - Confirm Booking: Wallet balance after commit and refresh: 8099
+2025-05-15 14:53:16,323 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 14:53:16] "PUT /bookings/confirm/30 HTTP/1.1" 200 -
+2025-05-15 14:55:43,486 [INFO] werkzeug -  * Detected change in 'c:\\python_project_complete\\flight-reservation-system-flask\\backend\\routes\\auth_routes.py', reloading
+2025-05-15 14:55:43,799 [INFO] werkzeug -  * Restarting with stat
+2025-05-15 14:55:45,184 [INFO] root - Logging is configured.
+2025-05-15 14:55:45,464 [WARNING] werkzeug -  * Debugger is active!
+2025-05-15 14:55:45,468 [INFO] werkzeug -  * Debugger PIN: 124-151-219
+2025-05-15 14:55:50,500 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 14:55:50] "[33mGET /auth/profile HTTP/1.1[0m" 404 -
+2025-05-15 14:56:03,406 [INFO] werkzeug -  * Detected change in 'c:\\python_project_complete\\flight-reservation-system-flask\\backend\\routes\\auth_routes.py', reloading
+2025-05-15 14:56:03,659 [INFO] werkzeug -  * Restarting with stat
+2025-05-15 14:56:05,014 [INFO] root - Logging is configured.
+2025-05-15 14:56:05,310 [WARNING] werkzeug -  * Debugger is active!
+2025-05-15 14:56:05,312 [INFO] werkzeug -  * Debugger PIN: 124-151-219
+2025-05-15 14:56:06,099 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 14:56:06] "GET /auth/profile HTTP/1.1" 200 -
+2025-05-15 15:00:51,324 [INFO] werkzeug -  * Detected change in 'c:\\python_project_complete\\flight-reservation-system-flask\\backend\\services\\auth_service.py', reloading
+2025-05-15 15:00:51,715 [INFO] werkzeug -  * Restarting with stat
+2025-05-15 15:00:53,812 [INFO] root - Logging is configured.
+2025-05-15 15:00:54,215 [WARNING] werkzeug -  * Debugger is active!
+2025-05-15 15:00:54,219 [INFO] werkzeug -  * Debugger PIN: 124-151-219
+2025-05-15 15:01:03,953 [INFO] werkzeug -  * Detected change in 'c:\\python_project_complete\\flight-reservation-system-flask\\backend\\routes\\auth_routes.py', reloading
+2025-05-15 15:01:04,218 [INFO] werkzeug -  * Restarting with stat
+2025-05-15 15:01:06,388 [INFO] root - Logging is configured.
+2025-05-15 15:01:06,842 [WARNING] werkzeug -  * Debugger is active!
+2025-05-15 15:01:06,847 [INFO] werkzeug -  * Debugger PIN: 124-151-219
+2025-05-15 15:02:25,158 [WARNING] passlib.handlers.bcrypt - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "C:\python_project_complete\flight-reservation-system-flask\backend\venv\Lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-05-15 15:02:25,590 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 15:02:25] "POST /auth/login HTTP/1.1" 200 -
+2025-05-15 15:02:34,687 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 15:02:34] "POST /auth/login HTTP/1.1" 200 -
+2025-05-15 15:02:39,793 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 15:02:39] "GET /auth/profile HTTP/1.1" 200 -
+2025-05-15 15:03:13,952 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 15:03:13] "POST /auth/register HTTP/1.1" 200 -
+2025-05-15 15:03:25,425 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 15:03:25] "GET /auth/profile HTTP/1.1" 200 -
+2025-05-15 15:03:32,271 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 15:03:32] "GET /auth/profile HTTP/1.1" 200 -
+2025-05-15 15:03:59,361 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 15:03:59] "POST /auth/login HTTP/1.1" 200 -
+2025-05-15 15:04:04,404 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 15:04:04] "GET /auth/profile HTTP/1.1" 200 -
+2025-05-15 15:04:28,410 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 15:04:28] "GET /auth/profile HTTP/1.1" 200 -
+2025-05-15 15:04:43,519 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 15:04:43] "POST /auth/logout HTTP/1.1" 200 -
+2025-05-15 15:04:48,335 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 15:04:48] "[31m[1mGET /auth/profile HTTP/1.1[0m" 422 -
+2025-05-15 15:04:54,602 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 15:04:54] "POST /auth/login HTTP/1.1" 200 -
+2025-05-15 15:05:00,379 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 15:05:00] "[31m[1mGET /auth/profile HTTP/1.1[0m" 422 -
+2025-05-15 15:05:17,273 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 15:05:17] "GET /auth/profile HTTP/1.1" 200 -
+2025-05-15 15:05:38,257 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 15:05:38] "GET /auth/profile HTTP/1.1" 200 -
+2025-05-15 15:12:05,731 [INFO] werkzeug -  * Detected change in 'c:\\python_project_complete\\flight-reservation-system-flask\\backend\\exceptions\\auth_exceptions.py', reloading
+2025-05-15 15:12:06,031 [INFO] werkzeug -  * Restarting with stat
+2025-05-15 15:12:07,493 [INFO] root - Logging is configured.
+2025-05-15 15:12:07,790 [WARNING] werkzeug -  * Debugger is active!
+2025-05-15 15:12:07,792 [INFO] werkzeug -  * Debugger PIN: 124-151-219
+2025-05-15 15:12:43,838 [INFO] werkzeug -  * Detected change in 'c:\\python_project_complete\\flight-reservation-system-flask\\backend\\services\\auth_service.py', reloading
+2025-05-15 15:12:44,114 [INFO] werkzeug -  * Restarting with stat
+2025-05-15 15:12:45,493 [INFO] root - Logging is configured.
+2025-05-15 15:12:45,925 [WARNING] werkzeug -  * Debugger is active!
+2025-05-15 15:12:45,928 [INFO] werkzeug -  * Debugger PIN: 124-151-219
+2025-05-15 15:12:48,977 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 15:12:48] "[35m[1mGET /auth/profile HTTP/1.1[0m" 500 -
+2025-05-15 15:14:36,021 [INFO] werkzeug -  * Detected change in 'c:\\python_project_complete\\flight-reservation-system-flask\\backend\\routes\\auth_routes.py', reloading
+2025-05-15 15:14:36,293 [INFO] werkzeug -  * Restarting with stat
+2025-05-15 15:14:37,600 [INFO] root - Logging is configured.
+2025-05-15 15:14:37,884 [WARNING] werkzeug -  * Debugger is active!
+2025-05-15 15:14:37,887 [INFO] werkzeug -  * Debugger PIN: 124-151-219
+2025-05-15 15:14:42,411 [INFO] services.auth_service - Profile fetched for user: 52
+2025-05-15 15:14:42,413 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 15:14:42] "GET /auth/profile HTTP/1.1" 200 -
+2025-05-15 15:15:01,559 [WARNING] passlib.handlers.bcrypt - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "C:\python_project_complete\flight-reservation-system-flask\backend\venv\Lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-05-15 15:15:01,821 [INFO] services.auth_service - User logged in: john123@gmail.com
+2025-05-15 15:15:01,823 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 15:15:01] "POST /auth/login HTTP/1.1" 200 -
+2025-05-15 15:15:08,217 [INFO] services.auth_service - User logged in: john123@gmail.com
+2025-05-15 15:15:08,219 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 15:15:08] "POST /auth/login HTTP/1.1" 200 -
+2025-05-15 15:21:17,248 [INFO] werkzeug -  * Detected change in 'c:\\python_project_complete\\flight-reservation-system-flask\\backend\\services\\wallet_service.py', reloading
+2025-05-15 15:21:17,543 [INFO] werkzeug -  * Restarting with stat
+2025-05-15 15:21:19,150 [INFO] root - Logging is configured.
+2025-05-15 15:21:19,461 [WARNING] werkzeug -  * Debugger is active!
+2025-05-15 15:21:19,464 [INFO] werkzeug -  * Debugger PIN: 124-151-219
+2025-05-15 15:21:40,597 [INFO] werkzeug -  * Detected change in 'c:\\python_project_complete\\flight-reservation-system-flask\\backend\\routes\\wallet_routes.py', reloading
+2025-05-15 15:21:40,894 [INFO] werkzeug -  * Restarting with stat
+2025-05-15 15:22:52,676 [INFO] root - Logging is configured.
+2025-05-15 15:22:52,957 [INFO] werkzeug - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-15 15:22:52,958 [INFO] werkzeug - [33mPress CTRL+C to quit[0m
+2025-05-15 15:22:52,960 [INFO] werkzeug -  * Restarting with stat
+2025-05-15 15:22:54,302 [INFO] root - Logging is configured.
+2025-05-15 15:22:54,620 [WARNING] werkzeug -  * Debugger is active!
+2025-05-15 15:22:54,622 [INFO] werkzeug -  * Debugger PIN: 124-151-219
+2025-05-15 15:23:09,965 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 15:23:09] "[31m[1mGET /wallet HTTP/1.1[0m" 401 -
+2025-05-15 15:23:18,075 [WARNING] passlib.handlers.bcrypt - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "C:\python_project_complete\flight-reservation-system-flask\backend\venv\Lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-05-15 15:23:18,336 [INFO] services.auth_service - User logged in: john123@gmail.com
+2025-05-15 15:23:18,337 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 15:23:18] "POST /auth/login HTTP/1.1" 200 -
+2025-05-15 15:23:30,349 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 15:23:30] "GET /wallet HTTP/1.1" 200 -
+2025-05-15 15:23:41,557 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 15:23:41] "POST /wallet/add HTTP/1.1" 200 -
+2025-05-15 15:23:59,623 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 15:23:59] "OPTIONS /wallet/ HTTP/1.1" 200 -
+2025-05-15 15:23:59,881 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 15:23:59] "GET /wallet/ HTTP/1.1" 200 -
+2025-05-15 15:24:05,379 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 15:24:05] "OPTIONS /wallet/add HTTP/1.1" 200 -
+2025-05-15 15:24:05,710 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 15:24:05] "POST /wallet/add HTTP/1.1" 200 -
+2025-05-15 15:24:07,632 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 15:24:07] "OPTIONS /bookings/user/irfan@gmail.com HTTP/1.1" 200 -
+2025-05-15 15:24:07,976 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 15:24:07] "GET /bookings/user/irfan@gmail.com HTTP/1.1" 200 -
+2025-05-15 15:24:09,895 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 15:24:09] "OPTIONS /wallet/ HTTP/1.1" 200 -
+2025-05-15 15:24:10,229 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 15:24:10] "GET /wallet/ HTTP/1.1" 200 -
+2025-05-15 15:24:11,797 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 15:24:11] "GET /bookings/user/irfan@gmail.com HTTP/1.1" 200 -
+2025-05-15 15:24:14,112 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 15:24:14] "OPTIONS /bookings/cancel/30 HTTP/1.1" 200 -
+2025-05-15 15:24:14,386 [INFO] root - Cancel Booking: Wallet initial balance: 18099, Booking Price: 5000.0
+2025-05-15 15:24:14,387 [INFO] root - Cancel Booking: Wallet balance after refund addition: 23099.0
+2025-05-15 15:24:14,406 [INFO] root - Cancel Booking: Wallet balance after commit and refresh: 23099
+2025-05-15 15:24:14,420 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 15:24:14] "PUT /bookings/cancel/30 HTTP/1.1" 200 -
+2025-05-15 15:24:17,308 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 15:24:17] "OPTIONS /wallet/ HTTP/1.1" 200 -
+2025-05-15 15:24:17,622 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 15:24:17] "GET /wallet/ HTTP/1.1" 200 -
+2025-05-15 15:24:19,972 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 15:24:19] "GET /wallet/ HTTP/1.1" 200 -
+2025-05-15 15:28:24,138 [INFO] werkzeug -  * Detected change in 'c:\\python_project_complete\\flight-reservation-system-flask\\backend\\services\\review_service.py', reloading
+2025-05-15 15:28:24,457 [INFO] werkzeug -  * Restarting with stat
+2025-05-15 15:28:25,978 [INFO] root - Logging is configured.
+2025-05-15 15:28:26,305 [WARNING] werkzeug -  * Debugger is active!
+2025-05-15 15:28:26,308 [INFO] werkzeug -  * Debugger PIN: 124-151-219
+2025-05-15 15:28:42,276 [INFO] werkzeug -  * Detected change in 'c:\\python_project_complete\\flight-reservation-system-flask\\backend\\routes\\review_routes.py', reloading
+2025-05-15 15:28:42,559 [INFO] werkzeug -  * Restarting with stat
+2025-05-15 15:29:16,757 [INFO] root - Logging is configured.
+2025-05-15 15:29:17,095 [INFO] werkzeug - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-15 15:29:17,096 [INFO] werkzeug - [33mPress CTRL+C to quit[0m
+2025-05-15 15:29:17,098 [INFO] werkzeug -  * Restarting with stat
+2025-05-15 15:29:18,607 [INFO] root - Logging is configured.
+2025-05-15 15:29:18,914 [WARNING] werkzeug -  * Debugger is active!
+2025-05-15 15:29:18,917 [INFO] werkzeug -  * Debugger PIN: 124-151-219
+2025-05-15 15:29:24,174 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 15:29:24] "OPTIONS /reviews/ HTTP/1.1" 200 -
+2025-05-15 15:29:24,451 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 15:29:24] "GET /reviews/ HTTP/1.1" 200 -
+2025-05-15 15:41:12,526 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 15:41:12] "OPTIONS /reviews/ HTTP/1.1" 200 -
+2025-05-15 15:41:12,782 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 15:41:12] "GET /reviews/ HTTP/1.1" 200 -
+2025-05-15 15:41:18,356 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 15:41:18] "OPTIONS /reviews/ HTTP/1.1" 200 -
+2025-05-15 15:41:18,684 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 15:41:18] "GET /reviews/ HTTP/1.1" 200 -
+2025-05-15 15:41:19,928 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 15:41:19] "GET /reviews/ HTTP/1.1" 200 -
+2025-05-15 15:41:21,122 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 15:41:21] "GET /reviews/ HTTP/1.1" 200 -
+2025-05-15 15:41:21,433 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 15:41:21] "GET /reviews/ HTTP/1.1" 200 -
+2025-05-15 15:41:21,670 [INFO] werkzeug - 127.0.0.1 - - [15/May/2025 15:41:21] "GET /reviews/ HTTP/1.1" 200 -
+2025-05-15 15:43:15,358 [INFO] werkzeug -  * Detected change in 'c:\\python_project_complete\\flight-reservation-system-flask\\backend\\services\\review_service.py', reloading
+2025-05-15 15:43:15,651 [INFO] werkzeug -  * Restarting with stat

@@ -1,54 +1,69 @@
-
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import ReviewCard from "@/components/reviews/ReviewCard";
 import { Search, MessageSquare } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
+import { toast } from "@/components/ui/use-toast";
 
-// Mock reviews data
-const MOCK_REVIEWS = [
-  {
-    id: "r1",
-    userId: "user1",
-    userName: "John Doe",
-    flightId: "CJ-1245",
-    rating: 4,
-    comment: "Great service and comfortable seating. The flight attendants were very helpful and friendly. Food was good too.",
-    date: "2025-06-02",
-  },
-  {
-    id: "r2",
-    userId: "user2",
-    userName: "Jane Smith",
-    flightId: "CJ-2347",
-    rating: 5,
-    comment: "Excellent experience from start to finish! The check-in process was smooth, and the flight was on time. Very satisfied with Cloud Jet Services.",
-    date: "2025-05-28",
-  },
-  {
-    id: "r3",
-    userId: "user3",
-    userName: "Alex Johnson",
-    flightId: "CJ-3782",
-    rating: 3,
-    comment: "The flight was delayed by an hour, but the staff handled it professionally. The in-flight entertainment options could be improved.",
-    date: "2025-05-20",
-  },
-  {
-    id: "r4",
-    userId: "user4",
-    userName: "Sarah Williams",
-    flightId: "CJ-9012",
-    rating: 2,
-    comment: "Disappointing experience. Long check-in queues and cramped seating. The food quality was below average for a premium airline.",
-    date: "2025-05-15",
-  },
-];
+interface Review {
+  id: number;
+  userId: string;
+  userName: string;
+  flightId: string;
+  rating: number;
+  comment: string;
+  date: string;
+}
 
 export default function ReviewsPage() {
+  const { token } = useAuth();
+  const [reviews, setReviews] = useState<Review[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [reviews] = useState(MOCK_REVIEWS);
-  
+  const [loading, setLoading] = useState(true);
+
+  const fetchReviews = async () => {
+    if (!token) return;
+    try {
+      const response = await fetch("http://localhost:5000/reviews/", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch reviews");
+      }
+
+      const data = await response.json();
+
+      // Optionally transform if backend structure differs
+      const transformed = data.map((review: any) => ({
+        id: review.id,
+        userId: review.user_id,
+        userName: `User-${review.user_id}`, // Replace if real name is available
+        flightId: review.booking_id,
+        rating: review.rating,
+        comment: review.comment,
+        date: review.created_at?.split("T")[0] ?? "N/A",
+      }));
+
+      setReviews(transformed);
+    } catch (error: any) {
+      toast({
+        title: "Error loading reviews",
+        description: error.message,
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchReviews();
+  }, [token]);
+
   const filteredReviews = reviews.filter(
     (review) =>
       review.userName.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -56,12 +71,12 @@ export default function ReviewsPage() {
       review.comment.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // Calculate average rating
-  const averageRating = reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length;
+  const averageRating =
+    reviews.reduce((acc, review) => acc + review.rating, 0) /
+    (reviews.length || 1);
 
-  // Count reviews by rating
   const ratingCounts = [0, 0, 0, 0, 0];
-  reviews.forEach(review => {
+  reviews.forEach((review) => {
     ratingCounts[review.rating - 1]++;
   });
 
@@ -114,7 +129,7 @@ export default function ReviewsPage() {
                     <div
                       className="bg-airline-blue h-2.5 rounded-full"
                       style={{
-                        width: `${(ratingCounts[rating - 1] / reviews.length) * 100}%`,
+                        width: `${(ratingCounts[rating - 1] / reviews.length) * 100 || 0}%`,
                       }}
                     ></div>
                   </div>
@@ -139,7 +154,9 @@ export default function ReviewsPage() {
           </div>
 
           <div className="space-y-4">
-            {filteredReviews.length > 0 ? (
+            {loading ? (
+              <p>Loading...</p>
+            ) : filteredReviews.length > 0 ? (
               filteredReviews.map((review) => (
                 <ReviewCard key={review.id} {...review} />
               ))
@@ -147,7 +164,9 @@ export default function ReviewsPage() {
               <div className="text-center py-12">
                 <MessageSquare className="h-12 w-12 mx-auto text-gray-300" />
                 <h3 className="mt-4 text-lg font-medium">No reviews found</h3>
-                <p className="mt-1 text-gray-500">Try adjusting your search terms</p>
+                <p className="mt-1 text-gray-500">
+                  Try adjusting your search terms
+                </p>
               </div>
             )}
           </div>

@@ -1,47 +1,37 @@
 from flask import Blueprint, request, jsonify
-from models.review import Review
-from models.user import User  # Import User model
-from extensions import db
-from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
+from services.review_service import ReviewService
+from exceptions.review_exceptions import ReviewError
 
-review_bp = Blueprint("review", __name__)
+review_bp = Blueprint("review", __name__, url_prefix="/reviews")
 
-def is_admin(user_id):
-    user = User.query.get(user_id)
-    return user and user.role == "admin"
+def is_admin():
+    claims = get_jwt()
+    return claims.get("role", "").upper() == "ADMIN"
 
 @review_bp.route("/", methods=["GET"])
 @jwt_required()
 def get_reviews():
-    """
-    Admin: get all reviews.
-    Customer: get only their own reviews.
-    """
-    user_id = get_jwt_identity()
+    try:
+        user_id = get_jwt_identity()
+        if not user_id:
+            return jsonify({"error": "Invalid token: user id missing"}), 401
 
-    if is_admin(user_id):
-        reviews = Review.query.all()
-    else:
-        reviews = Review.query.filter_by(user_id=user_id).all()
+        return ReviewService.get_reviews(user_id, is_admin=is_admin())
 
-    return jsonify([review.to_dict() for review in reviews]), 200
+    except ReviewError as e:
+        return jsonify({"error": e.message}), e.status_code
 
 @review_bp.route("/", methods=["POST"])
 @jwt_required()
 def create_review():
-    """
-    Create a new review for a booking.
-    """
-    data = request.json
-    user_id = get_jwt_identity()
+    try:
+        user_id = get_jwt_identity()
+        if not user_id:
+            return jsonify({"error": "Invalid token: user id missing"}), 401
 
-    review = Review(
-        user_id=user_id,
-        booking_id=data.get("booking_id"),
-        rating=data.get("rating"),
-        comment=data.get("comment")
-    )
-    db.session.add(review)
-    db.session.commit()
+        data = request.get_json()
+        return ReviewService.create_review(user_id, data)
 
-    return jsonify({"message": "Review submitted", "review": review.to_dict()}), 201
+    except ReviewError as e:
+        return jsonify({"error": e.message}), e.status_code

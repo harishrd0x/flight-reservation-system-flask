@@ -1,21 +1,18 @@
 import logging
-from decimal import Decimal
 from flask import Blueprint, request, jsonify
+from flask_jwt_extended import jwt_required, get_jwt_identity
+from sqlalchemy.orm import aliased
+
+from extensions import db  # import your SQLAlchemy db instance
+from services.booking_service import BookingService
+from models.airport import Airport
 from models.booking import Booking
 from models.user import User
-from models.flight import Flight, FlightClass
-from models.airport import Airport  # Import the Airport model
-from models.payment_transaction import PaymentTransaction
-from models.wallet import Wallet
-from extensions import db
-from datetime import datetime
-from sqlalchemy.orm import aliased
-from flask_jwt_extended import jwt_required, get_jwt_identity
+from models.flight import Flight
+
 
 booking_bp = Blueprint("booking", __name__)
 
-# -----------------------------------------------------------------------------
-# Create a Booking endpoint.
 @booking_bp.route("/book_flight", methods=["POST"])
 @jwt_required()
 def book_flight():
@@ -23,7 +20,6 @@ def book_flight():
     if not data:
         return jsonify({"error": "No JSON data provided"}), 400
 
-    # Extract user_id from JWT token and convert it to an integer.
     user_id_raw = get_jwt_identity()
     try:
         user_id = int(user_id_raw)
@@ -32,64 +28,20 @@ def book_flight():
 
     flight_id = data.get("flight_id")
     seat_class_str = data.get("seat_class")
-    # Since user_id is obtained dynamically from the token, we only check for flight_id and seat_class.
     if not flight_id or not seat_class_str:
         return jsonify({"error": "Missing required fields"}), 400
 
     try:
-        selected_class = FlightClass(seat_class_str.upper())
-    except ValueError:
-        return jsonify({
-            "error": "Invalid flight class provided. Allowed values: ECONOMY, BUSINESS."
-        }), 400
-
-    flight = Flight.query.get(flight_id)
-    if not flight:
-        return jsonify({"error": "Flight not found"}), 404
-
-    price = flight.get_price_by_class(selected_class)
-    if price == 0:
-        return jsonify({"error": "Price not found for selected class"}), 400
-
-    booking = Booking(
-        user_id=user_id,
-        flight_id=flight_id,
-        seat_class=selected_class.value,
-        booking_price=price,
-        booking_status="PENDING"
-    )
-
-    try:
-        db.session.add(booking)
-        db.session.commit()
+        booking = BookingService.create_booking(user_id, flight_id, seat_class_str)
+        return jsonify({"message": "Booking created", "booking": booking.to_dict()}), 201
+    except ValueError as ve:
+        return jsonify({"error": str(ve)}), 400
+    except LookupError as le:
+        return jsonify({"error": str(le)}), 404
     except Exception as e:
-        db.session.rollback()
-        logging.exception("Booking creation failed:")
         return jsonify({"error": "Booking creation failed", "details": str(e)}), 500
 
-    return jsonify({"message": "Booking created", "booking": booking.to_dict()}), 201
 
-
-    booking = Booking(
-        user_id=user_id,
-        flight_id=flight_id,
-        seat_class=selected_class.value,
-        booking_price=price,
-        booking_status="PENDING"
-    )
-
-    try:
-        db.session.add(booking)
-        db.session.commit()
-    except Exception as e:
-        db.session.rollback()
-        logging.exception("Booking creation failed:")
-        return jsonify({"error": "Booking creation failed", "details": str(e)}), 500
-
-    return jsonify({"message": "Booking created", "booking": booking.to_dict()}), 201
-
-# -----------------------------------------------------------------------------
-# Confirm Booking and Debit Wallet endpoint.
 @booking_bp.route("/confirm/<int:booking_id>", methods=["PUT"])
 def confirm_booking(booking_id):
     data = request.get_json()
@@ -99,113 +51,46 @@ def confirm_booking(booking_id):
     if data.get("payment_status") != "PAID":
         return jsonify({"error": "Payment status not confirmed. Cannot update booking."}), 400
 
-    booking = Booking.query.get(booking_id)
-    if not booking:
-        return jsonify({"error": "Booking not found"}), 404
-
-    if booking.booking_status != "PENDING":
-        return jsonify({"error": "Only pending bookings can be confirmed."}), 400
-
     try:
-        wallet = Wallet.query.filter_by(user_id=booking.user_id).first()
-        if not wallet:
-            return jsonify({"error": "Wallet not found for user"}), 404
-
-        booking_price = Decimal(str(booking.booking_price))
-        logging.info("Confirm Booking: Wallet initial balance: %s, Booking Price: %s", wallet.balance, booking_price)
-        
-        if wallet.balance < booking_price:
-            return jsonify({"error": "Insufficient funds in wallet"}), 400
-
-        wallet.balance -= booking_price
-        logging.info("Confirm Booking: Wallet balance after deduction: %s", wallet.balance)
-
-        booking.booking_status = "CONFIRMED"
-
-        payment_tx = PaymentTransaction(
-            wallet_id=wallet.id,
-            booking_id=booking.id,
-            amount=booking_price,
-            transaction_type="PAYMENT",
-            description="Payment confirmed for booking"
-        )
-        db.session.add(payment_tx)
-        db.session.commit()
-
-        db.session.refresh(wallet)
-        logging.info("Confirm Booking: Wallet balance after commit and refresh: %s", wallet.balance)
-
+        booking, wallet = BookingService.confirm_booking(booking_id)
         return jsonify({
             "message": "Booking confirmed and wallet debited",
             "booking": booking.to_dict(),
             "wallet": wallet.to_dict()
         }), 200
+    except LookupError as le:
+        return jsonify({"error": str(le)}), 404
+    except ValueError as ve:
+        return jsonify({"error": str(ve)}), 400
     except Exception as e:
-        db.session.rollback()
-        logging.exception("Failed to confirm booking:")
         return jsonify({"error": "Failed to confirm booking", "details": str(e)}), 500
 
-# -----------------------------------------------------------------------------
-# Cancel Booking and Refund Wallet endpoint.
+
 @booking_bp.route("/cancel/<int:booking_id>", methods=["PUT"])
 def cancel_booking(booking_id):
     data = request.get_json()
     if not data:
         return jsonify({"error": "No JSON data provided"}), 400
 
-    new_status = data.get("status", "").upper()
-    if new_status != "CANCELLED":
-        return jsonify({"error": "Invalid status update. Allowed value: 'CANCELLED'"}), 400
-
-    booking = Booking.query.get(booking_id)
-    if not booking:
-        return jsonify({"error": "Booking not found"}), 404
-
+    new_status = data.get("status", "")
     try:
-        if booking.booking_status == "CONFIRMED":
-            wallet = Wallet.query.filter_by(user_id=booking.user_id).first()
-            if not wallet:
-                return jsonify({"error": "Wallet not found for user"}), 404
-
-            booking_price = Decimal(str(booking.booking_price))
-            logging.info("Cancel Booking: Wallet initial balance: %s, Booking Price: %s", wallet.balance, booking_price)
-
-            wallet.balance += booking_price
-            logging.info("Cancel Booking: Wallet balance after refund addition: %s", wallet.balance)
-
-            refund_tx = PaymentTransaction(
-                wallet_id=wallet.id,
-                booking_id=booking.id,
-                amount=booking_price,
-                transaction_type="REFUND",
-                description="Refund issued for cancelled booking"
-            )
-            db.session.add(refund_tx)
-
-        booking.booking_status = "CANCELLED"
-        db.session.commit()
-
-        wallet = Wallet.query.filter_by(user_id=booking.user_id).first()
-        if wallet:
-            db.session.refresh(wallet)
-            logging.info("Cancel Booking: Wallet balance after commit and refresh: %s", wallet.balance)
-
+        booking, wallet = BookingService.cancel_booking(booking_id, new_status)
         return jsonify({
             "message": "Booking cancelled and refund processed (if applicable)",
             "booking": booking.to_dict(),
             "wallet": wallet.to_dict() if wallet else None
         }), 200
+    except LookupError as le:
+        return jsonify({"error": str(le)}), 404
+    except ValueError as ve:
+        return jsonify({"error": str(ve)}), 400
     except Exception as e:
-        db.session.rollback()
-        logging.exception("Failed to cancel booking:")
         return jsonify({"error": "Failed to cancel booking", "details": str(e)}), 500
 
-# -----------------------------------------------------------------------------
-# Get All Bookings endpoint.
+
 @booking_bp.route("/", methods=["GET"])
 def get_all_bookings():
     try:
-        # Create aliases for the airport joins.
         SourceAirport = aliased(Airport)
         DestAirport = aliased(Airport)
         records = (
@@ -242,8 +127,7 @@ def get_all_bookings():
         logging.exception("Error fetching all bookings:")
         return jsonify({"error": "Failed to fetch bookings", "details": str(e)}), 500
 
-# -----------------------------------------------------------------------------
-# Get Bookings for a Specific User endpoint.
+
 @booking_bp.route("/user/<string:identifier>", methods=["GET"])
 def get_user_bookings(identifier):
     try:
@@ -281,5 +165,5 @@ def get_user_bookings(identifier):
             })
         return jsonify(output), 200
     except Exception as e:
-        logging.exception("Error fetching bookings for user %s:", identifier)
+        logging.exception(f"Error fetching bookings for user {identifier}:")
         return jsonify({"error": "Failed to fetch user bookings", "details": str(e)}), 500
