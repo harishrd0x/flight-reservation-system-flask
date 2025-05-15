@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { User, Search } from "lucide-react";
+import { User } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import {
   Dialog,
@@ -10,28 +10,23 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogDescription,
 } from "@/components/ui/dialog";
 import { toast } from "@/components/ui/use-toast";
 
+// Wallet interface (only includes balance)
 interface Wallet {
   userId: string;
   userName: string;
-  email: string;
   balance: number;
 }
 
 function WalletsPage() {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [wallets, setWallets] = useState<Wallet[]>([]);
+  const [wallet, setWallet] = useState<Wallet | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  // State for payment modal and form fields
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
-  const [selectedWallet, setSelectedWallet] = useState<Wallet | null>(null);
   const [amount, setAmount] = useState("");
-  const [paymentMethod, setPaymentMethod] = useState("UPI"); // default option
   const [isProcessing, setIsProcessing] = useState(false);
 
   useEffect(() => {
@@ -42,7 +37,7 @@ function WalletsPage() {
       return;
     }
 
-    // Fetch wallet data from your backend
+    // Fetch user's wallet from the backend
     fetch("http://localhost:5000/wallet/", {
       method: "GET",
       headers: {
@@ -51,42 +46,35 @@ function WalletsPage() {
       },
     })
       .then((response) => {
-        if (!response.ok) {
-          throw new Error("Error fetching wallets");
-        }
+        if (!response.ok) throw new Error("Error fetching wallet");
         return response.json();
       })
       .then((data) => {
-        // Assume data is an array of wallet objects
-        setWallets(data);
+        setWallet({
+          userId: data.userId,
+          userName: data.userName,
+          balance: data.balance,
+        });
         setLoading(false);
       })
       .catch((err) => {
-        console.error("Error fetching wallets:", err);
-        setError("Error fetching wallets");
+        console.error("Error fetching wallet:", err);
+        setError("Error fetching wallet");
         setLoading(false);
       });
   }, []);
 
-  const filteredWallets = wallets.filter(
-    (wallet) =>
-      wallet.userName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      wallet.email.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  // Open the add funds modal for a wallet
-  const handleAddFunds = (wallet: Wallet) => {
-    console.log("Opening add funds modal for wallet:", wallet);
-    setSelectedWallet(wallet);
+  // Open Add Funds modal
+  const handleAddFunds = () => {
     setIsPaymentModalOpen(true);
   };
 
-  // Submit the payment to the backend URL "/wallet/add"
+  // Submit payment request
   const handlePaymentSubmit = async () => {
     if (!amount) {
       toast({
         title: "Error",
-        description: "Please enter an amount to add.",
+        description: "Please enter an amount.",
         variant: "destructive",
       });
       return;
@@ -95,7 +83,7 @@ function WalletsPage() {
     if (isNaN(numericAmount) || numericAmount <= 0) {
       toast({
         title: "Error",
-        description: "Please enter a valid amount.",
+        description: "Invalid amount.",
         variant: "destructive",
       });
       return;
@@ -111,9 +99,7 @@ function WalletsPage() {
           "Authorization": token ? `Bearer ${token}` : "",
         },
         body: JSON.stringify({
-          walletId: selectedWallet?.userId,
           amount: numericAmount,
-          paymentMethod: paymentMethod,
         }),
       });
 
@@ -123,23 +109,16 @@ function WalletsPage() {
       }
 
       const resData = await response.json();
-      // Assuming backend returns the updated wallet balance as resData.balance
 
       toast({
         title: "Payment Successful",
-        description: `₹${numericAmount.toFixed(2)} added via ${paymentMethod}!`,
+        description: `₹${numericAmount.toFixed(2)} added!`,
       });
 
-      // Update the wallet balance locally with the response value
-      if (selectedWallet) {
-        setWallets((prevWallets) =>
-          prevWallets.map((w) =>
-            w.userId === selectedWallet.userId
-              ? { ...w, balance: resData.balance }
-              : w
-          )
-        );
-      }
+      // Update wallet balance locally
+      setWallet((prevWallet) =>
+        prevWallet ? { ...prevWallet, balance: resData.balance } : prevWallet
+      );
     } catch (error: any) {
       toast({
         title: "Error",
@@ -149,145 +128,48 @@ function WalletsPage() {
     } finally {
       setIsProcessing(false);
       setIsPaymentModalOpen(false);
-      setSelectedWallet(null);
       setAmount("");
     }
   };
 
-  if (loading) {
-    return <div>Loading wallets...</div>;
-  }
-  if (error) {
-    return <div className="text-red-500">{error}</div>;
-  }
+  if (loading) return <div>Loading wallet...</div>;
+  if (error) return <div className="text-red-500">{error}</div>;
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">Customer Wallets</h1>
-        <p className="text-gray-500">View all customer wallet balances.</p>
-      </div>
+      <h1 className="text-3xl font-bold tracking-tight">Your Wallet</h1>
 
-      {/* Search Field */}
-      <div className="relative w-full md:max-w-md">
-        <Search className="absolute left-2 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500" />
-        <Input
-          placeholder="Search by customer name or email..."
-          className="pl-8"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-      </div>
+      <Card className="p-4">
+        <CardHeader>
+          <CardTitle className="flex items-center text-xl">
+            <User className="mr-2 h-5 w-5 text-wallet-blue" />
+            {wallet?.userName}
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p>Balance: ₹{wallet?.balance.toFixed(2)}</p>
+          <Button onClick={handleAddFunds} className="mt-2">
+            Add Funds
+          </Button>
+        </CardContent>
+      </Card>
 
-      {/* Wallet Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredWallets.length > 0 ? (
-          filteredWallets.map((wallet) => (
-            <Card
-              key={wallet.userId}
-              className="overflow-hidden hover:shadow-lg transition"
-            >
-              <CardHeader className="bg-gray-50 pb-2">
-                <CardTitle className="flex items-center">
-                  <div className="bg-airline-blue text-white p-2 rounded-full mr-2">
-                    <User className="h-4 w-4" />
-                  </div>
-                  {wallet.userName}
-                </CardTitle>
-                <p className="text-sm text-gray-500">{wallet.email}</p>
-              </CardHeader>
-              <CardContent className="p-6">
-                <div className="flex flex-col items-center justify-between p-4 bg-airline-blue/10 rounded-lg mb-4">
-                  <div>
-                    <p className="text-sm text-gray-500">Balance</p>
-                    <h3 className="text-2xl font-bold">
-                      ₹{(wallet.balance * 83).toFixed(2)}
-                    </h3>
-                  </div>
-                </div>
-                <Button
-                  onClick={() => handleAddFunds(wallet)}
-                  className="w-full bg-airline-blue hover:bg-airline-navy text-white transition"
-                >
-                  Add Funds
-                </Button>
-              </CardContent>
-            </Card>
-          ))
-        ) : (
-          <div className="col-span-full text-center py-12">
-            <User className="h-12 w-12 mx-auto text-gray-300" />
-            <h3 className="mt-4 text-lg font-medium">No wallets found</h3>
-            <p className="mt-1 text-gray-500">Try adjusting your search terms</p>
-          </div>
-        )}
-      </div>
-
-      {/* Payment Modal for Adding Funds */}
+      {/* Add Funds Dialog */}
       <Dialog open={isPaymentModalOpen} onOpenChange={setIsPaymentModalOpen}>
-        <DialogContent className="w-full max-w-sm p-6">
+        <DialogContent>
           <DialogHeader>
-            <DialogTitle className="text-xl font-bold">Add Funds</DialogTitle>
-            <DialogDescription>
-              {selectedWallet
-                ? `Add funds for ${selectedWallet.userName} (${selectedWallet.email})`
-                : "Add funds"}
-            </DialogDescription>
+            <DialogTitle>Add Funds</DialogTitle>
           </DialogHeader>
-          <div className="space-y-4">
-            <div>
-              <Label
-                htmlFor="amount"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Amount (₹)
-              </Label>
-              <Input
-                id="amount"
-                type="number"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-                placeholder="Enter amount"
-                className="mt-1 block w-full"
-              />
-            </div>
-            <div>
-              <Label className="block text-sm font-medium text-gray-700">
-                Payment Method
-              </Label>
-              <div className="mt-2 space-y-2">
-                <button
-                  type="button"
-                  onClick={() => setPaymentMethod("UPI")}
-                  className={`block w-full px-4 py-2 text-sm border rounded-md transition-colors ${
-                    paymentMethod === "UPI"
-                      ? "bg-airline-blue text-white border-airline-blue"
-                      : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
-                  }`}
-                >
-                  UPI / PhonePe
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setPaymentMethod("CARD")}
-                  className={`block w-full px-4 py-2 text-sm border rounded-md transition-colors ${
-                    paymentMethod === "CARD"
-                      ? "bg-airline-blue text-white border-airline-blue"
-                      : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
-                  }`}
-                >
-                  Credit/Debit Card
-                </button>
-              </div>
-            </div>
-          </div>
-          <DialogFooter className="mt-4">
-            <Button variant="outline" onClick={() => setIsPaymentModalOpen(false)}>
-              Cancel
-            </Button>
-            <Button onClick={handlePaymentSubmit} disabled={isProcessing} className="ml-2">
-              {isProcessing ? "Processing..." : "Proceed Payment"}
+          <Label>Amount (₹)</Label>
+          <Input
+            type="number"
+            placeholder="Enter amount"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+          />
+          <DialogFooter>
+            <Button onClick={handlePaymentSubmit} disabled={isProcessing}>
+              {isProcessing ? "Processing..." : "Add Funds"}
             </Button>
           </DialogFooter>
         </DialogContent>

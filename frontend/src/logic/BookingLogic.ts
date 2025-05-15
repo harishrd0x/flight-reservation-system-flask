@@ -1,11 +1,10 @@
-
-import { BookingDetails } from '@/models/types';
+import { BookingDetails } from '../models/types';
 import { LocalStorageRepository } from '@/models/repository/LocalStorageRepository';
 import { useToast } from '@/hooks/use-toast';
 import { generateBookingPDF } from '@/utils/pdfUtils';
 
 /**
- * Business logic for booking operations
+ * Business logic for booking operations.
  */
 export class BookingLogic {
   private bookingRepository: LocalStorageRepository<BookingDetails>;
@@ -18,29 +17,26 @@ export class BookingLogic {
   }
 
   /**
-   * Get all bookings, filtered by user if needed
+   * Get all bookings, optionally filtering by the user's email.
    */
   getAllBookings(userEmail?: string): BookingDetails[] {
     const bookings = this.bookingRepository.getAll();
-    
-    // Ensure all bookings have the correct status type
     const typedBookings = bookings.map(booking => ({
       ...booking,
-      status: this.validateStatus(booking.status)
+      booking_status: this.validateStatus(booking.booking_status)
     })) as BookingDetails[];
     
     return userEmail 
-      ? typedBookings.filter(booking => booking.userId === userEmail)
+      ? typedBookings.filter(booking => booking.user_id === userEmail)
       : typedBookings;
   }
 
   /**
-   * Create a new booking
+   * Create a new booking and process the payment.
    */
   createBooking(bookingData: Partial<BookingDetails>): BookingDetails | null {
     try {
-      // Validate booking data
-      if (!bookingData.flightId || !bookingData.userId || !bookingData.price) {
+      if (!bookingData.flight_id || !bookingData.user_id || !bookingData.booking_price) {
         this.toast.toast({
           title: "Booking Failed",
           description: "Missing required booking information",
@@ -49,9 +45,8 @@ export class BookingLogic {
         return null;
       }
 
-      // Check wallet balance
       const wallet = this.walletRepository.getAll()[0] || { balance: 0 };
-      if (wallet.balance < bookingData.price) {
+      if (wallet.balance < bookingData.booking_price) {
         this.toast.toast({
           title: "Insufficient Funds",
           description: "Please add money to your wallet to complete this booking",
@@ -60,19 +55,15 @@ export class BookingLogic {
         return null;
       }
 
-      // Create booking with proper status
       const newBooking: BookingDetails = {
         id: `booking-${Date.now()}`,
-        status: 'confirmed' as const,
+        booking_status: 'confirmed',
         bookingDate: new Date().toLocaleDateString(),
         ...bookingData
       } as BookingDetails;
 
-      // Add to repository
       this.bookingRepository.add(newBooking);
-
-      // Update wallet
-      this.processPayment(newBooking.price, newBooking.id);
+      this.processPayment(newBooking.booking_price, newBooking.id);
 
       this.toast.toast({
         title: "Booking Confirmed",
@@ -92,11 +83,10 @@ export class BookingLogic {
   }
 
   /**
-   * Cancel a booking and process refund
+   * Cancel a booking and process a refund.
    */
   cancelBooking(bookingId: string): boolean {
     try {
-      // Get the booking
       const booking = this.bookingRepository.getById(bookingId);
       if (!booking) {
         this.toast.toast({
@@ -107,14 +97,11 @@ export class BookingLogic {
         return false;
       }
 
-      // Update booking status
       const updatedBooking = { 
         ...booking, 
-        status: 'cancelled' as const 
+        booking_status: 'cancelled' as 'confirmed' | 'pending' | 'cancelled'
       };
       this.bookingRepository.update(updatedBooking);
-
-      // Process the refund
       this.processRefund(booking);
 
       this.toast.toast({
@@ -135,7 +122,7 @@ export class BookingLogic {
   }
 
   /**
-   * Generate a PDF for a booking
+   * Generate a PDF for a booking.
    */
   generatePDF(bookingId: string): void {
     try {
@@ -154,7 +141,7 @@ export class BookingLogic {
   }
 
   /**
-   * Process payment for a booking
+   * Process payment by deducting the booking price from the wallet.
    */
   private processPayment(amount: number, bookingId: string): void {
     try {
@@ -187,20 +174,20 @@ export class BookingLogic {
   }
 
   /**
-   * Process refund for a cancelled booking
+   * Process a refund by adding the booking price back to the wallet.
    */
   private processRefund(booking: BookingDetails): void {
     try {
       const walletData = this.walletRepository.getAll()[0] || { balance: 0, transactions: [] };
       
       const updatedWallet = {
-        balance: walletData.balance + booking.price,
+        balance: walletData.balance + booking.booking_price,
         transactions: [
           {
             id: `refund-${Date.now()}`,
-            amount: booking.price,
+            amount: booking.booking_price,
             type: "deposit" as const,
-            description: `Refund for booking ${booking.id} (${booking.flightId})`,
+            description: `Refund for booking ${booking.id} (flight ${booking.flight_id})`,
             date: new Date().toLocaleString('en-US', {
               year: 'numeric', 
               month: '2-digit', 
@@ -220,7 +207,7 @@ export class BookingLogic {
   }
 
   /**
-   * Validate booking status and ensure it's one of the allowed values
+   * Validate the booking status.
    */
   private validateStatus(status: any): 'confirmed' | 'pending' | 'cancelled' {
     if (status === 'confirmed' || status === 'pending' || status === 'cancelled') {

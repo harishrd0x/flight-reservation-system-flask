@@ -18,6 +18,7 @@ export interface User {
 
 interface AuthContextProps {
   user: User | null;
+  token: string | null;
   userProfile: UserProfile | null;
   login: (email: string, password: string) => Promise<boolean>;
   register: (
@@ -39,6 +40,7 @@ interface AuthContextProps {
 
 const AuthContext = createContext<AuthContextProps>({
   user: null,
+  token: null,
   userProfile: null,
   login: async () => false,
   register: async () => false,
@@ -171,7 +173,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     return user?.userType === role;
   };
 
-  // Memoize updateUserProfile so that its reference remains stable.
+  // Memoize updateUserProfile so its reference remains stable.
   const updateUserProfile = useCallback((data: Partial<UserProfile>) => {
     const updatedProfile = userProfile ? { ...userProfile, ...data } : (data as UserProfile);
     setUserProfile(updatedProfile);
@@ -187,6 +189,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     <AuthContext.Provider
       value={{
         user,
+        token, // token is now added directly to the context value.
         userProfile,
         login,
         register,

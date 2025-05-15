@@ -1,3 +1,4 @@
+# app.py
 from flask import Flask
 import enum
 from flask.json.provider import DefaultJSONProvider
@@ -7,7 +8,7 @@ from extensions import init_extensions, db
 from routes import register_blueprints
 from flasgger import Swagger
 
-# Custom JSON provider for Flask that converts enums to their value
+# Custom JSON provider for enums
 class CustomJSONProvider(DefaultJSONProvider):
     def default(self, obj):
         if isinstance(obj, enum.Enum):
@@ -18,33 +19,32 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
     
-    # Set up our custom JSON provider
+    # Use our custom JSON provider.
     app.json_provider_class = CustomJSONProvider
     app.json = app.json_provider_class(app)
     
-    # Configure global CORS using settings from the config,
-    # and allow credentials if needed.
-    CORS(app, origins=app.config.get("CORS_ORIGINS"), supports_credentials=True)
+    # Disable strict trailing slash enforcement to avoid redirecting OPTIONS preflight.
+    app.url_map.strict_slashes = False
     
-    # Set up Swagger documentation
+    # Configure CORS to allow requests from your frontend.
+    CORS(app, resources={r"/*": {"origins": "http://localhost:8080"}}, supports_credentials=True)
+    
+    # Set up Swagger documentation.
     swagger_template = {
         "swagger": "2.0",
         "info": {
             "title": "Flight Reservation API",
             "description": "API for Flight Reservation Application",
-            "version": "1.0.0"
+            "version": "1.0.0",
         },
         "basePath": "/"
     }
     Swagger(app, template=swagger_template)
     
-    # Initialize extensions (SQLAlchemy, JWT, etc.)
     init_extensions(app)
-    
     with app.app_context():
         db.create_all()
     
-    # Register blueprints for endpoints
     register_blueprints(app)
     
     return app

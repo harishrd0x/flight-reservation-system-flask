@@ -18,4 +18,6 @@ export interface BookingDetails {
   bookingDate?: string;
   status: 'confirmed' | 'pending' | 'cancelled';
   passengers?: PassengerInfo[];
+  // add booking_price
+  bookingPrice?: number;
 }

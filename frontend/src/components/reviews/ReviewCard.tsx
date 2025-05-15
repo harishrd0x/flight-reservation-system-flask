@@ -1,36 +1,42 @@
-
 import React from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Star, User, Calendar, Plane } from "lucide-react";
+import { Star, Calendar, Plane } from "lucide-react";
 
 interface ReviewCardProps {
-  id: string;
-  userId: string;
-  userName: string;
-  flightId: string;
+  id: number;             // review id
+  user_id: number;        // user id
+  flightId: number;       // booking_id from backend renamed for clarity
   rating: number;
   comment: string;
-  date: string;
+  created_at: string;     // date string from backend
 }
 
 const ReviewCard: React.FC<ReviewCardProps> = ({
   id,
-  userId,
-  userName,
+  user_id,
   flightId,
   rating,
   comment,
-  date
+  created_at,
 }) => {
+  // Format the created_at date nicely, e.g. "May 15, 2025"
+  const formattedDate = new Date(created_at).toLocaleDateString(undefined, {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
   return (
     <Card className="overflow-hidden hover:shadow-sm transition">
       <CardHeader className="bg-gray-50 p-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
+            {/* User icon, but no username available */}
             <div className="bg-airline-blue text-white p-2 rounded-full">
-              <User className="h-4 w-4" />
+              {/* Consider adding user initials or something here if you have the username */}
+              <span>{user_id}</span>
             </div>
-            <span className="font-medium">{userName}</span>
+            <span className="font-medium">User ID: {user_id}</span>
           </div>
           <div className="flex items-center">
             {[1, 2, 3, 4, 5].map((star) => (
@@ -52,12 +58,12 @@ const ReviewCard: React.FC<ReviewCardProps> = ({
           <span>Flight: {flightId}</span>
           <span className="mx-2">•</span>
           <Calendar className="h-4 w-4 mr-1" />
-          <span>{date}</span>
+          <span>{formattedDate}</span>
         </div>
         <p className="text-gray-700">{comment}</p>
       </CardContent>
     </Card>
   );
-}
+};
 
 export default ReviewCard;
