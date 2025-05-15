@@ -1,0 +1,115 @@
+2025-05-15 00:28:30,677 - INFO - root - Logging initialized
+2025-05-15 00:28:31,237 - INFO - werkzeug - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-15 00:28:31,238 - INFO - werkzeug - [33mPress CTRL+C to quit[0m
+2025-05-15 00:28:31,241 - INFO - werkzeug -  * Restarting with stat
+2025-05-15 00:28:32,477 - INFO - root - Logging initialized
+2025-05-15 00:28:32,806 - WARNING - werkzeug -  * Debugger is active!
+2025-05-15 00:28:32,812 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-15 00:28:36,407 - INFO - werkzeug - 127.0.0.1 - - [15/May/2025 00:28:36] "[32mPOST /api/flights HTTP/1.1[0m" 308 -
+2025-05-15 00:28:36,413 - INFO - werkzeug - 127.0.0.1 - - [15/May/2025 00:28:36] "[31m[1mPOST /api/flights/ HTTP/1.1[0m" 401 -
+2025-05-15 00:28:42,783 - INFO - backend.routes.auth_routes - Login attempt for email: bob@gmail.com
+2025-05-15 00:28:42,784 - INFO - backend.services.auth_service - Login attempt for email: bob@gmail.com
+2025-05-15 00:28:43,025 - INFO - backend.services.auth_service - Login successful for bob@gmail.com
+2025-05-15 00:28:43,027 - INFO - werkzeug - 127.0.0.1 - - [15/May/2025 00:28:43] "POST /api/auth/login HTTP/1.1" 200 -
+2025-05-15 00:28:53,610 - INFO - werkzeug - 127.0.0.1 - - [15/May/2025 00:28:53] "[32mPOST /api/flights HTTP/1.1[0m" 308 -
+2025-05-15 00:28:53,615 - INFO - backend.services.flight_service - Received flight creation request: {'flight_number': 'FL1234', 'airplane_id': 2, 'departure_airport_id': 2, 'arrival_airport_id': 3, 'departure_time': datetime.datetime(2025, 5, 15, 8, 0), 'arrival_time': datetime.datetime(2025, 5, 15, 12, 0), 'status': 'ACTIVE', 'price': 199.99}
+2025-05-15 00:28:53,653 - INFO - backend.services.flight_service - Flight successfully created with ID 13
+2025-05-15 00:28:53,655 - INFO - werkzeug - 127.0.0.1 - - [15/May/2025 00:28:53] "[35m[1mPOST /api/flights/ HTTP/1.1[0m" 201 -
+2025-05-15 00:29:00,150 - INFO - werkzeug - 127.0.0.1 - - [15/May/2025 00:29:00] "[32mGET /api/flights HTTP/1.1[0m" 308 -
+2025-05-15 00:29:00,154 - INFO - backend.services.flight_service - Fetching all flights...
+2025-05-15 00:29:00,162 - INFO - werkzeug - 127.0.0.1 - - [15/May/2025 00:29:00] "GET /api/flights/ HTTP/1.1" 200 -
+2025-05-15 00:29:04,627 - INFO - backend.services.flight_service - Fetching flight with ID 10...
+2025-05-15 00:29:04,631 - INFO - werkzeug - 127.0.0.1 - - [15/May/2025 00:29:04] "GET /api/flights/10 HTTP/1.1" 200 -
+2025-05-15 00:58:25,533 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\models\\booking.py', reloading
+2025-05-15 00:58:25,740 - INFO - werkzeug -  * Restarting with stat
+2025-05-15 00:58:27,392 - INFO - root - Logging initialized
+2025-05-15 00:58:27,751 - WARNING - werkzeug -  * Debugger is active!
+2025-05-15 00:58:27,762 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-15 00:58:36,113 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\models\\booking.py', reloading
+2025-05-15 00:58:36,508 - INFO - werkzeug -  * Restarting with stat
+2025-05-15 00:58:38,390 - INFO - root - Logging initialized
+2025-05-15 00:58:38,673 - WARNING - werkzeug -  * Debugger is active!
+2025-05-15 00:58:38,677 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-15 00:58:39,847 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\models\\booking.py', reloading
+2025-05-15 00:58:40,127 - INFO - werkzeug -  * Restarting with stat
+2025-05-15 00:58:41,596 - INFO - root - Logging initialized
+2025-05-15 00:58:41,842 - WARNING - werkzeug -  * Debugger is active!
+2025-05-15 00:58:41,851 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-15 00:58:45,039 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\models\\booking.py', reloading
+2025-05-15 00:58:45,227 - INFO - werkzeug -  * Restarting with stat
+2025-05-15 00:58:46,496 - INFO - root - Logging initialized
+2025-05-15 00:58:46,830 - WARNING - werkzeug -  * Debugger is active!
+2025-05-15 00:58:46,835 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-15 00:58:48,014 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\models\\booking.py', reloading
+2025-05-15 00:58:48,581 - INFO - werkzeug -  * Restarting with stat
+2025-05-15 00:58:50,670 - INFO - root - Logging initialized
+2025-05-15 00:58:50,946 - WARNING - werkzeug -  * Debugger is active!
+2025-05-15 00:58:50,950 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-15 00:58:58,331 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\models\\booking.py', reloading
+2025-05-15 00:58:58,647 - INFO - werkzeug -  * Restarting with stat
+2025-05-15 00:59:00,596 - INFO - root - Logging initialized
+2025-05-15 00:59:00,896 - WARNING - werkzeug -  * Debugger is active!
+2025-05-15 00:59:00,900 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-15 00:59:06,182 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\models\\booking.py', reloading
+2025-05-15 00:59:06,589 - INFO - werkzeug -  * Restarting with stat
+2025-05-15 00:59:08,102 - INFO - root - Logging initialized
+2025-05-15 00:59:08,342 - WARNING - werkzeug -  * Debugger is active!
+2025-05-15 00:59:08,348 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-15 01:00:24,604 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\models\\booking.py', reloading
+2025-05-15 01:00:24,820 - INFO - werkzeug -  * Restarting with stat
+2025-05-15 01:00:27,487 - INFO - root - Logging initialized
+2025-05-15 01:00:28,340 - WARNING - werkzeug -  * Debugger is active!
+2025-05-15 01:00:28,345 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-15 01:00:33,020 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\models\\booking.py', reloading
+2025-05-15 01:00:33,632 - INFO - werkzeug -  * Restarting with stat
+2025-05-15 01:00:35,066 - INFO - root - Logging initialized
+2025-05-15 01:00:35,327 - WARNING - werkzeug -  * Debugger is active!
+2025-05-15 01:00:35,330 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-15 01:00:43,716 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\models\\enums.py', reloading
+2025-05-15 01:00:44,004 - INFO - werkzeug -  * Restarting with stat
+2025-05-15 01:00:45,288 - INFO - root - Logging initialized
+2025-05-15 01:00:45,661 - WARNING - werkzeug -  * Debugger is active!
+2025-05-15 01:00:45,668 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-15 01:00:53,028 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\models\\enums.py', reloading
+2025-05-15 01:00:53,267 - INFO - werkzeug -  * Restarting with stat
+2025-05-15 01:00:54,503 - INFO - root - Logging initialized
+2025-05-15 01:00:54,862 - WARNING - werkzeug -  * Debugger is active!
+2025-05-15 01:00:54,868 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-15 01:00:59,186 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\models\\booking.py', reloading
+2025-05-15 01:00:59,479 - INFO - werkzeug -  * Restarting with stat
+2025-05-15 01:01:00,976 - INFO - root - Logging initialized
+2025-05-15 01:01:01,455 - WARNING - werkzeug -  * Debugger is active!
+2025-05-15 01:01:01,465 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-15 01:01:02,699 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\models\\booking.py', reloading
+2025-05-15 01:01:02,909 - INFO - werkzeug -  * Restarting with stat
+2025-05-15 01:01:03,994 - INFO - root - Logging initialized
+2025-05-15 01:01:04,225 - WARNING - werkzeug -  * Debugger is active!
+2025-05-15 01:01:04,229 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-15 01:01:47,916 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\models\\passenger_model.py', reloading
+2025-05-15 01:01:48,247 - INFO - werkzeug -  * Restarting with stat
+2025-05-15 01:01:49,856 - INFO - root - Logging initialized
+2025-05-15 01:01:50,220 - WARNING - werkzeug -  * Debugger is active!
+2025-05-15 01:01:50,340 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-15 01:01:52,654 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\models\\passenger_model.py', reloading
+2025-05-15 01:01:52,828 - INFO - werkzeug -  * Restarting with stat
+2025-05-15 01:01:54,443 - INFO - root - Logging initialized
+2025-05-15 01:01:54,697 - WARNING - werkzeug -  * Debugger is active!
+2025-05-15 01:01:54,700 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-15 01:01:59,963 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\models\\passenger_model.py', reloading
+2025-05-15 01:02:00,235 - INFO - werkzeug -  * Restarting with stat
+2025-05-15 01:02:01,693 - INFO - root - Logging initialized
+2025-05-15 01:02:01,976 - WARNING - werkzeug -  * Debugger is active!
+2025-05-15 01:02:01,982 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-15 01:02:20,623 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\models\\passenger_model.py', reloading
+2025-05-15 01:02:20,839 - INFO - werkzeug -  * Restarting with stat
+2025-05-15 01:02:22,197 - INFO - root - Logging initialized
+2025-05-15 01:02:22,722 - WARNING - werkzeug -  * Debugger is active!
+2025-05-15 01:02:22,733 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-15 01:02:24,969 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\models\\passenger_model.py', reloading
+2025-05-15 01:02:25,179 - INFO - werkzeug -  * Restarting with stat
+2025-05-15 01:02:26,584 - INFO - root - Logging initialized
+2025-05-15 01:02:26,952 - WARNING - werkzeug -  * Debugger is active!
+2025-05-15 01:02:26,956 - INFO - werkzeug -  * Debugger PIN: 642-335-336
+2025-05-15 01:02:30,361 - INFO - werkzeug -  * Detected change in 'C:\\PythonWorkspace\\frs\\backend\\models\\passenger_model.py', reloading
+2025-05-15 01:02:30,628 - INFO - werkzeug -  * Restarting with stat

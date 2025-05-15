@@ -19,3 +19,12 @@ class FlightStatus(str, Enum):
 #     ECONOMY = "ECONOMY"
 #     BUSINESS = "BUSINESS"
 #     FIRST_CLASS = "FIRST_CLASS"
+
+class BookingStatusEnum(str, Enum):
+    PENDING = "PENDING"
+    CONFIRMED = "CONFIRMED"
+    CANCELLED = "CANCELLED"
+
+class PassengerStatusEnum(str, Enum):
+    BOOKED = "BOOKED"
+    CANCELLED = "CANCELLED"
